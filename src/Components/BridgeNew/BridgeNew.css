@@ -8,6 +8,7 @@
   background-color: #fff;
   margin: 0px auto;
   margin-top: 50px;
+  position: relative;
 }
 .headline {
   font-family: Poppins;
@@ -141,7 +142,14 @@
   line-height: 16px;
   text-align: center;
 }
-
+.reverse-chain{
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left:45%;
+  bottom: -10%;
+  cursor: pointer;
+}
 @media screen and (max-width: 500px) {
   .BridgeApp {
     max-width: 95%;

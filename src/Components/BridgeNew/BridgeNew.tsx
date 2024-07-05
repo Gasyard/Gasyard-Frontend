@@ -10,6 +10,7 @@ import { formatEther, parseEther } from "viem";
 import { PortfolioAPI, sendTransaction } from "../../Config/API/api";
 import SelectChainModalNew from "../SelectChainModal/SelectChainModal_new";
 import arb_logo from '../../assets/arb_logo.svg'
+import ReverseChain from '../../assets/reverse.svg'
 import { getBalance } from '@wagmi/core'
 import { config } from "../../Config/config";
 import { type GetBalanceReturnType } from '@wagmi/core'
@@ -151,6 +152,11 @@ const BridgeNew = (props: Props) => {
     }
     setopenChainPopup(value)
   }
+  const reverseChain = () =>{
+    const temp = chain1;
+    setchain1(chain2)
+    setchain2(temp)
+  }
   const setTransactionModal = (value:boolean) =>{
     setopenTransactionPopup(value)
   }
@@ -218,8 +224,9 @@ const BridgeNew = (props: Props) => {
             }}
           />
           <button className="max-btn">Max</button>
+          <img src={ReverseChain} className="reverse-chain" onClick={reverseChain}/>
         </div>
-
+        
         <div className="to-chain">
           <div className="labels">
             <span className="tagline">To</span>
