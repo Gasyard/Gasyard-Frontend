@@ -5,8 +5,9 @@ type quoteProp = {
     address: string | undefined;
     transactionTime: string;
     fees: string;
+    chain1:any
   };
-const QuoteSection = ({ address, transactionTime, fees }: quoteProp) => {
+const QuoteSection = ({ address, transactionTime, fees, chain1 }: quoteProp) => {
     return (
       <>
         <div className="quoteRoot">
@@ -24,11 +25,11 @@ const QuoteSection = ({ address, transactionTime, fees }: quoteProp) => {
           </div>
           <div className="quote_row">
             <div className="quote_column col1">Network</div>
-            <div className="quote_column col2">Arbitrum one</div>
+            <div className="quote_column col2">{chain1}</div>
           </div>
           <div className="quote_row">
             <div className="quote_column col1">Network Fee</div>
-            <div className="quote_column col2">$0.12 USD</div>
+            <div className="quote_column col2">${fees} USD</div>
           </div>
         </div>
       </>

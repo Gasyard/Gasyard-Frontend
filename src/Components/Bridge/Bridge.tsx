@@ -211,8 +211,6 @@ const Bridge = (props: Props) => {
       }
     }
     setopenChainPopup(value)
-
-
   }
 
   const fetchPortfolio = async() =>{
@@ -466,14 +464,14 @@ const Bridge = (props: Props) => {
             </div>
           </div>
         </div>
-
+{/* 
         {quoteData && (
           <QuoteSection
             address={recepientAddress}
             transactionTime={"1.2s"}
             fees={String(quoteData.fees)}
           />
-        )}
+        )} */}
         {chain && chain1 ? (
           chain?.id === chain1.id ? (
             <button className="BridgeBtn" onClick={onSubmit}>Create Transaction</button>

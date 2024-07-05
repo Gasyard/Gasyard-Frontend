@@ -12,9 +12,15 @@ type Props = {
     isOpen?:any
     onOpen?:any 
     onClose?:any 
+    setModal?:any
 }
 
-const TransactionPopup = ({isOpen,onOpen, onClose}: Props) => {
+const TransactionPopup = ({isOpen,onOpen, onClose,setModal}: Props) => {
+    const onCloseModal = () =>{
+        // onClose()
+        setModal(false)
+        onClose()
+    }
   return (
     <div className="TransactionPopupRoot">
         <Modal
@@ -31,7 +37,8 @@ const TransactionPopup = ({isOpen,onOpen, onClose}: Props) => {
             <ModalHeader>
                 <div className="header">
                     Transaction Details
-                    <img src={CloseBtn} onClick={onClose}/>
+                    <img src={CloseBtn} onClick={onCloseModal}
+                    />
                    
                 </div>
             </ModalHeader>

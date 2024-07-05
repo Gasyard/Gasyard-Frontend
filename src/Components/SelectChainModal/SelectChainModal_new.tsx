@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useChains } from "wagmi";
 import { chainType } from "../../Config/types";
 import "./SelectChainModal.css"
-import SearchIcon from '../../assets/search.svg'
+import SearchIcon from '../../assets/search_logo.svg'
+import CloseBtn from '../../assets/CloseIcon.svg'
+
 type Props = {
     open:any
     setModal:any
@@ -37,7 +39,7 @@ function SelectChainModalNew({open,isOpen,onOpen, onClose,setModal,chain_1,chain
     }
     return (
       <>
-        <Button onClick={onOpen}>Open Modal</Button>
+        {/* <Button onClick={onOpen}>Open Modal</Button> */}
         <Modal
           isCentered
           onClose={onClose}
@@ -46,20 +48,29 @@ function SelectChainModalNew({open,isOpen,onOpen, onClose,setModal,chain_1,chain
           size={"xl"}
         >
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent borderRadius={"26px"}  sx={{
+            boxShadow: `0px 16px 32px -12px #07204540, 
+                        0px 1px 2px 0px #1D4F810A, 
+                        0px 0px 0px 1px #12376914`
+          }}>
             <ModalHeader>
-            <div className='search-chain'>
-            
-                    <input type="text"  placeholder='Search by name' onChange={handleInputChange}/>
-                    
-                </div>
-                
+            <div className="header">
+              Select Network
+              <img src={CloseBtn} onClick={onClose}/>
+            </div>          
             </ModalHeader>
-            {/* <ModalCloseButton /> */}
             <ModalBody>
+            <div className='search-chain-parent'>
+              <div className="search-chain">
+                <img src={SearchIcon} className="search-logo" />
+                <input type="text"  placeholder='Search by name' onChange={handleInputChange}/>
+              </div>
+              
+              
+            </div>
+            <div className="chains-body">
             {chainList.map((chain)=>{
                     var key = chain.name
-                    
                     if(toselectChain === 2 && chain.id === chain_1.id){
                         return("")
                     }
@@ -68,23 +79,23 @@ function SelectChainModalNew({open,isOpen,onOpen, onClose,setModal,chain_1,chain
                             <img className="chain-img" src={chain.iconUrl}/>
                             <div className='chain-info'>
                                 <div className="chain-name">{chain.name}</div>
-                                <div className="chain-token">{chain.nativeCurrency.symbol}</div>
+                                {/* <div className="chain-token">{chain.nativeCurrency.symbol}</div> */}
                             </div>
                             <div className="chain-balance">
-                                {portfolio && portfolio[key.toLowerCase()] && portfolio[key.toLowerCase()].balance}
+                              
+                                { portfolio && portfolio["bsc"] && key === "BNB Smart Chain" ? Math.round(portfolio["bsc"].balance * 100000) / 100000
+                                : portfolio && key === "Arbitrum One" ? Math.round(portfolio["arbitrum"].balance * 100000) / 100000 
+                                : portfolio && portfolio[key.toLowerCase()] ? Math.round(portfolio[key.toLowerCase()].balance * 100000)/100000 : ""}
+                                {" "}
+                                {chain.nativeCurrency.symbol}
                             </div>
                             
                         </div>
                     )
                 })}
+                </div>
                 
             </ModalBody>
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={onClose}>
-                Close
-              </Button>
-              
-            </ModalFooter>
           </ModalContent>
         </Modal>
       </>

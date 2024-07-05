@@ -16,7 +16,8 @@ import {
   bsc,
   scroll,
   Chain,
-  baseSepolia
+  baseSepolia,
+  optimism
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -82,10 +83,10 @@ const chains = [
     iconUrl: bsclogo,
     contractAddress:ChainJsonData["56"].routerContract
   },
-  { ...scroll, 
-    iconUrl: scrolllogo,
-    contractAddress:ChainJsonData["534352"].routerContract
-  },
+  // { ...scroll, 
+  //   iconUrl: scrolllogo,
+  //   contractAddress:ChainJsonData["534352"].routerContract
+  // },
   // {
   //   ...baseSepolia,
   //   iconUrl:sepolialogo,

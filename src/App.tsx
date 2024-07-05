@@ -18,11 +18,6 @@ function App() {
       <div className="App">
         <Header />
         <BridgeNew />
-        {/* <Bridge /> */}
-        {/* <SelectChainModal /> */}
-        {/* <w3m-button balance='show'/> */}
-        <TransactionPopup isOpen={isOpen} onOpen={onOpen} onClose={onClose}/>
-      <button onClick={() => onOpen()}>Open</button>
       </div>
     </ChakraProvider>
   );
