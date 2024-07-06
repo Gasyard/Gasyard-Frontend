@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./BridgeNew.css";
 import downArrow from "../../assets/SVG-black.svg";
-import { Stat, StatNumber, useDisclosure } from "@chakra-ui/react";
+import { Spinner, Stat, StatNumber, useDisclosure } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
 import { useAccount, useChains, useSwitchChain, useWriteContract } from "wagmi";
 import { chainType, quoteType } from "../../Config/types";
@@ -177,6 +177,27 @@ const BridgeNew = (props: Props) => {
     setportfolio(result)
   }
 
+  const roundDecimal = (numStr:string) => {
+    const num = parseFloat(numStr);
+    const decimalPlaces = numStr.split('.')[1]?.length || 0;
+    
+    if (decimalPlaces > 4) {
+      return num.toFixed(4);
+    } else {
+      return num.toFixed(decimalPlaces);
+    }
+  };
+  const ReturnBalance = () =>{
+    if(address){
+      return (
+      <>
+      {accountBalance != "" ?  roundDecimal(accountBalance.formatted)+" "+ accountBalance.symbol: <Spinner size='xs' />}
+      </>)
+    } else{
+      return (<> N/A </>)
+    }
+  }
+
   useEffect(() => {      
     fetchQuote(chain1,chain2,inputToken)
   }, [chain1,chain2,data])
@@ -203,7 +224,7 @@ const BridgeNew = (props: Props) => {
         <div className="from-chain">
           <div className="labels">
             <span className="tagline">From</span>
-            <span className="balance">Balance:- <span>{accountBalance != "" ? accountBalance.formatted +" "+ accountBalance.symbol:""}</span></span>
+            <span className="balance">Balance:- <span><ReturnBalance /></span></span>
           </div>
           <button className="chain1-btn" onClick={() => ToggleDD(1)}>
             {chain1 && <img className="logo" src={chain1?.iconUrl} />}
