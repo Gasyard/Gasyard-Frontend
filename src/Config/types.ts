@@ -24,7 +24,7 @@ interface Networks {
 }
 
 type quoteType = {
-  fees: number;
+  fees: number | "";
   outputTokenAmount: number;
 };
 

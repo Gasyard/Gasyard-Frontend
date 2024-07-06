@@ -57,14 +57,23 @@ const BridgeNew = (props: Props) => {
         },
       };
       const response = await fetch(url, options);
-
-      const result = await response.json();
-      console.log(result);
-      setquoteData({
-        fees: result.totalFees,
-        outputTokenAmount: result.outputTokenAmount,
-      });
-      setoutputToken(result.outputTokenAmount);
+      
+      if(response.status === 400){
+        setquoteData({
+          fees: "",
+          outputTokenAmount: 0,
+        });
+      }
+      else{
+        const result = await response.json();
+        console.log(result);
+        setquoteData({
+          fees: result.totalFees,
+          outputTokenAmount: result.outputTokenAmount,
+        });
+        setoutputToken(result.outputTokenAmount.toFixed(5));
+      }
+      
     }
   };
 
@@ -261,6 +270,7 @@ const BridgeNew = (props: Props) => {
             type="text"
             placeholder="0.0"
             className="outputToken"
+            value={outputToken}
             readOnly
           />
         </div>
