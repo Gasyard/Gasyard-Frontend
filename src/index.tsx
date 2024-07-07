@@ -107,7 +107,7 @@ createWeb3Modal({
   projectId,
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
   enableOnramp: true, // Optional - false as default
-  themeMode: 'light',
+  themeMode: 'dark',
   themeVariables:{
     '--w3m-color-mix': 'red',
     "--w3m-border-radius-master":"2px"

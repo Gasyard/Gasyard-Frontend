@@ -15,6 +15,7 @@ import { getBalance } from '@wagmi/core'
 import { config } from "../../Config/config";
 import { type GetBalanceReturnType } from '@wagmi/core'
 import TransactionPopup from "../TransactionPopup/TransactionPopup";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 type Props = {};
 
@@ -32,12 +33,30 @@ const BridgeNew = (props: Props) => {
   const [portfolio, setportfolio] = useState(null);
   const [recepientAddress, setrecepientAddress] = useState("");
   const [recepientAddressError, setrecepientAddressError] = useState("");
+  const [allvalueFilled, setallvalueFilled] = useState(false)
 
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const { chains, switchChain } = useSwitchChain();
   const { writeContract,data,isPending, isSuccess, status } = useWriteContract()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [accountBalance, setaccountBalance] = useState<GetBalanceReturnType | "">("")
+  const [debouncedValue, setDebouncedValue] = useState(inputToken);
+  const [submitBtnText, setsubmitBtnText] = useState("Submit Transaction")
+
+  const { open, close } = useWeb3Modal()
+
+  const FormHandler = () =>{
+    if(chain1 && chain2 && address && inputToken !== "" && accountBalance != "" && compareValue(parseFloat(roundDecimal(inputToken)),  Number(accountBalance.value))){
+      setallvalueFilled(true)
+    }
+    else{
+      if(accountBalance && parseFloat(roundDecimal(inputToken)) >  Number(accountBalance.value)){
+        setsubmitBtnText("Insufficient Gas")
+      }
+      setallvalueFilled(false)
+    }
+    
+  }
 
   const fetchQuote = async (chain1:any,chain2:any,inputToken:any) => {
     setquoteData(null)
@@ -72,6 +91,9 @@ const BridgeNew = (props: Props) => {
           outputTokenAmount: result.outputTokenAmount,
         });
         setoutputToken(result.outputTokenAmount.toFixed(5));
+        if(address && accountBalance && parseFloat(roundDecimal(inputToken)) >  Number(accountBalance.value)){
+          setsubmitBtnText("Insufficient Gas")
+        }
       }
       
     }
@@ -94,6 +116,7 @@ const BridgeNew = (props: Props) => {
     }
 
     setinputToken(value);
+    FormHandler()
   };
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
@@ -116,23 +139,42 @@ const BridgeNew = (props: Props) => {
     return true;
   };
   const handleBlurEvent = () => {
-    fetchQuote(chain1,chain2,inputToken);
+    // fetchQuote(chain1,chain2,inputToken);
   };
   const onSubmit = async() =>{
-    if(chain1 && chain2 && address){
+    if(accountBalance !== ""){
+      console.log("compare",compareValue(parseFloat(roundDecimal(inputToken)),  Number(accountBalance.value)))
+    }
+   
+    if(chain1 && chain2 && address && inputToken !== "" && accountBalance != "" && compareValue(parseFloat(roundDecimal(inputToken)),  Number(accountBalance.value))){
 
-      const result = await writeContract({
-        abi, 
-        address: chain1.contractAddress,
-        functionName: 'bridgeTo',
-        args: [
-          chain2.id,
-          address
-        ],
-        value:parseEther(inputToken)
-      })
+      try{
+        const result = await writeContract({
+          abi, 
+          address: chain1.contractAddress,
+          functionName: 'bridgeTo',
+          args: [
+            chain2.id,
+            address
+          ],
+          value:parseEther(inputToken)
+        })
+        setopenTransactionPopup(true)
+      }
+      catch(err){
+        console.log("err",err)
+      }
+
       
-      console.log(result)
+      
+    }
+    else{
+      if(accountBalance === ""){
+        setsubmitBtnText("Connect Wallet")
+      }else if(parseFloat(roundDecimal(inputToken)) > Number(accountBalance.value)){
+        setsubmitBtnText("Insufficient Gas")
+      }
+      
       
     }
   }
@@ -207,9 +249,25 @@ const BridgeNew = (props: Props) => {
     }
   }
 
+  const compareValue = (input:number,balance:number) =>{
+    console.log("input",input,"balance",balance)
+    return balance > input
+  }
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(inputToken);
+    }, 500); // 0.5 seconds
+
+    // Cleanup timeout if the effect is called again before the timeout completes
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputToken]);
   useEffect(() => {      
-    fetchQuote(chain1,chain2,inputToken)
-  }, [chain1,chain2,data])
+    fetchQuote(chain1,chain2,debouncedValue)
+  }, [chain1,chain2,data,debouncedValue])
+
 
   useEffect(() => {
     if(address){
@@ -228,7 +286,7 @@ const BridgeNew = (props: Props) => {
   return (
     <div className="BridgeRoot">
       <div className="BridgeApp">
-        <div className="headline">Bridge</div>
+        <div className="headline">Bridge {status}</div>
 
         <div className="from-chain">
           <div className="labels">
@@ -253,7 +311,11 @@ const BridgeNew = (props: Props) => {
               }
             }}
           />
-          <button className="max-btn">Max</button>
+          <button className="max-btn" onClick={() =>{ 
+            if(accountBalance !== ""){
+              setinputToken(String(accountBalance.value))}
+            }
+            }>Max</button>
           <img src={ReverseChain} className="reverse-chain" onClick={reverseChain}/>
         </div>
         
@@ -276,7 +338,21 @@ const BridgeNew = (props: Props) => {
         </div>
 
         <div className="review">
-          <button className="review-btn" onClick={() => setopenTransactionPopup(true)}>Open Transaction Popup</button>
+          {address === undefined ? (
+            <>
+             <button className=" review-btn" onClick={() => open()}> Connect Wallet</button> 
+           
+            </>
+          ): chain1 && chain?.id !== chain1.id ? (
+            <button className="review-btn" onClick={ () =>{
+              switchChain({
+                chainId:chain1.id
+              })
+            }}>Switch Network</button>
+          ) : (<>
+          <button className="review-btn"  disabled={!allvalueFilled} onClick={onSubmit}>{submitBtnText}</button>
+          </>)}
+          
         </div>
 
         {quoteData && (
@@ -290,7 +366,7 @@ const BridgeNew = (props: Props) => {
         
       </div>
       <SelectChainModalNew open={openChainPopup} setModal={changeModal} chain_1={chain1} chain_2={chain2} toselectChain={toSelectChain} portfolio={portfolio} isOpen={isOpen} onOpen={onOpen} onClose={onClose}/>
-      <TransactionPopup isOpen={openTransactionPopup} onOpen={onOpen} onClose={onClose} setModal={setTransactionModal} />
+      <TransactionPopup isOpen={openTransactionPopup} onOpen={onOpen} onClose={onClose} setModal={setTransactionModal} rejected={status === "error"} success={status === "success"} pending={status === "pending"} />
     </div>
   );
 };

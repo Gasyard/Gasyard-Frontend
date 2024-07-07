@@ -41,9 +41,12 @@ type Props = {
   onOpen?: any;
   onClose?: any;
   setModal?: any;
+  rejected?: boolean;
+  pending?:boolean;
+  success?:boolean
 };
 
-const TransactionPopup = ({ isOpen, onOpen, onClose, setModal }: Props) => {
+const TransactionPopup = ({ isOpen, onOpen, onClose, setModal, rejected, success, pending }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
@@ -68,15 +71,15 @@ const TransactionPopup = ({ isOpen, onOpen, onClose, setModal }: Props) => {
         >
           <ModalHeader>
             <div className="header">
-              {is_rejected ? "User Rejected" : "Transaction Details"}
+              {rejected ? "User Rejected" : "Transaction Details"}
               <img src={CloseBtn} onClick={onCloseModal} />
             </div>
           </ModalHeader>
 
           <ModalBody>
-            <div className={`success_body ${is_rejected ? "hideDiv" : ""}`}>
+            <div className={`success_body ${rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">
-                {is_successed ? (
+                {success ? (
                   <>
                     <div className="transaction_details">Bridge Successful</div>
                     <Lottie
@@ -127,7 +130,7 @@ const TransactionPopup = ({ isOpen, onOpen, onClose, setModal }: Props) => {
                 <img src={redirectLogo} onClick={() => setis_successed(!is_successed)}/>
               </div>
             </div>
-            <div className={`rejected_body ${!is_rejected ? "hideDiv" : ""}`}>
+            <div className={`rejected_body ${!rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">
                 <Lottie
                   animationData={rejected_animation}
