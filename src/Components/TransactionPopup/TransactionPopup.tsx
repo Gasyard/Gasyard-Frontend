@@ -46,9 +46,10 @@ type Props = {
   rejected?: boolean;
   pending?:boolean;
   success?:boolean
+  onSubmit?:any
 };
 
-const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending }: Props) => {
+const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
@@ -149,7 +150,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                   <img
                     src={retry}
                     alt="retry"
-                    onClick={() => setis_rejected(false)}
+                    onClick={onSubmit}
                   />
                 </div>
               </div>

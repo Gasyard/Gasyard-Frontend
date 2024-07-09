@@ -520,6 +520,7 @@ const BridgeNew = observer((props: Props) => {
         rejected={status === "error"}
         success={status === "success"}
         pending={status === "pending"}
+        onSubmit={onSubmit}
       />
     </div>
   );
