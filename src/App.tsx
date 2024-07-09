@@ -8,9 +8,10 @@ import { ChakraProvider, useDisclosure } from '@chakra-ui/react'
 import BridgeNew from './Components/BridgeNew/BridgeNew';
 import TransactionPopup from './Components/TransactionPopup/TransactionPopup';
 // import PrivyDemo from './Components/PrivyDemo/PrivyDemo?';
+import { observer } from 'mobx-react';
 
 
-function App() {
+const App = observer(() => {
 
   const { isOpen, onOpen,onClose } = useDisclosure()
   return (
@@ -21,6 +22,6 @@ function App() {
       </div>
     </ChakraProvider>
   );
-}
+})
 
 export default App;

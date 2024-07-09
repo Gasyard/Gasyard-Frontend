@@ -5,6 +5,7 @@ import { chainType } from "../../Config/types";
 import "./SelectChainModal.css"
 import SearchIcon from '../../assets/search_logo.svg'
 import CloseBtn from '../../assets/CloseIcon.svg'
+import { observer } from "mobx-react";
 
 type Props = {
     open:any
@@ -18,7 +19,7 @@ type Props = {
      onClose?:any
 }
 
-function SelectChainModalNew({open,isOpen,onOpen, onClose,setModal,chain_1,chain_2,toselectChain,portfolio}: Props) {
+const SelectChainModalNew = observer(({open,isOpen,onOpen, onClose,setModal,chain_1,chain_2,toselectChain,portfolio}: Props) => {
     // const { isOpen, onOpen, onClose } = useDisclosure()
     const Chains = useChains()
 
@@ -100,6 +101,6 @@ function SelectChainModalNew({open,isOpen,onOpen, onClose,setModal,chain_1,chain
         </Modal>
       </>
     )
-  }
+  })
 
 export default SelectChainModalNew

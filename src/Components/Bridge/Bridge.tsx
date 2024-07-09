@@ -214,7 +214,7 @@ const Bridge = (props: Props) => {
   }
 
   const fetchPortfolio = async() =>{
-    const result = await PortfolioAPI()
+    const result = await PortfolioAPI(address)
     console.log(result)
     setportfolio(result)
   }

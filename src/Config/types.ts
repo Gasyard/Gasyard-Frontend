@@ -32,7 +32,26 @@ interface ImageMapType {
   [key: string]: string | any;
 }
 
+interface portfolioType {
+  [key: string]:PorfolioChains
+  
+}
 
+type PorfolioChains = {
+  balance : string
+  balanceRawInteger: string
+  chainID:number
+  baseToken:string
+  // balanceUsd: string
+  // blockchain: string
+  // holderAddress: `0x${string}`
+  // thumbnail: string
+  // tokenDecimals: number
+  // tokenName: string
+  // tokenPrice:string
+  // tokenSymbol: string
+  // tokenType: string
+}
 
 export type {
   chainType,
@@ -40,5 +59,5 @@ export type {
   Networks,
   quoteType,
   ImageMapType,
-  
+  portfolioType
 };

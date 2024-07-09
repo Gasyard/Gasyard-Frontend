@@ -35,6 +35,8 @@ import on_going_trxn_animation from "../../assets/animations/on-going-txn.json";
 import rejected_animation from "../../assets/animations/rejected-animation.json";
 
 import Lottie from "lottie-react";
+import { observer } from "mobx-react";
+import FormStore from "../../Config/Store/FormStore";
 
 type Props = {
   isOpen?: any;
@@ -46,7 +48,7 @@ type Props = {
   success?:boolean
 };
 
-const TransactionPopup = ({ isOpen, onOpen, onClose, setModal, rejected, success, pending }: Props) => {
+const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
@@ -105,23 +107,23 @@ const TransactionPopup = ({ isOpen, onOpen, onClose, setModal, rejected, success
               <div className="reviewChains">
                 <div className="chain chain1">
                   <div className="chainCoinDiv">
-                    <img src={ChainCoin} className="chainCoin" alt="coin" />
-                    <img src={arblogo} className="chainlogo" alt="" />
+                    <img src={FormStore.chain1 && FormStore.chain1.iconUrl} className="chainCoin" alt="coin" />
+                    {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
-                    <div className="token_amount">0.1 ETH</div>
-                    <div className="chain_network">Arbitrum One</div>
+                    <div className="token_amount">{FormStore.inputToken} ETH</div>
+                    <div className="chain_network">{FormStore.chain1 && FormStore.chain1.name}</div>
                   </div>
                 </div>
                 <img src={darrow} className="darrow" />
                 <div className="chain chain2">
                   <div className="chainCoinDiv">
-                    <img src={ChainCoin} className="chainCoin" alt="coin" />
-                    <img src={arblogo} className="chainlogo" alt="" />
+                    <img src={FormStore.chain2 && FormStore.chain2.iconUrl} className="chainCoin" alt="coin" />
+                    {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
-                    <div className="token_amount">0.09985 ETH</div>
-                    <div className="chain_network">Base</div>
+                    <div className="token_amount">{FormStore.outputToken} ETH</div>
+                    <div className="chain_network">{FormStore.chain2 && FormStore.chain2.name}</div>
                   </div>
                 </div>
               </div>
@@ -157,6 +159,6 @@ const TransactionPopup = ({ isOpen, onOpen, onClose, setModal, rejected, success
       </Modal>
     </div>
   );
-};
+});
 
 export default TransactionPopup;

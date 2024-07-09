@@ -54,12 +54,12 @@ interface ChainWithIcon extends Chain {
 }
 
 const chains = [
-  {
-    ...mainnet,
-    iconUrl: ethereumlogo,
-    contractAddress:ChainJsonData["1"].routerContract
+  // {
+  //   ...mainnet,
+  //   iconUrl: ethereumlogo,
+  //   contractAddress:ChainJsonData["1"].routerContract
 
-  },
+  // },
   {
     ...arbitrum,
     iconUrl: arbitumlogo,
@@ -75,14 +75,14 @@ const chains = [
     iconUrl: baselogo,
     contractAddress:ChainJsonData["8453"].routerContract
   },
-  { ...polygon, 
-    iconUrl: polygonlogo,
-    contractAddress:ChainJsonData["137"].routerContract
-  },
-  { ...bsc, 
-    iconUrl: bsclogo,
-    contractAddress:ChainJsonData["56"].routerContract
-  },
+  // { ...polygon, 
+  //   iconUrl: polygonlogo,
+  //   contractAddress:ChainJsonData["137"].routerContract
+  // },
+  // { ...bsc, 
+  //   iconUrl: bsclogo,
+  //   contractAddress:ChainJsonData["56"].routerContract
+  // },
   // { ...scroll, 
   //   iconUrl: scrolllogo,
   //   contractAddress:ChainJsonData["534352"].routerContract

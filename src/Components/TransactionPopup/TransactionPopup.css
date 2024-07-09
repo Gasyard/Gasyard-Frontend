@@ -103,6 +103,7 @@
 .reviewChains .chain .chainCoinDiv .chainCoin{
     width: 32px;
     height: 32px;
+    border-radius: 50%;
 }
 .reviewChains .chain .chainCoinDiv .chainlogo{
     position: absolute;
