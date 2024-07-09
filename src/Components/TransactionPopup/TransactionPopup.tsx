@@ -33,6 +33,7 @@ import retry from "../../assets/retry.svg";
 import success_animation from "../../assets/animations/success-animation.json";
 import on_going_trxn_animation from "../../assets/animations/on-going-txn.json";
 import rejected_animation from "../../assets/animations/rejected-animation.json";
+import pending_animation from "../../assets/animations/pending-animation.json"
 
 import Lottie from "lottie-react";
 import { observer } from "mobx-react";
@@ -94,11 +95,11 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                 ) : (
                   <>
                     <div className="transaction_details">
-                      Transaction Submitted on
-                      <span className="chain_name">Arbitrum one</span>
+                      Waiting for user to confirm transaction
+                      {/* <span className="chain_name">Arbitrum one</span> */}
                     </div>
                     <Lottie
-                      animationData={on_going_trxn_animation}
+                      animationData={pending_animation}
                       loop={true}
                       style={{ height: "150px", width: "150px" }}
                     />
@@ -128,10 +129,10 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                   </div>
                 </div>
               </div>
-              <div className="redirectSection" onClick={() => setis_successed(!is_successed)}>
+              {/* <div className="redirectSection" onClick={() => setis_successed(!is_successed)}>
                 View on Explorer
                 <img src={redirectLogo} onClick={() => setis_successed(!is_successed)}/>
-              </div>
+              </div> */}
             </div>
             <div className={`rejected_body ${!rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">

@@ -19,7 +19,7 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { convertEthToWeiAndBack } from "../../Config/utils";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
-// import { formatEther, parseEther } from 'ethers';
+import {ethers } from 'ethers';
 
 type Props = {};
 
@@ -53,32 +53,39 @@ const BridgeNew = observer((props: Props) => {
   const [accBalance, setaccBalance] = useState("");
   const [debouncedValue, setDebouncedValue] = useState(inputToken);
   const [submitBtnText, setsubmitBtnText] = useState("Submit Transaction");
-  const [allGood, setallGood] = useState(true);
+  const [disableSubmitBtn, setdisableSubmitBtn] = useState(false);
 
   const { open, close } = useWeb3Modal();
 
   const FormHandler = () => {
-    //console.log("Form handler called");
+    console.log("Form handler called");
     if (
       chain1 &&
       chain2 &&
       address &&
-      inputToken !== "" &&
+      debouncedValue !== "" &&
       accBalance != "" &&
-      CompareValues(roundDecimal(inputToken), accBalance) && allGood
+      CompareValues(roundDecimal(debouncedValue), accBalance)
       
     ) {
       setallvalueFilled(true);
-      setallGood(true)
+      setdisableSubmitBtn(false)
       return true
     } else {
-      //console.log("Form handler called : error ");
-      if (accBalance && !CompareValues(roundDecimal(inputToken), accBalance)) {
+      setallvalueFilled(false)
+      setdisableSubmitBtn(true)
+      if(!chain1){
+        console.log("Chain1 empty")
+      }
+      if(!chain2){
+        console.log("Chain2 empty")
+      }
+      if (accBalance && !CompareValues(roundDecimal(debouncedValue), accBalance)) {
         //console.log("from form handler");
         setsubmitBtnText("Insufficient Gas");
         
       }
-      setallGood(false)
+      
       return false
     }
   };
@@ -86,7 +93,7 @@ const BridgeNew = observer((props: Props) => {
   const fetchQuote = async (chain1: any, chain2: any, inputToken: any) => {
     setquoteData(null);
     setoutputToken("");
-    setallGood(true);
+    //setdisableSubmitBtn(false);
     FormStore.setOuputToken("");
     if (chain1 && chain2 && inputToken) {
       const url = "https://api.gasyard.fi/api/quote";
@@ -96,7 +103,7 @@ const BridgeNew = observer((props: Props) => {
         body: JSON.stringify({
           inputNetwork: chain1 && chain1.id,
           outputNetwork: chain2 && chain2.id,
-          inputTokenAmount: parseFloat(inputToken) * 1000000000000000000,
+          inputTokenAmount: parseFloat(debouncedValue) * 1000000000000000000,
         }),
         headers: {
           "Content-type": "application/json",
@@ -106,16 +113,9 @@ const BridgeNew = observer((props: Props) => {
 
       if (response.status === 400 || response.status === 500) {
         const result = await response.json();
-        setallGood(false);
-        if (result.message === "Input Amount is Too Low") {
-          setsubmitBtnText(result.message);
-          // setallvalueFilled(false)
-        }
-
-        setquoteData({
-          fees: "",
-          outputTokenAmount: 0,
-        });
+        setdisableSubmitBtn(true);
+        setquoteData(null);
+        setsubmitBtnText(result.message)
       } else {
         const result = await response.json();
         //console.log(result);
@@ -125,23 +125,27 @@ const BridgeNew = observer((props: Props) => {
         });
         setoutputToken(result.outputTokenAmount.toFixed(5));
         FormStore.setOuputToken(result.outputTokenAmount.toFixed(5));
-
+        setsubmitBtnText("Submit Transaction")
+        FormHandler();
         //console.log("fetch",roundDecimal(inputToken), accBalance,CompareValues(roundDecimal(inputToken), accBalance))
-        if (
-          address &&
-          accBalance &&
-          CompareValues(roundDecimal(inputToken), accBalance)
-        ) {
-          setsubmitBtnText("Submit Transaction");
-          setallGood(true)
-        }
+        // if (
+        //   address &&
+        //   accBalance &&
+        //   CompareValues(roundDecimal(debouncedValue), accBalance)
+        // ) {
+        //   setsubmitBtnText("Submit Transaction");
+        //   setdisableSubmitBtn(false)
+        // }
 
-        if(!CompareValues(roundDecimal(inputToken), accBalance)){
-          setsubmitBtnText("Insufficient Gas")
-          setallGood(false)
-        }
+        // if(!CompareValues(roundDecimal(debouncedValue), accBalance)){
+        //   setsubmitBtnText("Insufficient Gas")
+        //   setdisableSubmitBtn(true)
+        // }
       }
+    }else{
+      setdisableSubmitBtn(true)
     }
+    
   };
 
   const ToggleDD = (ele: 0 | 1 | 2) => {
@@ -161,7 +165,7 @@ const BridgeNew = observer((props: Props) => {
     }
 
     setinputToken(value);
-    FormHandler();
+    
   };
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
@@ -191,10 +195,10 @@ const BridgeNew = observer((props: Props) => {
       chain1 &&
       chain2 &&
       address &&
-      inputToken !== "" &&
+      debouncedValue !== "" &&
       accountBalance != "" &&
       CompareValues(
-        roundDecimal(inputToken),
+        roundDecimal(debouncedValue),
         accBalance
       )
     ) {
@@ -204,7 +208,7 @@ const BridgeNew = observer((props: Props) => {
           address: chain1.contractAddress,
           functionName: "bridgeTo",
           args: [chain2.id, address],
-          value: parseEther(inputToken),
+          value: parseEther(debouncedValue),
         });
         setopenTransactionPopup(true);
       } catch (err) {
@@ -350,19 +354,35 @@ const BridgeNew = observer((props: Props) => {
     }
   };
 
-  const compareValue = (input: number, balance: number) => {
-    return balance > input;
-  };
+  
   const CompareValues = (input: string, balance: string) => {
     //console.log("bigint ",parseEther(balance),parseEther(input).valueOf())
-    return (parseEther(balance).valueOf()-(parseEther("0.0001"))) > parseEther(input);
+    try{
+      const inp = parseFloat(input) * 1e18
+      const out = parseFloat(balance) * 1e18
+      const to_subtract = parseFloat("0.0001") * 1e18
+      const new_out = out-to_subtract;
+      console.log("CompareValues",new_out,inp)
+      return new_out >= inp
+    }
+    catch(err){
+      console.group("CompareValues err",err)
+      return false
+    }
+    
   };
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(inputToken);
-      FormStore.setInputToken(inputToken);
-    }, 500); // 0.5 seconds
+      var ele = inputToken.split(".");
+      var value = inputToken
+      if (ele[1] === "") {
+        value = ele[0]+"."+"0"
+      }
+      setDebouncedValue(value);
+      FormStore.setInputToken(value);
+      setinputToken(value)
+    }, 1000); // 0.5 seconds
 
     // Cleanup timeout if the effect is called again before the timeout completes
     return () => {
@@ -370,6 +390,7 @@ const BridgeNew = observer((props: Props) => {
     };
   }, [inputToken]);
   useEffect(() => {
+    console.log("debouncedValue",debouncedValue)
     fetchQuote(chain1, chain2, debouncedValue);
     setAccountBalance();
   }, [chain1, chain2, data, debouncedValue]);
@@ -480,10 +501,10 @@ const BridgeNew = observer((props: Props) => {
             <>
               {/* disabled={!allvalueFilled} */}
 
-              {/* {console.log(!allvalueFilled || !allGood,allvalueFilled,allGood)} */}
+              {console.log(!allvalueFilled || disableSubmitBtn,allvalueFilled,disableSubmitBtn)}
               <button
                 className="review-btn"
-                disabled={!allvalueFilled}
+                disabled={!allvalueFilled || disableSubmitBtn}
                 onClick={onSubmit}
               >
                 {submitBtnText}

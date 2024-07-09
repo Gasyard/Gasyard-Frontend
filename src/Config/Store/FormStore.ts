@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx"
+import { action, makeAutoObservable } from "mobx"
 import { chainType } from "../types"
 
 
@@ -9,7 +9,10 @@ class FormStore{
     outputToken:any = ""
 
     constructor(){
-        makeAutoObservable(this)
+        makeAutoObservable(this,{
+            setChain1:action,
+            setChain2:action
+        })
     }
     setChain1= (data:any) =>{this.chain1 = data}
     setChain2 = (data:any) =>{this.chain2 = data}
