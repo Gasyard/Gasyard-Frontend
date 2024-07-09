@@ -274,10 +274,10 @@ const BridgeNew = observer((props: Props) => {
     const result = await PortfolioAPI(address);
     //console.log("portfolio", result);
     setportfolio(result);
-    setAccountBalance();
+    setAccountBalance(result);
   };
 
-  const setAccountBalance = () => {
+  const setAccountBalance = (portfolio:any) => {
     if (chain1 && portfolio) {
       var gweiValue;
       //console.log("setAccountBalance");
@@ -392,7 +392,7 @@ const BridgeNew = observer((props: Props) => {
   useEffect(() => {
     console.log("debouncedValue",debouncedValue)
     fetchQuote(chain1, chain2, debouncedValue);
-    setAccountBalance();
+    setAccountBalance(portfolio);
   }, [chain1, chain2, data, debouncedValue]);
 
   useEffect(() => {
