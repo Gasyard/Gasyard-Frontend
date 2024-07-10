@@ -36,7 +36,7 @@ const BridgeNew = observer((props: Props) => {
   const [outputToken, setoutputToken] = useState("");
   const [quoteData, setquoteData] = useState<quoteType | null>(null);
   const [openChainPopup, setopenChainPopup] = useState(false);
-  const [openTransactionPopup, setopenTransactionPopup] = useState(true);
+  const [openTransactionPopup, setopenTransactionPopup] = useState(false);
   const [toSelectChain, settoSelectChain] = useState<0 | 1 | 2>(0);
   const [portfolio, setportfolio] = useState<portfolioType | null>(null);
   const [recepientAddress, setrecepientAddress] = useState("");
