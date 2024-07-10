@@ -63,7 +63,8 @@ const chains = [
   {
     ...arbitrum,
     iconUrl: arbitumlogo,
-    contractAddress:ChainJsonData["42161"].routerContract
+    contractAddress:ChainJsonData["42161"].routerContract,
+    explorer:"https://arbiscan.io/tx/"
   },
   // {
   //   ...sepolia,
@@ -73,7 +74,8 @@ const chains = [
   {
     ...base,
     iconUrl: baselogo,
-    contractAddress:ChainJsonData["8453"].routerContract
+    contractAddress:ChainJsonData["8453"].routerContract,
+    explorer:"https://basescan.org/tx/"
   },
   // { ...polygon, 
   //   iconUrl: polygonlogo,

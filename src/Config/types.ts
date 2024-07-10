@@ -53,11 +53,29 @@ type PorfolioChains = {
   // tokenType: string
 }
 
+interface TxObjectType{
+    "inputTxHash"?: `0x${string}`,
+    "outputTxHash"?: `0x${string}` | null,
+    "managerHash"?: null,
+    "status"?: string,
+    "inputChainID"?: number,
+    "outputChainID"?: number,
+    "inputChainAmount"?: Number,
+    "outputChainAmount"?:Number,
+    "inputAddress"?: `0x${string}` | null,
+    "outputAddress"?: `0x${string}` | null,
+    "bridgeHash"?: `0x${string}` | null,
+    "fees"?: number | any,
+    "createdAt"?: string,
+    "updatedAt"?: string,
+    "id"?: string
+}
 export type {
   chainType,
   Network,
   Networks,
   quoteType,
   ImageMapType,
-  portfolioType
+  portfolioType,
+  TxObjectType
 };

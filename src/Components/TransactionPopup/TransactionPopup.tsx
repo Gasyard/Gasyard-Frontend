@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -48,12 +48,22 @@ type Props = {
   pending?:boolean;
   success?:boolean
   onSubmit?:any
+  txHash?:string | null
 };
 
-const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit }: Props) => {
+const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit,txHash }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
+  useEffect(() => {
+    console.log("count txHash from modal",txHash)
+  }, [txHash])
+
+  const redirectApp = () =>{
+    const url = FormStore.chain1.explorer+FormStore.transactionHash
+    window.open(url, '_blank');
+  }
+  
   const onCloseModal = () => {
     // onClose()
     setModal(false);
@@ -83,17 +93,9 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
           <ModalBody>
             <div className={`success_body ${rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">
-                {success ? (
+                {!success ? (
                   <>
-                    <div className="transaction_details">Bridge Successful</div>
-                    <Lottie
-                      animationData={success_animation}
-                      loop={true}
-                      style={{ height: "150px", width: "150px" }}
-                    />
-                  </>
-                ) : (
-                  <>
+                    
                     <div className="transaction_details">
                       Waiting for user to confirm transaction
                       {/* <span className="chain_name">Arbitrum one</span> */}
@@ -104,7 +106,23 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                       style={{ height: "150px", width: "150px" }}
                     />
                   </>
-                )}
+                ) : txHash != null ? (
+                  <>
+                   <div className="transaction_details">Bridge Successful</div>
+                    <Lottie
+                      animationData={success_animation}
+                      loop={true}
+                      style={{ height: "150px", width: "150px" }}
+                    />
+                  </>
+                ) : (<>
+                    <div className="transaction_details">Transaction Submitted on <span className="chain_name">Arbitrum one</span></div>
+                    <Lottie
+                      animationData={on_going_trxn_animation}
+                      loop={true}
+                      style={{ height: "150px", width: "150px" }}
+                    />
+                </>)}
               </div>
               <div className="reviewChains">
                 <div className="chain chain1">
@@ -129,10 +147,10 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                   </div>
                 </div>
               </div>
-              {/* <div className="redirectSection" onClick={() => setis_successed(!is_successed)}>
+              {success ? <div className="redirectSection" onClick={redirectApp}>
                 View on Explorer
-                <img src={redirectLogo} onClick={() => setis_successed(!is_successed)}/>
-              </div> */}
+                <img src={redirectLogo} onClick={redirectApp}/>
+              </div> : ("")}
             </div>
             <div className={`rejected_body ${!rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">

@@ -4,10 +4,10 @@ import downArrow from "../../assets/SVG-black.svg";
 import { Spinner, Stat, StatNumber, useDisclosure } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
 import { useAccount, useChains, useSwitchChain, useWriteContract } from "wagmi";
-import { chainType, portfolioType, quoteType } from "../../Config/types";
+import { chainType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
 import { abi } from "../../Config/abi";
 import { formatEther, parseEther } from "viem";
-import { PortfolioAPI, sendTransaction } from "../../Config/API/api";
+import { fetchTransactionObject, PortfolioAPI, sendTransaction } from "../../Config/API/api";
 import SelectChainModalNew from "../SelectChainModal/SelectChainModal_new";
 import arb_logo from "../../assets/arb_logo.svg";
 import ReverseChain from "../../assets/reverse.svg";
@@ -20,6 +20,7 @@ import { convertEthToWeiAndBack } from "../../Config/utils";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
 import {ethers } from 'ethers';
+import axios from "axios";
 
 type Props = {};
 
@@ -35,7 +36,7 @@ const BridgeNew = observer((props: Props) => {
   const [outputToken, setoutputToken] = useState("");
   const [quoteData, setquoteData] = useState<quoteType | null>(null);
   const [openChainPopup, setopenChainPopup] = useState(false);
-  const [openTransactionPopup, setopenTransactionPopup] = useState(false);
+  const [openTransactionPopup, setopenTransactionPopup] = useState(true);
   const [toSelectChain, settoSelectChain] = useState<0 | 1 | 2>(0);
   const [portfolio, setportfolio] = useState<portfolioType | null>(null);
   const [recepientAddress, setrecepientAddress] = useState("");
@@ -54,6 +55,10 @@ const BridgeNew = observer((props: Props) => {
   const [debouncedValue, setDebouncedValue] = useState(inputToken);
   const [submitBtnText, setsubmitBtnText] = useState("Submit Transaction");
   const [disableSubmitBtn, setdisableSubmitBtn] = useState(false);
+  const [objectId, setObjectId] = useState<string | null>(null);
+  const [outputTxHash, setoutputTxHash] = useState<string | null>(null)
+  const [txObject, settxObject] = useState<TxObjectType | null>(null)
+  const [count, setcount] = useState(0)
 
   const { open, close } = useWeb3Modal();
 
@@ -116,6 +121,7 @@ const BridgeNew = observer((props: Props) => {
         setdisableSubmitBtn(true);
         setquoteData(null);
         setsubmitBtnText(result.message)
+        setallvalueFilled(true)//to be removed later
       } else {
         const result = await response.json();
         //console.log(result);
@@ -288,6 +294,7 @@ const BridgeNew = observer((props: Props) => {
           String(portfolio[chain1.name.toLocaleLowerCase()].balance)
         );
       }
+
       const amount = formatEther(gweiValue);
       setaccBalance(roundDecimal(amount));
     }
@@ -304,26 +311,6 @@ const BridgeNew = observer((props: Props) => {
     }
   };
   const ReturnBalance = () => {
-    // if(portfolio && chain1){
-    //   var e;
-    //   //console.log("e->",portfolio["arbitrum"])
-    //   if(chain1.id === 42161 && portfolio["arbitrum"]){
-    //      e = (convertEthToWeiAndBack(String(portfolio["arbitrum"].balance)))
-    //      //console.log("e",e)
-    //      return <>{e} ETH</>
-    //   }else if(portfolio[chain1?.name.toLocaleLowerCase()]){
-    //      e = (convertEthToWeiAndBack(String(portfolio[chain1?.name.toLocaleLowerCase()].balance)))
-    //      return <>{e} ETH</>
-    //   }
-    //   else{
-    //     return <Spinner size="xs" />
-    //   }
-
-    //    //return <>{e} ETH</>
-    // }else{
-    //   return <>N/A</>
-    // }
-
     if (address) {
       return (
         <>{accBalance != "" ? accBalance + " ETH" : <Spinner size="xs" />}</>
@@ -372,6 +359,31 @@ const BridgeNew = observer((props: Props) => {
     
   };
 
+  const getTransactionObjectId = async(data:any,id:any) =>{
+    if(chain1){
+      try{
+        const objId = await sendTransaction(data, id);
+        setObjectId(objId)
+      } catch (error) {
+        console.error('Error making POST request', error);
+      }
+    }
+  }
+
+  const getTransactionObject = async(id:string) =>{
+    const response = await fetchTransactionObject(id)
+    if(response.outputTxHash){
+      setoutputTxHash(response.outputTxHash)
+      settxObject(response)
+      return
+    }else{
+      setTimeout(() => {
+        getTransactionObject(id)
+      }, 5000);
+    }
+  }
+  
+
   useEffect(() => {
     const handler = setTimeout(() => {
       var ele = inputToken.split(".");
@@ -393,7 +405,7 @@ const BridgeNew = observer((props: Props) => {
     console.log("debouncedValue",debouncedValue)
     fetchQuote(chain1, chain2, debouncedValue);
     setAccountBalance(portfolio);
-  }, [chain1, chain2, data, debouncedValue]);
+  }, [chain1, chain2, debouncedValue]);
 
   useEffect(() => {
     if (address) {
@@ -405,9 +417,16 @@ const BridgeNew = observer((props: Props) => {
 
   useEffect(() => {
     if (status === "success" && chain1) {
-      sendTransaction(data, chain1.id);
+      getTransactionObjectId(data, chain1.id);
     }
+    FormStore.setTransactionHash(data)
   }, [data, status]);
+
+  useEffect(() => {
+    if(objectId){
+      getTransactionObject(objectId)
+    }
+  }, [objectId]);
 
   return (
     <div className="BridgeRoot">
@@ -542,6 +561,7 @@ const BridgeNew = observer((props: Props) => {
         success={status === "success"}
         pending={status === "pending"}
         onSubmit={onSubmit}
+        txHash={outputTxHash}
       />
     </div>
   );
