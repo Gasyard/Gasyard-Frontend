@@ -438,7 +438,7 @@ const BridgeNew = observer((props: Props) => {
   return (
     <div className="BridgeRoot">
       <div className="BridgeApp">
-        <div className="headline">Bridge {status}</div>
+        <div className="headline">Bridge</div>
 
         <div className="from-chain">
           <div className="labels">
