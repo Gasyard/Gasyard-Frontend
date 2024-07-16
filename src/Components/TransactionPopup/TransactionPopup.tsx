@@ -49,18 +49,24 @@ type Props = {
   success?:boolean
   onSubmit?:any
   txHash?:string | null
+  chain1?:any
+  chain2?:any
 };
 
-const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit,txHash }: Props) => {
+const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit,txHash,chain1,chain2 }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
+
   useEffect(() => {
     console.log("count txHash from modal",txHash)
+    
   }, [txHash])
 
+  
+
   const redirectApp = () =>{
-    const url = FormStore.chain1.explorer+FormStore.transactionHash
+    const url = chain1.explorer+FormStore.transactionHash
     window.open(url, '_blank');
   }
   
@@ -127,23 +133,23 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
               <div className="reviewChains">
                 <div className="chain chain1">
                   <div className="chainCoinDiv">
-                    <img src={FormStore.chain1 && FormStore.chain1.iconUrl} className="chainCoin" alt="coin" />
+                    <img src={chain1 && chain1.iconUrl} className="chainCoin" alt="coin" />
                     {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
                     <div className="token_amount">{FormStore.inputToken} ETH</div>
-                    <div className="chain_network">{FormStore.chain1 && FormStore.chain1.name}</div>
+                    <div className="chain_network">{chain1 && chain1.name}</div>
                   </div>
                 </div>
                 <img src={darrow} className="darrow" />
                 <div className="chain chain2">
                   <div className="chainCoinDiv">
-                    <img src={FormStore.chain2 && FormStore.chain2.iconUrl} className="chainCoin" alt="coin" />
+                    <img src={chain2 && chain2.iconUrl} className="chainCoin" alt="coin" />
                     {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
                     <div className="token_amount">{FormStore.outputToken} ETH</div>
-                    <div className="chain_network">{FormStore.chain2 && FormStore.chain2.name}</div>
+                    <div className="chain_network">{chain2 && chain2.name}</div>
                   </div>
                 </div>
               </div>

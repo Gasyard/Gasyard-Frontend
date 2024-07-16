@@ -84,9 +84,14 @@ const SelectChainModalNew = observer(({open,isOpen,onOpen, onClose,setModal,chai
                             </div>
                             <div className="chain-balance">
                               
-                                { portfolio && portfolio["bsc"] && key === "BNB Smart Chain" ? Math.round(portfolio["bsc"].balance * 100000) / 100000
+                                {/* { portfolio && portfolio["bsc"] && key === "BNB Smart Chain" ? Math.round(portfolio["bsc"].balance * 100000) / 100000
                                 : portfolio && key === "Arbitrum One" ? Math.round(portfolio["arbitrum"].balance * 100000) / 100000 
                                 : portfolio && portfolio[key.toLowerCase()] ? Math.round(portfolio[key.toLowerCase()].balance * 100000)/100000 : ""}
+                                {" "} */}
+
+                                {/* {portfolio && toselectChain === 1 && chain_1 ? portfolio[String(chain_1.id)].balance : chain_2 && portfolio[String(chain_2.id)].balance } */}
+                                
+                                {portfolio && chain && portfolio[chain.id] ? portfolio[chain.id].balance :"N/A" }
                                 {" "}
                                 {chain.nativeCurrency.symbol}
                             </div>

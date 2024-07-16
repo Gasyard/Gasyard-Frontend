@@ -9,6 +9,8 @@ import BridgeNew from './Components/BridgeNew/BridgeNew';
 import TransactionPopup from './Components/TransactionPopup/TransactionPopup';
 // import PrivyDemo from './Components/PrivyDemo/PrivyDemo?';
 import { observer } from 'mobx-react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Explorer from './Components/Explorer/Explorer';
 
 
 const App = observer(() => {
@@ -16,9 +18,20 @@ const App = observer(() => {
   const { isOpen, onOpen,onClose } = useDisclosure()
   return (
     <ChakraProvider>
+      
       <div className="App">
         <Header />
-        <BridgeNew />
+        <Router>
+        <Routes>
+        <Route
+            path="/"
+            element={ <BridgeNew />} />
+        <Route
+        path="/explorer"
+        element={ <Explorer />} />
+        </Routes>
+      </Router>
+       
       </div>
     </ChakraProvider>
   );

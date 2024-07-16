@@ -8,7 +8,7 @@ export const PortfolioAPI = async(address:any) =>{
         const response = await fetch(url);
         const result = await response.json();
         console.log(result)
-        return result.responseJson
+        return result
     }
     catch(Err){
         console.log("Unexpected Error! " ,Err)

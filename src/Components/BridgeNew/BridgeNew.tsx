@@ -258,10 +258,12 @@ const BridgeNew = observer((props: Props) => {
     setopenChainPopup(value);
     FormHandler()
   };
-  const reverseChain = () => {
+  const reverseChain = async() => {
     const temp = chain1;
     setchain1(chain2);
+    // await FormStore.setChain1(chain2)
     setchain2(temp);
+    // await FormStore.setChain2(temp)
   };
   const setTransactionModal = (value: boolean) => {
     setopenTransactionPopup(value);
@@ -278,22 +280,20 @@ const BridgeNew = observer((props: Props) => {
   };
   const fetchPortfolio = async (address: any) => {
     const result = await PortfolioAPI(address);
-    //console.log("portfolio", result);
+    console.log("portfolio", result);
     setportfolio(result);
     setAccountBalance(result);
   };
 
   const setAccountBalance = (portfolio:any) => {
-    if (chain1 && portfolio) {
+    if (chain1 && portfolio && portfolio[chain1.id]) {
       var gweiValue;
       //console.log("setAccountBalance");
-      if (chain1.name.toLocaleLowerCase() === "arbitrum one") {
-        gweiValue = parseEther(String(portfolio["arbitrum"].balance));
-      } else {
+      
         gweiValue = parseEther(
-          String(portfolio[chain1.name.toLocaleLowerCase()].balance)
+          String(portfolio[chain1.id].balance)
         );
-      }
+      
 
       const amount = formatEther(gweiValue);
       setaccBalance(roundDecimal(amount));
@@ -320,25 +320,22 @@ const BridgeNew = observer((props: Props) => {
   };
 
   const calculateMaxValue = () => {
-    if (portfolio && chain1) {
+    console.log("max called")
+    if (portfolio && chain1 && portfolio[chain1.id]) {
       var gweiValue;
-      if (chain1.name.toLocaleLowerCase() === "arbitrum one") {
-        gweiValue = parseEther(String(portfolio["arbitrum"].balance));
-      } else {
+      console.log("max gwei")
         gweiValue = parseEther(
-          String(portfolio[chain1.name.toLocaleLowerCase()].balance)
+          String(portfolio[chain1.id].balance)
         );
+        console.log("max gwei",gweiValue)
+        if(gweiValue > parseEther("0.0001")){
+          const max_amout = formatEther(gweiValue - parseEther("0.0001"));
+          setinputToken(roundDecimal(max_amout));
+        }else{
+          const max_amout = formatEther(gweiValue);
+          setinputToken(roundDecimal(max_amout));
+        }
       }
-      
-      if(gweiValue > parseEther("0.0001")){
-        const max_amout = formatEther(gweiValue - parseEther("0.0001"));
-        setinputToken(roundDecimal(max_amout));
-      }else{
-        const max_amout = formatEther(gweiValue);
-        setinputToken(roundDecimal(max_amout));
-      }
-      
-    }
   };
 
   
@@ -363,7 +360,7 @@ const BridgeNew = observer((props: Props) => {
     if(chain1){
       try{
         const objId = await sendTransaction(data, id);
-        setObjectId(objId)
+        setObjectId(objId.uniqueID)
       } catch (error) {
         console.error('Error making POST request', error);
       }
@@ -411,7 +408,7 @@ const BridgeNew = observer((props: Props) => {
     if (address) {
       setrecepientAddress(address);
       fetchPortfolio(address);
-      GetBalance();
+      // GetBalance();
     }
   }, [address]);
 
@@ -427,6 +424,16 @@ const BridgeNew = observer((props: Props) => {
       getTransactionObject(objectId)
     }
   }, [objectId]);
+
+  useEffect(() => {
+    console.log("chain1 set to",chain1?.name)
+    FormStore.setChain1(chain1)
+  }, [chain1])
+  useEffect(() => {
+    console.log("chain1 set to",chain2?.name)
+    FormStore.setChain2(chain2)
+  }, [chain2])
+  
 
   return (
     <div className="BridgeRoot">
@@ -464,7 +471,7 @@ const BridgeNew = observer((props: Props) => {
           <button
             className="max-btn"
             onClick={() => {
-              if (accountBalance !== "") {
+              if (accBalance !== "") {
                 // setinputToken(String(accountBalance.value))
                 calculateMaxValue();
               }
@@ -562,6 +569,8 @@ const BridgeNew = observer((props: Props) => {
         pending={status === "pending"}
         onSubmit={onSubmit}
         txHash={outputTxHash}
+        chain1={chain1}
+        chain2={chain2}
       />
     </div>
   );
