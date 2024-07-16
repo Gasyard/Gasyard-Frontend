@@ -202,7 +202,7 @@ const BridgeNew = observer((props: Props) => {
       chain2 &&
       address &&
       debouncedValue !== "" &&
-      accountBalance != "" &&
+      accBalance != "" &&
       CompareValues(
         roundDecimal(debouncedValue),
         accBalance
