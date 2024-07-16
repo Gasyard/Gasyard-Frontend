@@ -3,8 +3,8 @@ import './Explorer.css'
 import SearchIcon from '../../assets/search_logo.svg'
 import arb_logo from '../../assets/arb_logo.svg'
 import eth from '../../assets/coins/eth.svg'
-import redirect_logo from '../../assets/redirect.svg'
-import copytext from '../../assets/copy_to_clip.svg'
+import redirect_logo from '../../assets/redirect_grey.svg'
+import copytext from '../../assets/copyText2.svg'
 
 type Props = {}
 
@@ -37,8 +37,11 @@ const Explorer = (props: Props) => {
                     <tr>
                         <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
                         <td>
-                            <span className='success'></span>
+                            <div className="statusWrap">
+                            <span className='status Success'></span>
                             Success
+                            </div>
+                            
                         </td>
                         <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
                         <td>
@@ -50,11 +53,15 @@ const Explorer = (props: Props) => {
                         </td>
                         <td>Jun-10-2024 04:36:47 AM UTC</td>
                     </tr>
+
                     <tr>
                         <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
                         <td>
-                            <span className='success'></span>
-                            Success
+                            <div className="statusWrap">
+                            <span className='status Failed'></span>
+                            Failed
+                            </div>
+                            
                         </td>
                         <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
                         <td>
@@ -66,11 +73,15 @@ const Explorer = (props: Props) => {
                         </td>
                         <td>Jun-10-2024 04:36:47 AM UTC</td>
                     </tr>
+
                     <tr>
                         <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
                         <td>
-                            <span className='success'></span>
-                            Success
+                            <div className="statusWrap">
+                            <span className='status Pending'></span>
+                            Pending
+                            </div>
+                            
                         </td>
                         <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
                         <td>
@@ -82,6 +93,7 @@ const Explorer = (props: Props) => {
                         </td>
                         <td>Jun-10-2024 04:36:47 AM UTC</td>
                     </tr>
+                   
                 </tbody>
             </table>
         </div>
