@@ -390,7 +390,6 @@ const BridgeNew = observer((props: Props) => {
       setoutputTxHash(response.outputTxHash)
       settxObject(response)
       PortfolioAPI(address)
-      ClearState()
       return
     }else{
       setTimeout(() => {
@@ -599,6 +598,7 @@ const BridgeNew = observer((props: Props) => {
         txHash={outputTxHash}
         chain1={chain1}
         chain2={chain2}
+        ClearState={ClearState}
       />
     </div>
   );

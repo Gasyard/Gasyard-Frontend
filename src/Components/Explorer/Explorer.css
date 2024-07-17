@@ -71,6 +71,7 @@
     border: 1px solid #E4E7EC;
     box-shadow: 0px 1px 2px 0px #1018280D;
     margin: 20px auto;
+    overflow-x: scroll;
 }
 .table-container table{
     width: 100%;
@@ -260,4 +261,9 @@ table .chain img.logo{
         font-size: 14px;
     }
     .subtitle{}
+    .table-container{
+        max-width: 100%;
+        overflow-x: scroll;
+        padding: 20px;
+    }
 }

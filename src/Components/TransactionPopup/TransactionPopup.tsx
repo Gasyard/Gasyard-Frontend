@@ -51,9 +51,10 @@ type Props = {
   txHash?:string | null
   chain1?:any
   chain2?:any
+  ClearState?:any
 };
 
-const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit,txHash,chain1,chain2 }: Props) => {
+const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected, success, pending,onSubmit,txHash,chain1,chain2,ClearState }: Props) => {
   const [is_rejected, setis_rejected] = useState(true);
   const [is_successed, setis_successed] = useState(false);
 
@@ -78,8 +79,12 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
   
   const onCloseModal = () => {
     // onClose()
+    if(txHash){
+      ClearState()
+    }
     setModal(false);
     onClose();
+    
   };
   return (
     <div className="TransactionPopupRoot">
