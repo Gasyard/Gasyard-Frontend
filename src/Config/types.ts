@@ -32,6 +32,10 @@ interface ImageMapType {
   [key: string]: string | any;
 }
 
+interface ImageMapType2 {
+  [key: number]: string;
+}
+
 interface portfolioType {
   [key: string]:PorfolioChains
   
@@ -54,21 +58,21 @@ type PorfolioChains = {
 }
 
 interface TxObjectType{
-    "inputTxHash"?: `0x${string}`,
-    "outputTxHash"?: `0x${string}` | null,
-    "managerHash"?: null,
-    "status"?: string,
-    "inputChainID"?: number,
-    "outputChainID"?: number,
-    "inputChainAmount"?: Number,
-    "outputChainAmount"?:Number,
-    "inputAddress"?: `0x${string}` | null,
-    "outputAddress"?: `0x${string}` | null,
-    "bridgeHash"?: `0x${string}` | null,
-    "fees"?: number | any,
-    "createdAt"?: string,
-    "updatedAt"?: string,
-    "id"?: string
+    "inputTxHash": `0x${string}`,
+    "outputTxHash": `0x${string}` | null,
+    "managerHash": null,
+    "status": string,
+    "inputChainID": number,
+    "outputChainID": number,
+    "inputChainAmount": bigint,
+    "outputChainAmount":bigint,
+    "inputAddress": `0x${string}` | null,
+    "outputAddress": `0x${string}` | null,
+    "bridgeHash": `0x${string}` | null,
+    "fees": number | any,
+    "createdAt": string,
+    "updatedAt": string,
+    "id": string
 }
 export type {
   chainType,
@@ -77,5 +81,6 @@ export type {
   quoteType,
   ImageMapType,
   portfolioType,
-  TxObjectType
+  TxObjectType,
+  ImageMapType2
 };

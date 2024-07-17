@@ -3,7 +3,7 @@ import "./BridgeNew.css";
 import downArrow from "../../assets/SVG-black.svg";
 import { Spinner, Stat, StatNumber, useDisclosure } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
-import { useAccount, useChains, useSwitchChain, useWriteContract } from "wagmi";
+import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract,useWaitForTransactionReceipt } from "wagmi";
 import { chainType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
 import { abi } from "../../Config/abi";
 import { formatEther, parseEther } from "viem";
@@ -21,6 +21,7 @@ import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
 import {ethers } from 'ethers';
 import axios from "axios";
+import { getTransactionReceipt } from '@wagmi/core'
 
 type Props = {};
 
@@ -47,6 +48,10 @@ const BridgeNew = observer((props: Props) => {
   const { chains, switchChain } = useSwitchChain();
   const { writeContract, data, isPending, isSuccess, status } =
     useWriteContract();
+  
+  const {data:txReceiptData} = useTransactionReceipt({
+    hash:data
+  })
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [accountBalance, setaccountBalance] = useState<
     GetBalanceReturnType | ""
@@ -61,6 +66,13 @@ const BridgeNew = observer((props: Props) => {
   const [count, setcount] = useState(0)
 
   const { open, close } = useWeb3Modal();
+
+  const ClearState = () =>{
+    setinputToken("")
+    setoutputToken("")
+    FormStore.setInputToken("")
+    FormStore.setOuputToken("")
+  }
 
   const FormHandler = () => {
     console.log("Form handler called");
@@ -131,7 +143,12 @@ const BridgeNew = observer((props: Props) => {
         });
         setoutputToken(result.outputTokenAmount.toFixed(5));
         FormStore.setOuputToken(result.outputTokenAmount.toFixed(5));
-        setsubmitBtnText("Submit Transaction")
+        if(result.hasLiquidity === false){
+          setsubmitBtnText("Low Liquidity!")
+        }else{
+          setsubmitBtnText("Submit Transaction")
+        }
+
         FormHandler();
         //console.log("fetch",roundDecimal(inputToken), accBalance,CompareValues(roundDecimal(inputToken), accBalance))
         // if (
@@ -372,6 +389,8 @@ const BridgeNew = observer((props: Props) => {
     if(response.outputTxHash){
       setoutputTxHash(response.outputTxHash)
       settxObject(response)
+      PortfolioAPI(address)
+      ClearState()
       return
     }else{
       setTimeout(() => {
@@ -380,6 +399,11 @@ const BridgeNew = observer((props: Props) => {
     }
   }
   
+  // const getTxRecipt = async(data:any) =>{
+  //   const result = await getTransactionReceipt(config, {
+  //     hash: data,
+  //   })
+  // }
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -413,11 +437,15 @@ const BridgeNew = observer((props: Props) => {
   }, [address]);
 
   useEffect(() => {
-    if (status === "success" && chain1) {
+    if (txReceiptData !== undefined && status === "success" && chain1) {
+      console.log("txreceipt:",txReceiptData)
       getTransactionObjectId(data, chain1.id);
     }
+    if(data){
+      console.log("txHash:",data)
+    }
     FormStore.setTransactionHash(data)
-  }, [data, status]);
+  }, [data, status,txReceiptData]);
 
   useEffect(() => {
     if(objectId){

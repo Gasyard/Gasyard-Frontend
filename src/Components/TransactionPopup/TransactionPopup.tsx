@@ -66,8 +66,14 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
   
 
   const redirectApp = () =>{
-    const url = chain1.explorer+FormStore.transactionHash
-    window.open(url, '_blank');
+    if(txHash){
+      const url = chain2.explorer+txHash
+      window.open(url, '_blank');
+    }else{
+      const url = chain1.explorer+FormStore.transactionHash
+      window.open(url, '_blank');
+    }
+    
   }
   
   const onCloseModal = () => {

@@ -47,3 +47,14 @@ export const fetchTransactionObject = async(id:string) =>{
         return null
     }
 }
+
+export const getListTransactions = async(page:any=1) => {
+    try{
+        const url = `https://api.gasyard.fi/api/list-transactions?page=${page}`
+        const response = await axios.get(url)
+        return response.data.results
+    }catch(err){
+        console.log("Unexpected Error!",err)
+        return null
+    }
+}

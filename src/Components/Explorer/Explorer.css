@@ -233,13 +233,13 @@ table .chain img.logo{
     border-radius: 50%;
     transform: scale(0.5);
 }
-.status.Success{
+.status.success{
     background-color: #17B26A;
 }
-.status.Pending{
+.status.pending{
     background-color: #FFCA34;
 }
-.status.Failed{
+.status.failed{
     background-color: #FF0000;
 }
 @media screen and (max-width:720px) {

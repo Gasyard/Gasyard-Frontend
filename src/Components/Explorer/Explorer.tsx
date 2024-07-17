@@ -1,14 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Explorer.css'
 import SearchIcon from '../../assets/search_logo.svg'
 import arb_logo from '../../assets/arb_logo.svg'
+import base_logo from '../../assets/chains/base.svg'
 import eth from '../../assets/coins/eth.svg'
 import redirect_logo from '../../assets/redirect_grey.svg'
 import copytext from '../../assets/copyText2.svg'
+import { getListTransactions } from '../../Config/API/api'
+import { ImageMapType2, TxObjectType } from '../../Config/types'
+import { formatEther } from 'viem'
 
 type Props = {}
 
+const imageUrl : ImageMapType2 = {
+    42161:arb_logo,
+    8453:base_logo
+}
+
+type TxObjectArrayType = TxObjectType[];
 const Explorer = (props: Props) => {
+    const [transactions, settransactions] = useState<TxObjectArrayType | null>(null)
+
+    const getData = async() =>{
+        const data = await getListTransactions()
+        console.log("tnxobj",data)
+        settransactions(data)
+    }
+
+    const shortenAddress = (address: string | null, startLength = 8, endLength = 8): string =>{
+        if(address){
+            if (address.length <= startLength + endLength) {
+                return address;
+              }
+              return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
+        }
+        return ""
+        
+      }
+      
+      const formatToken = (numStr:string) =>{
+        
+        if(parseFloat(numStr)){
+            const num = parseFloat(numStr);
+            const decimalPlaces = numStr.split(".")[1]?.length || 0;
+            if (decimalPlaces > 4) {
+            return num.toFixed(4).toString();
+            } else {
+            return num.toFixed(decimalPlaces).toString();
+            }
+                    
+        }
+        return numStr
+      }
+
+    useEffect(() => {
+        getData()
+    }, [])
+    
   return (
     <div className='ExplorerApp'>
         {/* <div className="content-section">
@@ -34,65 +82,33 @@ const Explorer = (props: Props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
+                    
+                    {
+                        transactions !== null && (
+                            transactions.map((item, index)  =>(
+                                <tr>
+                        <td><div className="dflex-row hash">{shortenAddress(item.inputAddress)} <img src={copytext}/></div></td>
                         <td>
                             <div className="statusWrap">
-                            <span className='status Success'></span>
-                            Success
+                            <span className={`status ${item.status}`}></span>
+                            {item.status}
                             </div>
                             
                         </td>
-                        <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
+                        <td><div className="dflex-row address">{shortenAddress(item.outputAddress)} <img src={redirect_logo}/></div></td>
                         <td>
-                            <div className="dflex-row token">Token: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
+                            <div className="dflex-row token">Token: <img src={imageUrl[item.inputChainID]} className='logo' />{formatToken(formatEther(item.inputChainAmount))} ETH<img src={redirect_logo}/></div>
                         </td>
 
                         <td>
-                            <div className="dflex-row chain">Chain: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
+                            <div className="dflex-row chain">Chain: <img src={imageUrl[item.outputChainID]} className='logo' />{formatToken(formatEther(item.outputChainAmount))} ETH<img src={redirect_logo}/></div>
                         </td>
-                        <td>Jun-10-2024 04:36:47 AM UTC</td>
+                        <td>{item.updatedAt}</td>
                     </tr>
-
-                    <tr>
-                        <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
-                        <td>
-                            <div className="statusWrap">
-                            <span className='status Failed'></span>
-                            Failed
-                            </div>
-                            
-                        </td>
-                        <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
-                        <td>
-                            <div className="dflex-row token">Token: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
-                        </td>
-
-                        <td>
-                            <div className="dflex-row chain">Chain: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
-                        </td>
-                        <td>Jun-10-2024 04:36:47 AM UTC</td>
-                    </tr>
-
-                    <tr>
-                        <td><div className="dflex-row hash">0x323f8e24...4171f42a69 <img src={copytext}/></div></td>
-                        <td>
-                            <div className="statusWrap">
-                            <span className='status Pending'></span>
-                            Pending
-                            </div>
-                            
-                        </td>
-                        <td><div className="dflex-row address">0x323f8e24...4171f42a69 <img src={redirect_logo}/></div></td>
-                        <td>
-                            <div className="dflex-row token">Token: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
-                        </td>
-
-                        <td>
-                            <div className="dflex-row chain">Chain: <img src={eth} className='logo' />0.01 ETH<img src={redirect_logo}/></div>
-                        </td>
-                        <td>Jun-10-2024 04:36:47 AM UTC</td>
-                    </tr>
+                            ))
+                        )
+                    }
+                    
                    
                 </tbody>
             </table>
