@@ -9,6 +9,7 @@ import copytext from "../../assets/copyText2.svg";
 import { getListTransactions } from "../../Config/API/api";
 import { ImageMapType2, TxObjectType } from "../../Config/types";
 import { formatEther } from "viem";
+import arrowLeft from '../../assets/arrow-left.svg'
 
 type Props = {};
 
@@ -19,14 +20,17 @@ const imageUrl: ImageMapType2 = {
 
 type TxObjectArrayType = TxObjectType[];
 const Explorer = (props: Props) => {
-  const [transactions, settransactions] = useState<TxObjectArrayType | null>(
-    null
-  );
+  const [transactions, settransactions] = useState<TxObjectArrayType | null>(null);
+  const [pageNo, setpageNo] = useState(1)
+  const [btn1disabled, setbtn1disabled] = useState(false)
+  const [btn2disabled, setbtn2disabled] = useState(false)
+  const [totalPages, settotalPages] = useState(1)
 
-  const getData = async () => {
-    const data = await getListTransactions();
+  const getData = async (pageNo:number) => {
+    const data = await getListTransactions(pageNo);
     console.log("tnxobj", data);
-    settransactions(data);
+    settransactions(data.results);
+    settotalPages(data.totalPages)
   };
 
   const shortenAddress = (
@@ -43,6 +47,22 @@ const Explorer = (props: Props) => {
     return "";
   };
 
+  const onClickPrev = () =>{
+    if(pageNo > 1){
+        setpageNo(pageNo-1)
+    }else{
+        setpageNo(totalPages)
+    }
+  }
+  const onClickNext = () =>{
+    if(pageNo > totalPages){
+        setpageNo(1)
+    }else{
+        setpageNo(pageNo+1)
+    }
+    
+  }
+
   const formatToken = (numStr: string) => {
     if (parseFloat(numStr)) {
       const num = parseFloat(numStr);
@@ -57,8 +77,8 @@ const Explorer = (props: Props) => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(pageNo);
+  }, [pageNo]);
 
   return (
     <div className="ExplorerApp">
@@ -128,6 +148,18 @@ const Explorer = (props: Props) => {
                   <td>{item.updatedAt}</td>
                 </tr>
               ))}
+
+              <tr>
+                <td colSpan={6}>
+                    <div className="table-footer">
+                    <button className="previous btns" onClick={onClickPrev} disabled={pageNo < 1}><img src={arrowLeft} className="prev-arrow" />Previous</button>
+                    <div className="pagination">
+
+                    </div>
+                    <button className="next btns" onClick={onClickNext} disabled={pageNo > totalPages}>Next <img src={arrowLeft} className="next-arrow"/></button>
+                    </div>
+                </td>
+              </tr>
           </tbody>
         </table>
       </div>

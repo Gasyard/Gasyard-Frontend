@@ -71,7 +71,6 @@
     border: 1px solid #E4E7EC;
     box-shadow: 0px 1px 2px 0px #1018280D;
     margin: 20px auto;
-    overflow-x: scroll;
 }
 .table-container table{
     width: 100%;
@@ -160,6 +159,50 @@
     text-align: left;
 }
 
+.table-container table tbody tr:last-child td .table-footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.table-container table tbody tr:last-child .btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* column-gap: 10px; */
+    border: 1px solid #D0D5DD;
+    box-shadow: 0px 1px 2px 0px #1018280D;
+    padding: 8px 12px 8px 12px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: left;
+    color: #344054;
+    min-width:84px;
+    height:36px;
+    width: fit-content;
+    justify-content: space-around;
+}
+.table-container table tbody tr:last-child .btns.previous{
+    min-width:111px
+}
+.table-container table tbody tr:last-child .btns.next{
+    margin-left: auto;
+}
+.table-container table tbody tr:last-child .btns img.next-arrow{
+    transform: rotate(180deg);
+}
+.table-container table tbody tr:last-child .btns:disabled{
+    opacity: 0.8;
+    background-color: #f1f1f1;
+    pointer-events: none;
+}
+.pagination{
+
+}
 .table-container table tbody tr{
     background-color: #fff;
     border-bottom: 1px solid #E2E8F0;
@@ -265,5 +308,16 @@ table .chain img.logo{
         max-width: 100%;
         overflow-x: scroll;
         padding: 20px;
+    }
+    .table-container table tbody tr td:nth-child(4),
+    .table-container table thead tr th:nth-child(4),
+    .table-container table tbody tr td:nth-child(5),
+    .table-container table thead tr th:nth-child(5){
+        min-width:266px;
+    }
+    .table-container table tbody tr td:nth-child(6),
+    .table-container table thead tr th:nth-child(6){
+        min-width:267px;
+        
     }
 }
