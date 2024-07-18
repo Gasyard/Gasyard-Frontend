@@ -78,12 +78,21 @@ const ChainJsonData: Networks = {
       routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
     },
     "534352": {
-      networkName: "scroll",
-      chainID: 534352,
-      baseToken: "ETH",
-      decimals: 18,
-      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-    },
+      "networkName": "scroll",
+      "chainID":534352,
+      "baseToken": "ETH",
+      "decimals":18,
+      "rpc": "https://1rpc.io/scroll",
+      "feedaddress": "0x6bF14CB0A831078629D993FDeBcB182b21A8774C",
+      "routerContract":"0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
+      "liquidityPool":"0xB127256729cD60988f681eFe4522aB1E30619e59",
+      "platformFeePercentage":2.5,
+      "gweiLimit":1000000,
+      "isGasByLifi":true,
+      "minimumGas":0.001,
+      
+  }
+,
   };
 export {
     iconMap,

@@ -85,10 +85,11 @@ const chains = [
   //   iconUrl: bsclogo,
   //   contractAddress:ChainJsonData["56"].routerContract
   // },
-  // { ...scroll, 
-  //   iconUrl: scrolllogo,
-  //   contractAddress:ChainJsonData["534352"].routerContract
-  // },
+  { ...scroll, 
+    iconUrl: scrolllogo,
+    contractAddress:ChainJsonData["534352"].routerContract,
+    explorer:"https://scrollscan.com/tx/"
+  },
   // {
   //   ...baseSepolia,
   //   iconUrl:sepolialogo,

@@ -17,6 +17,8 @@ interface Network {
   platformFeePercentage?:number
   gweiLimit?:number
   isGasByLifi?:boolean
+  liquidityPool?:`0x${string}`
+  minimumGas?:number
 }
 
 interface Networks {

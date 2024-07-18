@@ -3,6 +3,7 @@ import "./Explorer.css";
 import SearchIcon from "../../assets/search_logo.svg";
 import arb_logo from "../../assets/arb_logo.svg";
 import base_logo from "../../assets/chains/base.svg";
+import scrollLogo from '../../assets/chains/scroll.svg'
 import eth from "../../assets/coins/eth.svg";
 import redirect_logo from "../../assets/redirect_grey.svg";
 import copytext from "../../assets/copyText2.svg";
@@ -25,6 +26,7 @@ type Props = {};
 const imageUrl: ImageMapType2 = {
   42161: arb_logo,
   8453: base_logo,
+  534352:scrollLogo
 };
 
 type TxObjectArrayType = TxObjectType[];
