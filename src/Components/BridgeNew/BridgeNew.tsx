@@ -22,6 +22,9 @@ import FormStore from "../../Config/Store/FormStore";
 import {ethers } from 'ethers';
 import axios from "axios";
 import { getTransactionReceipt } from '@wagmi/core'
+import CloseIcon from "../../assets/CloseIcon.svg";
+import addAddress from '../../assets/addAddress.svg'
+import AddRecepient from "../AddRecepient/AddRecepient";
 
 type Props = {};
 
@@ -40,7 +43,7 @@ const BridgeNew = observer((props: Props) => {
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
   const [toSelectChain, settoSelectChain] = useState<0 | 1 | 2>(0);
   const [portfolio, setportfolio] = useState<portfolioType | null>(null);
-  const [recepientAddress, setrecepientAddress] = useState("");
+  const [recepientAddress, setrecepientAddress] = useState<`0x${string}` | "">("");
   const [recepientAddressError, setrecepientAddressError] = useState("");
   const [allvalueFilled, setallvalueFilled] = useState(false);
 
@@ -63,7 +66,7 @@ const BridgeNew = observer((props: Props) => {
   const [objectId, setObjectId] = useState<string | null>(null);
   const [outputTxHash, setoutputTxHash] = useState<string | null>(null)
   const [txObject, settxObject] = useState<TxObjectType | null>(null)
-  const [count, setcount] = useState(0)
+  const [showAddress, setshowAddress] = useState(false);
 
   const { open, close } = useWeb3Modal();
 
@@ -145,25 +148,11 @@ const BridgeNew = observer((props: Props) => {
         FormStore.setOuputToken(result.outputTokenAmount.toFixed(5));
         if(result.hasLiquidity === false){
           setsubmitBtnText("Low Liquidity!")
+          setdisableSubmitBtn(true)
         }else{
           setsubmitBtnText("Submit Transaction")
+          FormHandler();
         }
-
-        FormHandler();
-        //console.log("fetch",roundDecimal(inputToken), accBalance,CompareValues(roundDecimal(inputToken), accBalance))
-        // if (
-        //   address &&
-        //   accBalance &&
-        //   CompareValues(roundDecimal(debouncedValue), accBalance)
-        // ) {
-        //   setsubmitBtnText("Submit Transaction");
-        //   setdisableSubmitBtn(false)
-        // }
-
-        // if(!CompareValues(roundDecimal(debouncedValue), accBalance)){
-        //   setsubmitBtnText("Insufficient Gas")
-        //   setdisableSubmitBtn(true)
-        // }
       }
     }else{
       setdisableSubmitBtn(true)
@@ -230,7 +219,7 @@ const BridgeNew = observer((props: Props) => {
           abi,
           address: chain1.contractAddress,
           functionName: "bridgeTo",
-          args: [chain2.id, address],
+          args: [chain2.id, recepientAddress !== "" ? recepientAddress : address],
           value: parseEther(debouncedValue),
         });
         setopenTransactionPopup(true);
@@ -397,6 +386,7 @@ const BridgeNew = observer((props: Props) => {
       }, 5000);
     }
   }
+
   
   // const getTxRecipt = async(data:any) =>{
   //   const result = await getTransactionReceipt(config, {
@@ -532,6 +522,8 @@ const BridgeNew = observer((props: Props) => {
         </div>
 
         <div className="review">
+        <AddRecepient setrecepientAddress={setrecepientAddress} recepientAddress={recepientAddress} />
+
           {address === undefined ? (
             <>
               <button className=" review-btn" onClick={() => open()}>

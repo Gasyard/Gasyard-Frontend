@@ -75,14 +75,14 @@ const QuoteSection = ({
           </>
         ) : (
           <>
-            <div className="quote_row">
+            {/* <div className="quote_row">
               <div className="quote_column col1">Points Earned</div>
               <div className="quote_column col2">
-                {/* <img src={SubtractCoin} alt="points"/> */}
+                
                 <span className="coin"></span>
                 +400
               </div>
-            </div>
+            </div> */}
             <div className="quote_row">
               <div className="quote_column col1">Estimated Time</div>
               <div className="quote_column col2">~ 30 sec</div>

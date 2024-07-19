@@ -127,7 +127,10 @@
 }
 .review {
   display: flex;
+  flex-direction: column;
+  /* column-gap: 16px; */
   border-bottom: 1px solid #f1f2f4;
+  padding: 20px;
 }
 .review-btn {
   background-color: #1557E2;
@@ -164,6 +167,85 @@
   left:45%;
   bottom: -10%;
   cursor: pointer;
+}
+
+.AddAddress{
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  background-color: #F9FAFB;
+  padding: 5px 10px;
+  width:fit-content;
+  border-radius: 30px;
+  align-items: center;
+  cursor: pointer;
+  font-family: Inter;
+  font-size: 13.23px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+
+}
+.AddAddress img{
+  width:32px;
+  border-radius: 50%;
+}
+
+.RecepientAddressRoot{
+  background-color: #F9FAFB;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.RecepientAddressTitle{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: Inter;
+  font-size: 13.23px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+}
+.RecepientAddressTitle img{
+  margin-left: auto;
+}
+.enterAddress{
+  display: flex;
+  flex-direction: column;
+}
+.enterAddress input{
+  width: 96%;
+  padding: 2%;
+  outline: none;
+  border: 1px solid #f6f2fb;
+  /* font-size: 16px;
+  font-weight: 600;
+  color:#444; */
+  border-radius: 5px;
+  color:#31353C;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+.enterAddress input::placeholder{
+  color:#31353C;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  text-align: left;
+
+}
+.enterAddress .errorMsg{
+  font-size: 12px;
+  color:red;
+  font-weight: 700;
+  margin-left: auto;
+
 }
 @media screen and (max-width: 500px) {
   .BridgeApp {

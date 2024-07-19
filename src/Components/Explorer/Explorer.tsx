@@ -101,8 +101,8 @@ const Explorer = (props: Props) => {
     if (parseFloat(numStr)) {
       const num = parseFloat(numStr);
       const decimalPlaces = numStr.split(".")[1]?.length || 0;
-      if (decimalPlaces > 4) {
-        return num.toFixed(4).toString();
+      if (decimalPlaces > 6) {
+        return num.toFixed(6).toString();
       } else {
         return num.toFixed(decimalPlaces).toString();
       }
@@ -334,7 +334,7 @@ const Explorer = (props: Props) => {
                   <button
                     className="next btns"
                     onClick={onClickNext}
-                    disabled={pageNo > totalPages}
+                    disabled={pageNo >= totalPages}
                   >
                     Next <img src={arrowLeft} className="next-arrow" />
                   </button>
