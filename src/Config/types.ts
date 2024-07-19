@@ -38,6 +38,10 @@ interface ImageMapType2 {
   [key: number]: string;
 }
 
+interface explorerMapType {
+  [key: number]: string;
+}
+
 interface portfolioType {
   [key: string]:PorfolioChains
   
@@ -84,5 +88,6 @@ export type {
   ImageMapType,
   portfolioType,
   TxObjectType,
-  ImageMapType2
+  ImageMapType2,
+  explorerMapType
 };

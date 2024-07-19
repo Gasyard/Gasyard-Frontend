@@ -8,7 +8,7 @@ import eth from "../../assets/coins/eth.svg";
 import redirect_logo from "../../assets/redirect_grey.svg";
 import copytext from "../../assets/copyText2.svg";
 import { getListTransactions } from "../../Config/API/api";
-import { ImageMapType2, TxObjectType } from "../../Config/types";
+import { explorerMapType, ImageMapType2, TxObjectType } from "../../Config/types";
 import { formatEther } from "viem";
 import arrowLeft from "../../assets/arrow-left.svg";
 import {
@@ -18,8 +18,11 @@ import {
   MenuItem,
   MenuList,
   Spinner,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { useChains } from "wagmi";
+
 
 type Props = {};
 
@@ -29,7 +32,19 @@ const imageUrl: ImageMapType2 = {
   534352:scrollLogo
 };
 
+const explorerMap:explorerMapType = {
+  42161: "https://arbiscan.io/address/",
+  8453: "https://basescan.org/address/",
+  534352:"https://scrollscan.com/address/"
+}
+
+type chains_type = {
+  id:number,
+  name:string
+}
 type TxObjectArrayType = TxObjectType[];
+
+
 const Explorer = (props: Props) => {
   const [initailTxns, setInitailTxns] = useState<TxObjectArrayType | null>(null)
   const [transactions, settransactions] = useState<TxObjectArrayType | null>(
@@ -40,6 +55,10 @@ const Explorer = (props: Props) => {
   const [btn2disabled, setbtn2disabled] = useState(false);
   const [totalPages, settotalPages] = useState(1);
   const [inputAddress, setinputAddress] = useState("")
+  const [chain1, setchain1] = useState<chains_type | null>(null)
+  const [chain2, setchain2] = useState<chains_type | null>(null)
+
+  const Chains = useChains()
 
   const getData = async (pageNo: number) => {
     const data = await getListTransactions(pageNo);
@@ -67,7 +86,7 @@ const Explorer = (props: Props) => {
     if (pageNo > 1) {
       setpageNo(pageNo - 1);
     } else {
-      setpageNo(totalPages);
+      //setpageNo(totalPages);
     }
   };
   const onClickNext = () => {
@@ -101,7 +120,38 @@ const Explorer = (props: Props) => {
             (obj.outputAddress && obj.outputAddress.toLowerCase().includes(addressLowerCase))
         );
     });
-}
+  };
+
+  function filterObjectsByChain(objects:TxObjectArrayType, id:number,chain_no:number) {
+    if(chain_no === 1){
+    return objects.filter(obj => {
+        return (
+            (obj.inputChainID && obj.inputChainID === id) 
+        );
+    });
+  }else{
+    return objects.filter(obj => {
+      return (
+          (obj.outputChainID && obj.outputChainID === id) 
+      );
+  });
+  }
+  };
+
+  const onSelectChain = (chain_no:number,chain_obj:chains_type) =>{
+    if(chain_no === 1){
+      setchain1(chain_obj)
+      initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,1))
+    }else{
+      setchain2(chain_obj)
+      initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,2))
+    }
+  }
+
+  const redirectToExplorer = (id:number,hash:any) =>{
+    const url = explorerMap[id]+hash
+    window.open(url, '_blank');
+  }
 
 
 
@@ -151,6 +201,7 @@ const Explorer = (props: Props) => {
             <Menu>
               <MenuButton
                 as={Button}
+                disabled
                 sx={{
                   backgroundColor: "#fff",
                   borderRadius: "24px",
@@ -163,14 +214,12 @@ const Explorer = (props: Props) => {
                 }}
                 rightIcon={<ChevronDownIcon />}
               >
-                Actions
+                {chain1 ? chain1.name :"All Chains"}
               </MenuButton>
               <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
+                {Chains.map((chain) =>{
+                  return(<MenuItem key={chain.id} onClick={() => onSelectChain(1,{id:chain.id,name:chain.name})}>{chain.name}</MenuItem>)
+                })}
               </MenuList>
             </Menu>
           </div>
@@ -190,15 +239,14 @@ const Explorer = (props: Props) => {
                   textAlign: "left",
                   color:"#878794"
                 }}
+                disabled={true}
               >
-                Actions
+                {chain2 ? chain2.name :"All Chains"}
               </MenuButton>
               <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
+              {Chains.map((chain) =>{
+                  return(<MenuItem key={chain.id} onClick={() => onSelectChain(2,{id:chain.id,name:chain.name})}>{chain.name}</MenuItem>)
+                })}
               </MenuList>
             </Menu>
           </div>
@@ -222,7 +270,10 @@ const Explorer = (props: Props) => {
                 <tr>
                   <td>
                     <div className="dflex-row hash">
-                      {shortenAddress(item.inputAddress)} <img src={copytext} />
+                      {shortenAddress(item.managerHash)} 
+                      <Tooltip label='Copy' fontSize='sm' bg="#E4E7EC" color="#444" placement='bottom'>
+                      <img src={copytext} onClick={() => item.managerHash && navigator.clipboard.writeText(item.managerHash)} />
+                      </Tooltip>
                     </div>
                   </td>
                   <td>
@@ -234,15 +285,15 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="dflex-row address">
                       {shortenAddress(item.outputAddress)}{" "}
-                      <img src={redirect_logo} />
+                      <img src={redirect_logo} onClick={() => redirectToExplorer(item.outputChainID,item.outputAddress)} />
                     </div>
                   </td>
                   <td>
                     <div className="dflex-row token">
-                      Token:{" "}
+                      Chain:{" "}
                       <img src={imageUrl[item.inputChainID]} className="logo" />
                       {formatToken(formatEther(item.inputChainAmount))} ETH
-                      <img src={redirect_logo} />
+                      {/* <img src={redirect_logo} /> */}
                     </div>
                   </td>
 
@@ -254,7 +305,7 @@ const Explorer = (props: Props) => {
                         className="logo"
                       />
                       {formatToken(formatEther(item.outputChainAmount))} ETH
-                      <img src={redirect_logo} />
+                      {/* <img src={redirect_logo} /> */}
                     </div>
                   </td>
                   <td>{item.updatedAt}</td>
@@ -274,7 +325,7 @@ const Explorer = (props: Props) => {
                   <button
                     className="previous btns"
                     onClick={onClickPrev}
-                    disabled={pageNo < 1}
+                    disabled={pageNo <= 1}
                   >
                     <img src={arrowLeft} className="prev-arrow" />
                     Previous

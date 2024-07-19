@@ -81,6 +81,8 @@
     line-height: 18px;
     text-align: left;
     color: #000000;
+    opacity: 0.6;
+    pointer-events: none;
 
 }
 .filter-chain1{
@@ -259,6 +261,10 @@ table .address{
     color:#1557E2;
 
 }
+table .address img,
+table .hash img{
+    cursor: pointer;
+}
 table .token,
 table .chain{
     font-family: Inter;
@@ -280,6 +286,7 @@ table .token img.logo,
 table .chain img.logo{
     height: 16px;
     width:16px;
+    border-radius: 50%;
 }
 
 .statusWrap{
