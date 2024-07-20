@@ -61,7 +61,7 @@ const Explorer = (props: Props) => {
   const Chains = useChains()
 
   const getData = async (pageNo: number) => {
-    const data = await getListTransactions(pageNo);
+    const data = await getListTransactions(pageNo-1);
     console.log("tnxobj", data);
     settransactions(data.results);
     setInitailTxns(data.results)

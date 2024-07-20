@@ -419,7 +419,7 @@ const BridgeNew = observer((props: Props) => {
 
   useEffect(() => {
     if (address) {
-      setrecepientAddress(address);
+      // setrecepientAddress(address);
       fetchPortfolio(address);
       // GetBalance();
     }
