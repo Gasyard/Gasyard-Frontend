@@ -53,20 +53,37 @@ const Explorer = (props: Props) => {
   const [pageNo, setpageNo] = useState(1);
   const [btn1disabled, setbtn1disabled] = useState(false);
   const [btn2disabled, setbtn2disabled] = useState(false);
-  const [totalPages, settotalPages] = useState(1);
-  const [inputAddress, setinputAddress] = useState("")
+  const [totalPages, settotalPages] = useState(0);
+  const [inputAddress, setinputAddress] = useState<`0x${string}`| "" | string>("")
+  const [debouncedValue, setDebouncedValue] = useState<`0x${string}` | string>(inputAddress);
   const [chain1, setchain1] = useState<chains_type | null>(null)
   const [chain2, setchain2] = useState<chains_type | null>(null)
 
   const Chains = useChains()
 
   const getData = async (pageNo: number) => {
-    const data = await getListTransactions(pageNo-1);
+    const data = await getListTransactions(pageNo);
     console.log("tnxobj", data);
     settransactions(data.results);
     setInitailTxns(data.results)
     settotalPages(data.totalPages);
   };
+
+  const getFilteredData = async(page:number,inputAddress:`0x${string}`| "" | string,chain1:chains_type|null,chain2:chains_type|null) =>{
+    const response = await getListTransactions(page,inputAddress === "" ? null : inputAddress, chain1 && chain1.id ? chain1.id : null,chain2 && chain2.id ? chain2.id : null)
+    console.log(response)
+    if(response && response.results){
+      settransactions(null)
+      setTimeout(() => {
+        settransactions(response.results)
+        settotalPages(response.totalPages);
+      }, 500);
+    }else{
+      settransactions([])
+      settotalPages(0)
+    }
+    
+  }
 
   const shortenAddress = (
     address: string | null,
@@ -83,18 +100,10 @@ const Explorer = (props: Props) => {
   };
 
   const onClickPrev = () => {
-    if (pageNo > 1) {
-      setpageNo(pageNo - 1);
-    } else {
-      //setpageNo(totalPages);
-    }
+    setpageNo(pageNo-1)
   };
   const onClickNext = () => {
-    if (pageNo > totalPages) {
-      setpageNo(1);
-    } else {
-      setpageNo(pageNo + 1);
-    }
+    setpageNo(pageNo+1)
   };
 
   const formatToken = (numStr: string) => {
@@ -141,10 +150,10 @@ const Explorer = (props: Props) => {
   const onSelectChain = (chain_no:number,chain_obj:chains_type) =>{
     if(chain_no === 1){
       setchain1(chain_obj)
-      initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,1))
+      // initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,1))
     }else{
       setchain2(chain_obj)
-      initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,2))
+      // initailTxns && settransactions(filterObjectsByChain(initailTxns,chain_obj.id,2))
     }
   }
 
@@ -154,23 +163,47 @@ const Explorer = (props: Props) => {
   }
 
 
+  // useEffect(() => {
+  //   getFilteredData(1,"",null,null)
+  // }, [])
+  
 
   useEffect(() => {
-    getData(pageNo);
+    if(inputAddress || chain1 || chain2){
+      getFilteredData(pageNo,inputAddress,chain1,chain2)
+    }
+    else{
+      getFilteredData(pageNo,"",null,null)
+    }
   }, [pageNo]);
 
   useEffect(() => {
-    if(transactions){
-      if(inputAddress != ""){
-      const filteredObjects = filterObjectsByAddress(transactions, inputAddress);
-      settransactions(filteredObjects)
-      }
-      else{
-        settransactions(initailTxns)
-      }
+    console.log("debouncedValue",debouncedValue)
+    if(debouncedValue || chain1 || chain2){
+      console.log("inside")
+      getFilteredData(0,inputAddress,chain1,chain2)
+    }else{
+      console.log("inside2",initailTxns)
+      getFilteredData(1,"",null,null)
     }
-    
+  }, [debouncedValue,chain1,chain2])
+
+  useEffect(() => {
+
+    const handler = setTimeout(() => {
+      console.log("input value set",inputAddress)
+      setDebouncedValue(inputAddress);
+    }, 1000); // 1 seconds
+
+    // Cleanup timeout if the effect is called again before the timeout completes
+    return () => {
+      clearTimeout(handler);
+    };
+
   }, [inputAddress])
+
+  
+  
   
 
   return (
@@ -217,6 +250,7 @@ const Explorer = (props: Props) => {
                 {chain1 ? chain1.name :"All Chains"}
               </MenuButton>
               <MenuList>
+                <MenuItem key={0} onClick={() => setchain1(null)}>All Chains</MenuItem>
                 {Chains.map((chain) =>{
                   return(<MenuItem key={chain.id} onClick={() => onSelectChain(1,{id:chain.id,name:chain.name})}>{chain.name}</MenuItem>)
                 })}
@@ -244,6 +278,7 @@ const Explorer = (props: Props) => {
                 {chain2 ? chain2.name :"All Chains"}
               </MenuButton>
               <MenuList>
+              <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
               {Chains.map((chain) =>{
                   return(<MenuItem key={chain.id} onClick={() => onSelectChain(2,{id:chain.id,name:chain.name})}>{chain.name}</MenuItem>)
                 })}
@@ -265,7 +300,7 @@ const Explorer = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {transactions !== null ? (
+            {transactions ? (
               transactions.map((item, index) => (
                 <tr>
                   <td>
@@ -325,7 +360,7 @@ const Explorer = (props: Props) => {
                   <button
                     className="previous btns"
                     onClick={onClickPrev}
-                    disabled={pageNo <= 1}
+                    disabled={!(pageNo > 1)}
                   >
                     <img src={arrowLeft} className="prev-arrow" />
                     Previous
@@ -334,7 +369,7 @@ const Explorer = (props: Props) => {
                   <button
                     className="next btns"
                     onClick={onClickNext}
-                    disabled={pageNo >= totalPages}
+                    disabled={!(totalPages > pageNo)}
                   >
                     Next <img src={arrowLeft} className="next-arrow" />
                   </button>

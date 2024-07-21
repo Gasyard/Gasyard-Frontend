@@ -20,15 +20,31 @@ const App = observer(() => {
     <ChakraProvider>
       
       <div className="App">
-        <Header />
+        
         <Router>
         <Routes>
         <Route
             path="/"
-            element={ <BridgeNew />} />
+            element={ 
+              <>
+              <Header />
+              <BridgeNew />
+              </>
+              
+            } />
         <Route
         path="/explorer"
-        element={ <Explorer />} />
+        element={ 
+            <>
+            <Header />
+            <Explorer />
+            </>
+          } />
+
+      <Route
+            path="*"
+            element={<>Page Not Found!</>}
+          />
         </Routes>
       </Router>
        

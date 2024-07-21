@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./BridgeNew.css";
 import downArrow from "../../assets/SVG-black.svg";
-import { Spinner, Stat, StatNumber, useDisclosure } from "@chakra-ui/react";
+import { Spinner, Stat, StatNumber, useDisclosure, useToast } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
 import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract,useWaitForTransactionReceipt } from "wagmi";
 import { chainType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
@@ -30,6 +30,7 @@ type Props = {};
 
 const BridgeNew = observer((props: Props) => {
   const Chains = useChains();
+  const toast = useToast()
   const [chain1, setchain1] = useState<chainType | null>(Chains[0]);
   const [chain2, setchain2] = useState<chainType | null>(Chains[1]);
 
@@ -366,7 +367,20 @@ const BridgeNew = observer((props: Props) => {
     if(chain1){
       try{
         const objId = await sendTransaction(data, id);
-        setObjectId(objId.uniqueID)
+        if(objId.status && objId.status !== 200){
+          console.log(objId.msg.response.data.message)
+          toast({
+            title: 'Unexpected Error Occured!.',
+            description: "There seems to be issue with your request please reachout to support on Live Chat",
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        }else{
+          setObjectId(objId.uniqueID)
+        }
+        
+        
       } catch (error) {
         console.error('Error making POST request', error);
       }

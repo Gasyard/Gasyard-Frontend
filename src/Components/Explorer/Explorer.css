@@ -81,8 +81,8 @@
     line-height: 18px;
     text-align: left;
     color: #000000;
-    opacity: 0.6;
-    pointer-events: none;
+    /* opacity: 0.6;
+    pointer-events: none; */
 
 }
 .filter-chain1{
