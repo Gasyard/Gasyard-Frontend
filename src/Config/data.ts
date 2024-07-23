@@ -16,6 +16,7 @@ const iconMap: ImageMapType = {
     "137": polygonlogo,
     "534352": scrolllogo,
     "11155111": sepolialogo,
+    "421614":sepolialogo
 };
 const ChainJsonData: Networks = {
     "1": {
@@ -35,6 +36,13 @@ const ChainJsonData: Networks = {
     "84532": {
       networkName: "basesepolia",
       chainID: 84532,
+      baseToken: "ETH",
+      decimals: 18,
+      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    },
+    "421614": {
+      networkName: "arbitrumsepolia",
+      chainID: 421614,
       baseToken: "ETH",
       decimals: 18,
       routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",

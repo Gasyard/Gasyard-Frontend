@@ -17,7 +17,8 @@ import {
   scroll,
   Chain,
   baseSepolia,
-  optimism
+  optimism,
+  arbitrumSepolia
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -31,10 +32,10 @@ import scrolllogo from './assets/chains/scroll.svg'
 import sepolialogo from "./assets/coins/sepolia.png";
 import { ChainJsonData } from "./Config/data";
 
-import {PrivyProvider} from '@privy-io/react-auth';
+import { PrivyProvider } from '@privy-io/react-auth';
 
 
-
+const SERVER = "testnet";
 
 // 0. Setup queryClient
 const queryClient = new QueryClient();
@@ -51,56 +52,78 @@ const metadata = {
 
 
 
-const chains = [
-  // {
-  //   ...mainnet,
-  //   iconUrl: ethereumlogo,
-  //   contractAddress:ChainJsonData["1"].routerContract
+let config;
+console.log("HELLO"+process.env.REACT_APP_SERVER)
+if (SERVER == "testnet") {
+  const chains = [
+    {
+      ...baseSepolia,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["84532"].routerContract
+    },
+    {
+      ...arbitrumSepolia,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["421614"].routerContract
+    }
+  ] as const;
 
-  // },
-  {
-    ...arbitrum,
-    iconUrl: arbitumlogo,
-    contractAddress:ChainJsonData["42161"].routerContract,
-    explorer:"https://arbiscan.io/tx/"
-  },
-  // {
-  //   ...sepolia,
-  //   iconUrl: sepolialogo,
-  //   contractAddress:ChainJsonData["11155111"].routerContract
-  // },
-  {
-    ...base,
-    iconUrl: baselogo,
-    contractAddress:ChainJsonData["8453"].routerContract,
-    explorer:"https://basescan.org/tx/"
-  },
-  // { ...polygon, 
-  //   iconUrl: polygonlogo,
-  //   contractAddress:ChainJsonData["137"].routerContract
-  // },
-  // { ...bsc, 
-  //   iconUrl: bsclogo,
-  //   contractAddress:ChainJsonData["56"].routerContract
-  // },
-  { ...scroll, 
-    iconUrl: scrolllogo,
-    contractAddress:ChainJsonData["534352"].routerContract,
-    explorer:"https://scrollscan.com/tx/"
-  },
-  // {
-  //   ...baseSepolia,
-  //   iconUrl:sepolialogo,
-  //   contractAddress:ChainJsonData["84532"].routerContract
-  // }
-] as const;
+  config = defaultWagmiConfig({
+    chains,
+    projectId,
+    metadata,
+    // ...wagmiOptions // Optional - Override createConfig parameters
+  });
+}
+else {
+  const chains = [
+    // {
+    //   ...mainnet,
+    //   iconUrl: ethereumlogo,
+    //   contractAddress:ChainJsonData["1"].routerContract
 
-const config = defaultWagmiConfig({
-  chains,
-  projectId,
-  metadata,
-  // ...wagmiOptions // Optional - Override createConfig parameters
-});
+    // },
+    {
+      ...arbitrum,
+      iconUrl: arbitumlogo,
+      contractAddress: ChainJsonData["42161"].routerContract,
+      explorer: "https://arbiscan.io/tx/"
+    },
+    // {
+    //   ...sepolia,
+    //   iconUrl: sepolialogo,
+    //   contractAddress:ChainJsonData["11155111"].routerContract
+    // },
+    {
+      ...base,
+      iconUrl: baselogo,
+      contractAddress: ChainJsonData["8453"].routerContract,
+      explorer: "https://basescan.org/tx/"
+    },
+    // { ...polygon, 
+    //   iconUrl: polygonlogo,
+    //   contractAddress:ChainJsonData["137"].routerContract
+    // },
+    // { ...bsc, 
+    //   iconUrl: bsclogo,
+    //   contractAddress:ChainJsonData["56"].routerContract
+    // },
+    {
+      ...scroll,
+      iconUrl: scrolllogo,
+      contractAddress: ChainJsonData["534352"].routerContract,
+      explorer: "https://scrollscan.com/tx/"
+    }
+  ] as const;
+
+  config = defaultWagmiConfig({
+    chains,
+    projectId,
+    metadata,
+    // ...wagmiOptions // Optional - Override createConfig parameters
+  });
+}
+
 
 // 3. Create modal
 createWeb3Modal({
@@ -109,9 +132,9 @@ createWeb3Modal({
   enableAnalytics: true, // Optional - defaults to your Cloud configuration
   enableOnramp: true, // Optional - false as default
   themeMode: 'light',
-  themeVariables:{
+  themeVariables: {
     '--w3m-color-mix': 'red',
-    "--w3m-border-radius-master":"2px"
+    "--w3m-border-radius-master": "2px"
   }
 });
 
@@ -122,7 +145,7 @@ root.render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-          <App />
+        <App />
       </QueryClientProvider>
     </WagmiProvider>
   </React.StrictMode>
