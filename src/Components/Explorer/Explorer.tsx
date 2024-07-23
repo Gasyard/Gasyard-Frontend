@@ -218,7 +218,7 @@ const Explorer = (props: Props) => {
             </div>
         </div>
         </div> */}
-      <div className="filter-container dflex-row">
+      <div className="filter-container">
         <div className="input-search">
           <img src={SearchIcon} />
           <input

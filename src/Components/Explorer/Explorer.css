@@ -69,6 +69,10 @@
     width: 1216px;
     margin: 20px auto;
     margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    align-items: center;
     /* column-gap: 20px; */
     justify-content: space-between;
 }
@@ -348,5 +352,18 @@ table .chain img.logo{
     .table-container table thead tr th:nth-child(6){
         min-width:267px;
         
+    }
+    .filter-container{
+        flex-direction: column;
+        row-gap: 16px;
+        max-width: 100%;
+    }
+    .input-search{
+        max-width: 100%;
+    }
+    .filters{
+        max-width: 100%;
+        column-gap: 8px;
+        padding: 0px;
     }
 }

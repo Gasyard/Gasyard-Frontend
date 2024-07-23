@@ -252,4 +252,8 @@
     max-width: 95%;
     margin: 0px auto;
   }
+  .review-btn{
+    max-width: 100%;
+    width: 96%;
+  }
 }

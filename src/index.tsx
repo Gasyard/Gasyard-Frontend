@@ -49,9 +49,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-interface ChainWithIcon extends Chain {
-  iconUrl: string;
-}
+
 
 const chains = [
   // {
