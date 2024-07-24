@@ -47,6 +47,20 @@ const ChainJsonData: Networks = {
       decimals: 18,
       routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
     },
+    "2710": {
+      networkName: "morphtestnet",
+      chainID: 2710,
+      baseToken: "ETH",
+      decimals: 18,
+      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    },
+    "30732": {
+      networkName: "movementtestnet",
+      chainID: 30732,
+      baseToken: "MOVE",
+      decimals: 18,
+      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    },
     "8453": {
       "networkName": "base",
       "chainID":8453,

@@ -5,7 +5,7 @@ import App from "./App";
 
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-
+import { movementTestnet } from "./Config/chains";
 import { WagmiProvider } from "wagmi";
 import {
   arbitrum,
@@ -18,7 +18,8 @@ import {
   Chain,
   baseSepolia,
   optimism,
-  arbitrumSepolia
+  arbitrumSepolia,
+  morphSepolia
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -34,8 +35,6 @@ import { ChainJsonData } from "./Config/data";
 
 import { PrivyProvider } from '@privy-io/react-auth';
 
-
-const SERVER = "testnet";
 
 // 0. Setup queryClient
 const queryClient = new QueryClient();
@@ -53,7 +52,7 @@ const metadata = {
 
 
 let config;
-console.log("HELLO"+process.env.REACT_APP_SERVER)
+console.log("HELLO" + process.env.REACT_APP_SERVER)
 if (process.env.REACT_APP_SERVER == "testnet") {
   const chains = [
     {
@@ -65,6 +64,16 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       ...arbitrumSepolia,
       iconUrl: sepolialogo,
       contractAddress: ChainJsonData["421614"].routerContract
+    },
+    {
+      ...morphSepolia,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["2710"].routerContract
+    },
+    {
+      ...movementTestnet,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["30732"].routerContract
     }
   ] as const;
 
