@@ -74,7 +74,7 @@ const AddRecepient = ({ setrecepientAddress, recepientAddress }: Props) => {
   };
   return (
     <div>
-      <div className={`AddAddress`}>
+      <div className={`AddAddress`} onClick={onOpen}>
         {recepientAddress !== "" ? (
           <>
             <img src={GreenTick} onClick={onOpen} />
