@@ -54,7 +54,7 @@ const metadata = {
 
 let config;
 console.log("HELLO"+process.env.REACT_APP_SERVER)
-if (SERVER == "testnet") {
+if (process.env.REACT_APP_SERVER == "testnet") {
   const chains = [
     {
       ...baseSepolia,
