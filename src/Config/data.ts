@@ -14,7 +14,8 @@ const iconMap: ImageMapType = {
     "56": bsclogo,
     "1": ethereumlogo,
     "137": polygonlogo,
-    "534352": scrolllogo,
+    "534352": scrolllogo,,
+    "5000": scrolllogo,
     "11155111": sepolialogo,
 };
 const ChainJsonData: Networks = {
@@ -89,6 +90,21 @@ const ChainJsonData: Networks = {
       "platformFeePercentage":2.5,
       "gweiLimit":1000000,
       "isGasByLifi":true,
+      "minimumGas":0.001,
+      
+  },
+    "5000": {
+      "networkName": "mantle",
+      "chainID":5000,
+      "baseToken": "MNT",
+      "decimals":18,
+      "rpc": "https://rpc.mantle.xyz",
+      "feedaddress": "0x6bF14CB0A831078629D993FDeBcB182b21A8774C",
+      "routerContract":"0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
+      "liquidityPool":"0xB127256729cD60988f681eFe4522aB1E30619e59",
+      "platformFeePercentage":2.5,
+      "gweiLimit":1000000,
+      "isGasByLifi":false,
       "minimumGas":0.001,
       
   }
