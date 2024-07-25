@@ -17,7 +17,8 @@ import {
   scroll,
   Chain,
   baseSepolia,
-  optimism
+  optimism,
+  mantle
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -93,6 +94,11 @@ const chains = [
   //   iconUrl:sepolialogo,
   //   contractAddress:ChainJsonData["84532"].routerContract
   // }
+  { ...mantle, 
+    iconUrl: scrolllogo,
+    contractAddress:ChainJsonData["5000"].routerContract,
+    explorer:"https://mantlescan.info/tx/"
+  },
 ] as const;
 
 const config = defaultWagmiConfig({
