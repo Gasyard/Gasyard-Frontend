@@ -41,7 +41,7 @@ export const fetchTransactionObject = async(id:string) =>{
     try{
         const url = `https://api.gasyard.fi/api/list-transactions/${id}`
         const response = await axios.get(url)
-        return response.data[0]
+        return response.data.results[0]
     }catch(err){
         console.log("Unexpected Error!",err)
         return null
