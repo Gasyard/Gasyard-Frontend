@@ -30,6 +30,7 @@ import optimismlogo from './assets/chains/optimism.svg'
 import polygonlogo from './assets/chains/polygon.svg'
 import scrolllogo from './assets/chains/scroll.svg'
 import sepolialogo from "./assets/coins/sepolia.png";
+import mantlelogo from "./assets/chains/mantle.svg"
 import { ChainJsonData } from "./Config/data";
 
 import {PrivyProvider} from '@privy-io/react-auth';
@@ -95,7 +96,7 @@ const chains = [
   //   contractAddress:ChainJsonData["84532"].routerContract
   // }
   { ...mantle, 
-    iconUrl: scrolllogo,
+    iconUrl: mantlelogo,
     contractAddress:ChainJsonData["5000"].routerContract,
     explorer:"https://mantlescan.info/tx/"
   },
