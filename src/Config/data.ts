@@ -4,6 +4,7 @@ import bsclogo from "../assets/chains/bsc.svg";
 import ethereumlogo from "../assets/chains/ethereum.svg";
 import polygonlogo from "../assets/chains/polygon.svg";
 import scrolllogo from "../assets/chains/scroll.svg";
+import mantlelogo from "../assets/chains/mantle.svg";
 import sepolialogo from "../assets/coins/sepolia.png";
 import selectLogo from "../assets/chains/select.png";
 import { ImageMapType, Networks } from "./types";
@@ -15,7 +16,7 @@ const iconMap: ImageMapType = {
     "1": ethereumlogo,
     "137": polygonlogo,
     "534352": scrolllogo,
-    "5000": scrolllogo,
+    "5000": mantlelogo,
     "11155111": sepolialogo,
 };
 const ChainJsonData: Networks = {
