@@ -18,7 +18,7 @@ const Header = (props: Props) => {
             Explorer
           </a>
 
-          <a className="nav-history" href="#"> Liquidity</a>
+          {/* <a className="nav-history" href="#"> Liquidity</a> */}
         </div>
 
         

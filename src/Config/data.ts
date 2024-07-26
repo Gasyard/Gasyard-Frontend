@@ -4,6 +4,7 @@ import bsclogo from "../assets/chains/bsc.svg";
 import ethereumlogo from "../assets/chains/ethereum.svg";
 import polygonlogo from "../assets/chains/polygon.svg";
 import scrolllogo from "../assets/chains/scroll.svg";
+import mantlelogo from "../assets/chains/mantle.svg";
 import sepolialogo from "../assets/coins/sepolia.png";
 import selectLogo from "../assets/chains/select.png";
 import { ImageMapType, Networks } from "./types";
@@ -15,6 +16,7 @@ const iconMap: ImageMapType = {
     "1": ethereumlogo,
     "137": polygonlogo,
     "534352": scrolllogo,
+    "5000": mantlelogo,
     "11155111": sepolialogo,
     "421614":sepolialogo
 };
@@ -71,7 +73,9 @@ const ChainJsonData: Networks = {
       "routerContract":"0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
       "platformFeePercentage":2.5,
       "gweiLimit":1000000,
-      "isGasByLifi":true
+      "isGasByLifi":true,
+      explorer:"https://basescan.org/address/"
+      
     },
     "137": {
       networkName: "polygon",
@@ -90,7 +94,8 @@ const ChainJsonData: Networks = {
       "routerContract":"0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
       "platformFeePercentage":2.5,
       "gweiLimit":1000000,
-      "isGasByLifi":true
+      "isGasByLifi":true,
+      explorer:"https://arbiscan.io/address/"
     },
     "56": {
       networkName: "bsc",
@@ -112,6 +117,23 @@ const ChainJsonData: Networks = {
       "gweiLimit":1000000,
       "isGasByLifi":true,
       "minimumGas":0.001,
+      "explorer":"https://scrollscan.com/address/"
+      
+  },
+    "5000": {
+      "networkName": "mantle",
+      "chainID":5000,
+      "baseToken": "MNT",
+      "decimals":18,
+      "rpc": "https://rpc.mantle.xyz",
+      "feedaddress": "0x6bF14CB0A831078629D993FDeBcB182b21A8774C",
+      "routerContract":"0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
+      "liquidityPool":"0xB127256729cD60988f681eFe4522aB1E30619e59",
+      "platformFeePercentage":2.5,
+      "gweiLimit":1000000,
+      "isGasByLifi":false,
+      "minimumGas":0.001,
+      explorer:"https://mantlescan.info/address/"
       
   }
 ,

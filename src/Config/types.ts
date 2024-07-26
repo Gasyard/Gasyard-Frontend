@@ -19,6 +19,7 @@ interface Network {
   isGasByLifi?:boolean
   liquidityPool?:`0x${string}`
   minimumGas?:number
+  explorer?:string
 }
 
 interface Networks {

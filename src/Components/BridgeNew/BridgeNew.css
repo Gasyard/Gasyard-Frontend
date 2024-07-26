@@ -173,7 +173,7 @@
   display: flex;
   flex-direction: row;
   column-gap: 10px;
-  background-color: #F9FAFB;
+  background-color: #F4f5f5;
   padding: 5px 10px;
   width:fit-content;
   border-radius: 30px;
@@ -184,7 +184,7 @@
   font-weight: 600;
   line-height: 20px;
   text-align: center;
-
+  box-shadow: 0 1px 3px 0 #0003;
 }
 .AddAddress img{
   width:32px;
@@ -213,9 +213,17 @@
   display: flex;
   flex-direction: column;
 }
-.enterAddress input{
+.enterAddress label{
+  color:#31353C;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  margin-bottom: 10px
+}
+.enterAddress .inputDv input{
   width: 96%;
-  padding: 2%;
+  padding: 2% 4%;
   outline: none;
   border: 1px solid #f6f2fb;
   /* font-size: 16px;
@@ -229,8 +237,21 @@
   line-height: 21px;
   letter-spacing: -0.02em;
   text-align: left;
+  border-radius: 20px;
+  margin-bottom: 16px;
 }
-.enterAddress input::placeholder{
+.tooltip-icon{
+  width:35px;
+  /* height: 20px; */
+}
+.ModalBody-title{
+  font-size: 20px;
+  font-weight: 500;
+  padding-bottom: 32px;
+  color:#1A202c;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.enterAddress .inputDv input::placeholder{
   color:#31353C;
   font-family: Inter;
   font-size: 14px;
@@ -238,13 +259,22 @@
   line-height: 21px;
   letter-spacing: -0.02em;
   text-align: left;
-
+}
+.enterAddress .inputDv input:focus{
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #3b82f6, 0 0 0 8px #dae6fb;
+}
+.walleticon{
+  width:16px;
+  position: absolute;
 }
 .enterAddress .errorMsg{
   font-size: 12px;
   color:red;
-  font-weight: 700;
-  margin-left: auto;
+  font-family: Inter;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  /* margin-left: auto; */
 
 }
 @media screen and (max-width: 500px) {

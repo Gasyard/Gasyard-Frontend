@@ -22,6 +22,8 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useChains } from "wagmi";
+import { ChainJsonData } from "../../Config/data";
+import { iconMap } from "../../Config/data";
 
 
 type Props = {};
@@ -119,34 +121,6 @@ const Explorer = (props: Props) => {
     return numStr;
   };
 
-  function filterObjectsByAddress(objects:TxObjectArrayType, address:string) {
-    return objects.filter(obj => {
-        const addressLowerCase = address.toLowerCase();
-        return (
-            (obj.inputTxHash && obj.inputTxHash.toLowerCase().includes(addressLowerCase)) ||
-            (obj.outputTxHash && obj.outputTxHash.toLowerCase().includes(addressLowerCase)) ||
-            (obj.inputAddress && obj.inputAddress.toLowerCase().includes(addressLowerCase)) ||
-            (obj.outputAddress && obj.outputAddress.toLowerCase().includes(addressLowerCase))
-        );
-    });
-  };
-
-  function filterObjectsByChain(objects:TxObjectArrayType, id:number,chain_no:number) {
-    if(chain_no === 1){
-    return objects.filter(obj => {
-        return (
-            (obj.inputChainID && obj.inputChainID === id) 
-        );
-    });
-  }else{
-    return objects.filter(obj => {
-      return (
-          (obj.outputChainID && obj.outputChainID === id) 
-      );
-  });
-  }
-  };
-
   const onSelectChain = (chain_no:number,chain_obj:chains_type) =>{
     if(chain_no === 1){
       setchain1(chain_obj)
@@ -158,15 +132,31 @@ const Explorer = (props: Props) => {
   }
 
   const redirectToExplorer = (id:number,hash:any) =>{
-    const url = explorerMap[id]+hash
+    const url = ChainJsonData[id].explorer+hash
     window.open(url, '_blank');
   }
 
-
-  // useEffect(() => {
-  //   getFilteredData(1,"",null,null)
-  // }, [])
+  const formatDate = (dateString:string) => {
+    const date = new Date(dateString);
   
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = months[date.getUTCMonth()];
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+  
+    let hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    
+    const formattedDate = `${month}-${day}-${year}`;
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ${ampm} UTC`;
+    
+    return `${formattedDate} ${formattedTime}`;
+  }
 
   useEffect(() => {
     if(inputAddress || chain1 || chain2){
@@ -326,8 +316,8 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="dflex-row token">
                       Chain:{" "}
-                      <img src={imageUrl[item.inputChainID]} className="logo" />
-                      {formatToken(formatEther(item.inputChainAmount))} ETH
+                      <img src={iconMap[item.inputChainID]} className="logo" />
+                      {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken}
                       {/* <img src={redirect_logo} /> */}
                     </div>
                   </td>
@@ -336,14 +326,14 @@ const Explorer = (props: Props) => {
                     <div className="dflex-row chain">
                       Chain:{" "}
                       <img
-                        src={imageUrl[item.outputChainID]}
+                        src={iconMap[item.outputChainID]}
                         className="logo"
                       />
-                      {formatToken(formatEther(item.outputChainAmount))} ETH
+                      {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
                       {/* <img src={redirect_logo} /> */}
                     </div>
                   </td>
-                  <td>{item.updatedAt}</td>
+                  <td>{formatDate(item.updatedAt)}</td>
                 </tr>
               ))
             ) : (

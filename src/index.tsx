@@ -18,6 +18,7 @@ import {
   Chain,
   baseSepolia,
   optimism,
+  mantle,
   arbitrumSepolia,
   morphSepolia
 } from "wagmi/chains";
@@ -31,6 +32,7 @@ import optimismlogo from './assets/chains/optimism.svg'
 import polygonlogo from './assets/chains/polygon.svg'
 import scrolllogo from './assets/chains/scroll.svg'
 import sepolialogo from "./assets/coins/sepolia.png";
+import mantlelogo from "./assets/chains/mantle.svg"
 import { ChainJsonData } from "./Config/data";
 
 import { PrivyProvider } from '@privy-io/react-auth';
@@ -91,39 +93,43 @@ else {
     //   iconUrl: ethereumlogo,
     //   contractAddress:ChainJsonData["1"].routerContract
 
-    // },
-    {
-      ...arbitrum,
-      iconUrl: arbitumlogo,
-      contractAddress: ChainJsonData["42161"].routerContract,
-      explorer: "https://arbiscan.io/tx/"
-    },
-    // {
-    //   ...sepolia,
-    //   iconUrl: sepolialogo,
-    //   contractAddress:ChainJsonData["11155111"].routerContract
-    // },
-    {
-      ...base,
-      iconUrl: baselogo,
-      contractAddress: ChainJsonData["8453"].routerContract,
-      explorer: "https://basescan.org/tx/"
-    },
-    // { ...polygon, 
-    //   iconUrl: polygonlogo,
-    //   contractAddress:ChainJsonData["137"].routerContract
-    // },
-    // { ...bsc, 
-    //   iconUrl: bsclogo,
-    //   contractAddress:ChainJsonData["56"].routerContract
-    // },
-    {
-      ...scroll,
-      iconUrl: scrolllogo,
-      contractAddress: ChainJsonData["534352"].routerContract,
-      explorer: "https://scrollscan.com/tx/"
-    }
-  ] as const;
+  // },
+  {
+    ...arbitrum,
+    iconUrl: arbitumlogo,
+    contractAddress:ChainJsonData["42161"].routerContract,
+    explorer:"https://arbiscan.io/tx/"
+  },
+  // {
+  //   ...sepolia,
+  //   iconUrl: sepolialogo,
+  //   contractAddress:ChainJsonData["11155111"].routerContract
+  // },
+  {
+    ...base,
+    iconUrl: baselogo,
+    contractAddress:ChainJsonData["8453"].routerContract,
+    explorer:"https://basescan.org/tx/"
+  },
+  // { ...polygon, 
+  //   iconUrl: polygonlogo,
+  //   contractAddress:ChainJsonData["137"].routerContract
+  // },
+  // { ...bsc, 
+  //   iconUrl: bsclogo,
+  //   contractAddress:ChainJsonData["56"].routerContract
+  // },
+  { ...scroll, 
+    iconUrl: scrolllogo,
+    contractAddress:ChainJsonData["534352"].routerContract,
+    explorer:"https://scrollscan.com/tx/"
+  },
+  // {
+  //   ...baseSepolia,
+  //   iconUrl:sepolialogo,
+  //   contractAddress:ChainJsonData["84532"].routerContract
+  // }
+] as const;
 
   config = defaultWagmiConfig({
     chains,
