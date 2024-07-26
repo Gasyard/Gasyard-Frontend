@@ -63,6 +63,20 @@ const ChainJsonData: Networks = {
       decimals: 18,
       routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
     },
+    "1802203764": {
+      networkName: "kakarottestnet",
+      chainID: 1802203764,
+      baseToken: "ETH",
+      decimals: 18,
+      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    },
+    "1802203764": {
+      networkName: "berachaintestnet",
+      chainID: 80085,
+      baseToken: "BERA",
+      decimals: 18,
+      routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+    },
     "8453": {
       "networkName": "base",
       "chainID":8453,
