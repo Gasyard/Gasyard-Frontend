@@ -107,7 +107,7 @@ const AddRecepient = ({ setrecepientAddress, recepientAddress }: Props) => {
           <ModalBody>
             {/* <div className="ModalBody-title">Enter Reciever Address</div> */}
             <div className="enterAddress">
-              <label>Destination Address</label>
+              {/* <label>Destination Address</label> */}
               <div className="inputDv">
               {/* <img src={walletIcon} className="walleticon" /> */}
               <input
