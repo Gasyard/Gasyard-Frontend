@@ -20,7 +20,9 @@ import {
   optimism,
   mantle,
   arbitrumSepolia,
-  morphSepolia
+  morphSepolia,
+  berachainTestnet,
+  kakarotSepolia
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -73,12 +75,7 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       contractAddress: ChainJsonData["2710"].routerContract
     },
     {
-      ...movementTestnet,
-      iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["30732"].routerContract
-    },
-    {
-      ...kakarotTestnet,
+      ...kakarotSepolia,
       iconUrl: sepolialogo,
       contractAddress: ChainJsonData["1802203764"].routerContract
     },
