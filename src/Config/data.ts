@@ -70,7 +70,7 @@ const ChainJsonData: Networks = {
       decimals: 18,
       routerContract: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
     },
-    "1802203764": {
+    "80085": {
       networkName: "berachaintestnet",
       chainID: 80085,
       baseToken: "BERA",
