@@ -76,6 +76,16 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       ...movementTestnet,
       iconUrl: sepolialogo,
       contractAddress: ChainJsonData["30732"].routerContract
+    },
+    {
+      ...kakarotTestnet,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["1802203764"].routerContract
+    },
+    {
+      ...berachainTestnet,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["80085"].routerContract
     }
   ] as const;
 
