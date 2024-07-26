@@ -22,6 +22,8 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useChains } from "wagmi";
+import { ChainJsonData } from "../../Config/data";
+import { iconMap } from "../../Config/data";
 
 
 type Props = {};
@@ -119,34 +121,6 @@ const Explorer = (props: Props) => {
     return numStr;
   };
 
-  function filterObjectsByAddress(objects:TxObjectArrayType, address:string) {
-    return objects.filter(obj => {
-        const addressLowerCase = address.toLowerCase();
-        return (
-            (obj.inputTxHash && obj.inputTxHash.toLowerCase().includes(addressLowerCase)) ||
-            (obj.outputTxHash && obj.outputTxHash.toLowerCase().includes(addressLowerCase)) ||
-            (obj.inputAddress && obj.inputAddress.toLowerCase().includes(addressLowerCase)) ||
-            (obj.outputAddress && obj.outputAddress.toLowerCase().includes(addressLowerCase))
-        );
-    });
-  };
-
-  function filterObjectsByChain(objects:TxObjectArrayType, id:number,chain_no:number) {
-    if(chain_no === 1){
-    return objects.filter(obj => {
-        return (
-            (obj.inputChainID && obj.inputChainID === id) 
-        );
-    });
-  }else{
-    return objects.filter(obj => {
-      return (
-          (obj.outputChainID && obj.outputChainID === id) 
-      );
-  });
-  }
-  };
-
   const onSelectChain = (chain_no:number,chain_obj:chains_type) =>{
     if(chain_no === 1){
       setchain1(chain_obj)
@@ -158,15 +132,10 @@ const Explorer = (props: Props) => {
   }
 
   const redirectToExplorer = (id:number,hash:any) =>{
-    const url = explorerMap[id]+hash
+    const url = ChainJsonData[id].explorer+hash
     window.open(url, '_blank');
   }
 
-
-  // useEffect(() => {
-  //   getFilteredData(1,"",null,null)
-  // }, [])
-  
 
   useEffect(() => {
     if(inputAddress || chain1 || chain2){
@@ -326,7 +295,7 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="dflex-row token">
                       Chain:{" "}
-                      <img src={imageUrl[item.inputChainID]} className="logo" />
+                      <img src={iconMap[item.inputChainID]} className="logo" />
                       {formatToken(formatEther(item.inputChainAmount))} ETH
                       {/* <img src={redirect_logo} /> */}
                     </div>
@@ -336,7 +305,7 @@ const Explorer = (props: Props) => {
                     <div className="dflex-row chain">
                       Chain:{" "}
                       <img
-                        src={imageUrl[item.outputChainID]}
+                        src={iconMap[item.outputChainID]}
                         className="logo"
                       />
                       {formatToken(formatEther(item.outputChainAmount))} ETH
