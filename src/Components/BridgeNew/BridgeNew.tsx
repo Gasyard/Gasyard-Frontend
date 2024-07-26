@@ -117,7 +117,10 @@ const BridgeNew = observer((props: Props) => {
     //setdisableSubmitBtn(false);
     FormStore.setOuputToken("");
     if (chain1 && chain2 && inputToken) {
-      const url = "https://api.gasyard.fi/api/quote";
+      const isTestnet = process.env.REACT_APP_SERVER === "testnet"
+      const domain = isTestnet ? process.env.REACT_APP_BACKEND_API_TESTNET : process.env.REACT_APP_BACKEND_API
+      console.log("domain",domain,process.env.REACT_APP_BACKEND_API_TESTNET,process.env.REACT_APP_BACKEND_API)
+      const url = `${domain}/api/quote`;
 
       const options = {
         method: "POST",

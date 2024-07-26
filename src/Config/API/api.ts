@@ -1,10 +1,13 @@
 import axios from "axios";
 
+const isTestnet = process.env.REACT_APP_SERVER === "testnet"
+const domain = isTestnet ? process.env.REACT_APP_BACKEND_API_TESTNET : process.env.REACT_APP_BACKEND_API
+console.log(domain,process.env.REACT_APP_SERVER)
 export const PortfolioAPI = async(address:any) =>{
     console.log("portfolio api called")
     try{
-        // const url = `https://api.gasyard.fi/api/portfolio/0x875C02095ABB53428aa56A59FE6C8E712F48C762`
-        const url = `https://api.gasyard.fi/api/portfolio/${address}`
+        // const url = `${domain}/api/portfolio/0x875C02095ABB53428aa56A59FE6C8E712F48C762`
+        const url = `${domain}/api/portfolio/${address}`
         const response = await fetch(url);
         const result = await response.json();
         console.log(result)
@@ -20,7 +23,7 @@ export const sendTransaction = async(hash:`0x${string}` | undefined,inputNetwork
     console.log('send transaction called')
     try{
         if(hash){
-            const url = 'https://api.gasyard.fi/api/submit-tx' 
+            const url = '${domain}/api/submit-tx' 
             const data = {
                     "transactionHash":hash,
                     "inputNetwork":inputNetwork
@@ -39,7 +42,7 @@ export const sendTransaction = async(hash:`0x${string}` | undefined,inputNetwork
 
 export const fetchTransactionObject = async(id:string) =>{
     try{
-        const url = `https://api.gasyard.fi/api/list-transactions/${id}`
+        const url = `${domain}/api/list-transactions/${id}`
         const response = await axios.get(url)
         return response.data[0]
     }catch(err){
@@ -51,7 +54,7 @@ export const fetchTransactionObject = async(id:string) =>{
 export const getListTransactions = async(page:number,inputAddress:`0x${string}`| string | null=null,chain1:number | null=null,chain2:number | null=null) => {
     try{
         var url = ""
-        url = `https://api.gasyard.fi/api/list-transactions?sortBy=updatedAt:desc&page=${page}&${inputAddress && `inputAddress=${inputAddress}`}&${chain1 && `inputChainID=${chain1}`}&${chain2 && `outputChainID=${chain2}`}`
+        url = `${domain}/api/list-transactions?sortBy=updatedAt:desc&page=${page}&${inputAddress && `inputAddress=${inputAddress}`}&${chain1 && `inputChainID=${chain1}`}&${chain2 && `outputChainID=${chain2}`}`
         url = url.replace(/&null/g, "").replace("null","")
         const response = await axios.get(url)
         if(response.status === 400){
