@@ -52,7 +52,8 @@ const ChainJsonData: Networks = {
       "platformFeePercentage":2.5,
       "gweiLimit":1000000,
       "isGasByLifi":true,
-      explorer:"https://basescan.org/address/"
+      explorer:"https://basescan.org/tx/",
+      explorerAddress:"https://basescan.org/address/"
       
     },
     "137": {
@@ -73,7 +74,8 @@ const ChainJsonData: Networks = {
       "platformFeePercentage":2.5,
       "gweiLimit":1000000,
       "isGasByLifi":true,
-      explorer:"https://arbiscan.io/address/"
+      explorer:"https://arbiscan.io/tx/",
+      explorerAddress:"https://arbiscan.io/address/"
     },
     "56": {
       networkName: "bsc",
@@ -95,7 +97,8 @@ const ChainJsonData: Networks = {
       "gweiLimit":1000000,
       "isGasByLifi":true,
       "minimumGas":0.001,
-      "explorer":"https://scrollscan.com/address/"
+      "explorer":"https://scrollscan.com/tx/",
+      "explorerAddress":"https://scrollscan.com/address/"
       
   },
     "5000": {
@@ -111,7 +114,8 @@ const ChainJsonData: Networks = {
       "gweiLimit":1000000,
       "isGasByLifi":false,
       "minimumGas":0.001,
-      explorer:"https://mantlescan.info/address/"
+      explorer:"https://mantlescan.info/tx/",
+      explorerAddress:"https://mantlescan.info/address/"
       
   }
 ,

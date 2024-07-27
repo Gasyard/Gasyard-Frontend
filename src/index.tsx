@@ -64,7 +64,7 @@ const chains = [
     ...arbitrum,
     iconUrl: arbitumlogo,
     contractAddress:ChainJsonData["42161"].routerContract,
-    explorer:"https://arbiscan.io/tx/"
+    explorer:ChainJsonData["42161"].explorer
   },
   // {
   //   ...sepolia,
@@ -75,7 +75,7 @@ const chains = [
     ...base,
     iconUrl: baselogo,
     contractAddress:ChainJsonData["8453"].routerContract,
-    explorer:"https://basescan.org/tx/"
+    explorer:ChainJsonData["8453"].explorer
   },
   // { ...polygon, 
   //   iconUrl: polygonlogo,
@@ -88,7 +88,7 @@ const chains = [
   { ...scroll, 
     iconUrl: scrolllogo,
     contractAddress:ChainJsonData["534352"].routerContract,
-    explorer:"https://scrollscan.com/tx/"
+    explorer:ChainJsonData["534352"].explorer
   },
   // {
   //   ...baseSepolia,
@@ -98,7 +98,7 @@ const chains = [
   { ...mantle, 
     iconUrl: mantlelogo,
     contractAddress:ChainJsonData["5000"].routerContract,
-    explorer:"https://mantlescan.info/tx/"
+    explorer:ChainJsonData["5000"].explorer
   },
 ] as const;
 
