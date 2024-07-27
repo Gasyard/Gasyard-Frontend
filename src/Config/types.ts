@@ -20,6 +20,7 @@ interface Network {
   liquidityPool?:`0x${string}`
   minimumGas?:number
   explorer?:string
+  priceProvider?:string
 }
 
 interface Networks {

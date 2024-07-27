@@ -21,8 +21,8 @@ import {
   mantle,
   arbitrumSepolia,
   morphSepolia,
-  berachainTestnet,
-  kakarotSepolia
+  kakarotSepolia,
+  berachainTestnet
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -84,6 +84,7 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       iconUrl: sepolialogo,
       contractAddress: ChainJsonData["80085"].routerContract
     }
+    
   ] as const;
 
   config = defaultWagmiConfig({
