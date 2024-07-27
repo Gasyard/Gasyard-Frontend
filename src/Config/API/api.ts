@@ -23,7 +23,7 @@ export const sendTransaction = async(hash:`0x${string}` | undefined,inputNetwork
     console.log('send transaction called')
     try{
         if(hash){
-            const url = '${domain}/api/submit-tx' 
+            const url = `${domain}/api/submit-tx`
             const data = {
                     "transactionHash":hash,
                     "inputNetwork":inputNetwork
