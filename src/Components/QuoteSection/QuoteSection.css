@@ -19,7 +19,7 @@
     margin-left: auto;
     font-family: Inter;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 18px;
     letter-spacing: -0.02em;
     color:#31353C;
@@ -27,7 +27,7 @@
 .col1{
     font-family: Inter;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: bold;
     line-height: 18px;
     letter-spacing: -0.02em;
     color: #878794;
