@@ -7,6 +7,9 @@ import scrolllogo from "../assets/chains/scroll.svg";
 import mantlelogo from "../assets/chains/mantle.svg";
 import sepolialogo from "../assets/coins/sepolia.png";
 import selectLogo from "../assets/chains/select.png";
+import morphlogo from '../assets/chains/Morph.png';
+import karakotlogo from '../assets/chains/kakarot.png'
+import berachianlogo from '../assets/chains/berchain.png' 
 import { ImageMapType, Networks } from "./types";
 
 const iconMap: ImageMapType = {
@@ -18,7 +21,11 @@ const iconMap: ImageMapType = {
   "534352": scrolllogo,
   "5000": mantlelogo,
   "11155111": sepolialogo,
-  "421614": sepolialogo,
+  "421614": arbitumlogo,
+  "84532":sepolialogo,
+  "2710":morphlogo,
+  "1802203764":karakotlogo,
+  "80085":berachianlogo
 };
 const ChainJsonData: Networks = {
   "1": {
@@ -46,7 +53,8 @@ const ChainJsonData: Networks = {
     platformFeePercentage: 2.5,
     gweiLimit: 1000000,
     isGasByLifi: true,
-    explorer: "https://basescan.org/address/",
+    explorer: "https://basescan.org/tx/",
+    explorerAddress:"https://basescan.org/address/"
   },
   "137": {
     networkName: "polygon",
@@ -66,7 +74,8 @@ const ChainJsonData: Networks = {
     platformFeePercentage: 2.5,
     gweiLimit: 1000000,
     isGasByLifi: true,
-    explorer: "https://arbiscan.io/address/",
+    explorer: "https://arbiscan.io/tx/",
+    explorerAddress:"https://arbiscan.io/address/"
   },
   "56": {
     networkName: "bsc",
@@ -88,7 +97,8 @@ const ChainJsonData: Networks = {
     gweiLimit: 1000000,
     isGasByLifi: true,
     minimumGas: 0.001,
-    explorer: "https://scrollscan.com/address/",
+    explorer: "https://scrollscan.com/tx/",
+    explorerAddress: "https://scrollscan.com/address/",
   },
   "5000": {
     networkName: "mantle",
@@ -103,7 +113,8 @@ const ChainJsonData: Networks = {
     gweiLimit: 1000000,
     isGasByLifi: false,
     minimumGas: 0.001,
-    explorer: "https://mantlescan.info/address/",
+    explorer: "https://mantlescan.info/tx/",
+    explorerAddress: "https://mantlescan.info/address/",
   },
   84532: {
     networkName: "basesepolia",
@@ -121,6 +132,7 @@ const ChainJsonData: Networks = {
     isGasByLifi: false,
     minimumGas: 0.0001,
     explorer: "https://sepolia.basescan.org/tx/",
+    explorerAddress: "https://sepolia.basescan.org/address/",
   },
   421614: {
     networkName: "arbitrumsepolia",
@@ -138,6 +150,7 @@ const ChainJsonData: Networks = {
     isGasByLifi: false,
     minimumGas: 0.0001,
     explorer: "https://sepolia.arbiscan.io/tx/",
+    explorerAddress: "https://sepolia.arbiscan.io/address/",
   },
   2710: {
     networkName: "morphtestnet",
@@ -155,6 +168,7 @@ const ChainJsonData: Networks = {
     isGasByLifi: false,
     minimumGas: 0.001,
     explorer: "https://explorer-holesky.morphl2.io/tx/",
+    explorerAddress: "https://explorer-holesky.morphl2.io/address/"
   },
   30732: {
     networkName: "movetestnet",
@@ -172,6 +186,7 @@ const ChainJsonData: Networks = {
     isGasByLifi: false,
     minimumGas: 0.001,
     explorer: "https://explorer.mevm.devnet.m2.movementlabs.xyz/tx/",
+    explorerAddress: "https://explorer.mevm.devnet.m2.movementlabs.xyz/address/",
   },
   1802203764: {
     networkName: "kakarottestnet",
@@ -188,7 +203,8 @@ const ChainJsonData: Networks = {
     gweiLimit: 400000,
     isGasByLifi: false,
     minimumGas: 0.001,
-    explorer: "https://sepolia.kakarotscan.org/tx",
+    explorer: "https://sepolia.kakarotscan.org/tx/",
+    explorerAddress: "https://sepolia.kakarotscan.org/address/",
   },
   80085: {
     networkName: "berachaintestnet",
@@ -205,7 +221,8 @@ const ChainJsonData: Networks = {
     gweiLimit: 400000,
     isGasByLifi: false,
     minimumGas: 0.001,
-    explorer: "https://sepolia.kakarotscan.org/tx",
+    explorer: "https://sepolia.kakarotscan.org/tx/",
+    explorerAddress: "https://sepolia.kakarotscan.org/address/",
   },
 };
 

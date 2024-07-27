@@ -132,7 +132,7 @@ const Explorer = (props: Props) => {
   }
 
   const redirectToExplorer = (id:number,hash:any) =>{
-    const url = ChainJsonData[id].explorer+hash
+    const url = ChainJsonData[id].explorerAddress+hash
     window.open(url, '_blank');
   }
 
