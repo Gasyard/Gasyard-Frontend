@@ -31,9 +31,9 @@ import darrow from "../../assets/darrow.svg";
 import redirectLogo from "../../assets/redirect.svg";
 import retry from "../../assets/retry.svg";
 import success_animation from "../../assets/animations/success-animation.json";
-import on_going_trxn_animation from "../../assets/animations/on-going-txn.json";
+import on_going_trxn_animation from "../../assets/animations/waitingAnimation.json";
 import rejected_animation from "../../assets/animations/rejected-animation.json";
-import pending_animation from "../../assets/animations/pending-animation.json"
+import pending_animation from "../../assets/animations/pendingAnimation2.json"
 
 import Lottie from "lottie-react";
 import { observer } from "mobx-react";
