@@ -35,6 +35,9 @@ import polygonlogo from './assets/chains/polygon.svg'
 import scrolllogo from './assets/chains/scroll.svg'
 import sepolialogo from "./assets/coins/sepolia.png";
 import mantlelogo from "./assets/chains/mantle.svg"
+import karakotlogo from './assets/chains/kakarot.png'
+import berachianlogo from './assets/chains/berchain.png'
+import morphlogo from './assets/chains/Morph.png'
 import { ChainJsonData } from "./Config/data";
 
 import { PrivyProvider } from '@privy-io/react-auth';
@@ -62,27 +65,32 @@ if (process.env.REACT_APP_SERVER == "testnet") {
     {
       ...baseSepolia,
       iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["84532"].routerContract
+      contractAddress: ChainJsonData["84532"].routerContract,
+      explorer:ChainJsonData["84532"].explorer
     },
     {
       ...arbitrumSepolia,
-      iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["421614"].routerContract
+      iconUrl: arbitumlogo,
+      contractAddress: ChainJsonData["421614"].routerContract,
+      explorer:ChainJsonData["421614"].explorer
     },
     {
       ...morphSepolia,
-      iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["2710"].routerContract
+      iconUrl: morphlogo,
+      contractAddress: ChainJsonData["2710"].routerContract,
+      explorer:ChainJsonData["2710"].explorer
     },
     {
       ...kakarotSepolia,
-      iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["1802203764"].routerContract
+      iconUrl: karakotlogo,
+      contractAddress: ChainJsonData["1802203764"].routerContract,
+      explorer:ChainJsonData["1802203764"].explorer
     },
     {
       ...berachainTestnet,
-      iconUrl: sepolialogo,
-      contractAddress: ChainJsonData["80085"].routerContract
+      iconUrl: berachianlogo,
+      contractAddress: ChainJsonData["80085"].routerContract,
+      explorer:ChainJsonData["80085"].explorer
     }
     
   ] as const;
