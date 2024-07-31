@@ -206,12 +206,12 @@ const ChainJsonData: Networks = {
     explorer: "https://sepolia.kakarotscan.org/tx/",
     explorerAddress: "https://sepolia.kakarotscan.org/address/",
   },
-  80085: {
+  80084: {
     networkName: "berachaintestnet",
-    chainID: 80085,
+    chainID: 80084,
     baseToken: "BERA",
     decimals: 18,
-    rpc: "https://bartio.rpc.berachain.com/",
+    rpc: "https://bartio.rpc.berachain.com",
     feedaddress: "0x0000000000000000000000000000000000000000",
     priceProvider:
       "https://api.bybit.com/v5/market/tickers?category=spot&symbol=MNTUSDT",
@@ -221,9 +221,10 @@ const ChainJsonData: Networks = {
     gweiLimit: 400000,
     isGasByLifi: false,
     minimumGas: 0.001,
-    explorer: "https://sepolia.kakarotscan.org/tx/",
-    explorerAddress: "https://sepolia.kakarotscan.org/address/",
+    explorer: "https://bartio.beratrail.io/tx/",
+    explorerAddress: "https://bartio.beratrail.io/address/",
   },
+  
 };
 
 

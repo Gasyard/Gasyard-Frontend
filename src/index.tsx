@@ -22,7 +22,7 @@ import {
   arbitrumSepolia,
   morphSepolia,
   kakarotSepolia,
-  berachainTestnet
+  berachainTestnet,
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -37,10 +37,10 @@ import sepolialogo from "./assets/coins/sepolia.png";
 import mantlelogo from "./assets/chains/mantle.svg"
 import karakotlogo from './assets/chains/kakarot.png'
 import berachianlogo from './assets/chains/berchain.png'
+import movementtestnetlogo from './assets/chains/movmenttestnet.jpg'
 import morphlogo from './assets/chains/Morph.png'
 import { ChainJsonData } from "./Config/data";
-
-import { PrivyProvider } from '@privy-io/react-auth';
+import { MovementTestnet,BerachainTestnet } from "./Config/config";
 
 
 // 0. Setup queryClient
@@ -64,7 +64,7 @@ if (process.env.REACT_APP_SERVER == "testnet") {
   const chains = [
     {
       ...baseSepolia,
-      iconUrl: sepolialogo,
+      iconUrl: baselogo,
       contractAddress: ChainJsonData["84532"].routerContract,
       explorer:ChainJsonData["84532"].explorer
     },
@@ -86,11 +86,24 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       contractAddress: ChainJsonData["1802203764"].routerContract,
       explorer:ChainJsonData["1802203764"].explorer
     },
+    // {
+    //   ...berachainTestnet,
+    //   iconUrl: berachianlogo,
+    //   contractAddress: ChainJsonData["80085"].routerContract,
+    //   explorer:ChainJsonData["80085"].explorer
+    // }
     {
-      ...berachainTestnet,
+      ...MovementTestnet,
+      iconUrl:movementtestnetlogo,
+      contractAddress: ChainJsonData["30732"].routerContract,
+      explorer:ChainJsonData["30732"].explorer
+    },
+    {
+      ...BerachainTestnet,
       iconUrl: berachianlogo,
-      contractAddress: ChainJsonData["80085"].routerContract,
-      explorer:ChainJsonData["80085"].explorer
+      contractAddress: ChainJsonData["80084"].routerContract,
+      explorer:ChainJsonData["80084"].explorer
+
     }
     
   ] as const;
