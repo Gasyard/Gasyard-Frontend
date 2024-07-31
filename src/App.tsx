@@ -11,6 +11,7 @@ import TransactionPopup from './Components/TransactionPopup/TransactionPopup';
 import { observer } from 'mobx-react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Explorer from './Components/Explorer/Explorer';
+import Liquidity from './Components/Liquidity/Liquidity';
 
 
 const App = observer(() => {
@@ -38,6 +39,15 @@ const App = observer(() => {
             <>
             <Header />
             <Explorer />
+            </>
+          } />
+
+      <Route
+        path="/liquidity"
+        element={ 
+            <>
+            <Header />
+            <Liquidity />
             </>
           } />
 
