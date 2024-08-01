@@ -179,8 +179,8 @@ const ChainJsonData: Networks = {
     feedaddress: "0x0000000000000000000000000000000000000000",
     priceProvider:
       "https://api.bybit.com/v5/market/tickers?category=spot&symbol=MNTUSDT",
-    routerContract: "0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
-    liquidityPool: "0xB127256729cD60988f681eFe4522aB1E30619e59",
+    routerContract: "0x3f7b7bA399fA8Ae547F96c31F03fa27564564Cc6",
+    liquidityPool: "0x3AF7Fd52DA42e9f1626C026Ab7dEa4B668085743",
     platformFeePercentage: 1,
     gweiLimit: 400000,
     isGasByLifi: false,
