@@ -1,5 +1,6 @@
 import React from "react";
-import './Liquidity.css'
+import "./Liquidity.css";
+import { iconMap } from "../../Config/data";
 
 type Props = {};
 
@@ -9,6 +10,9 @@ const Liquidity = (props: Props) => {
       <div className="liquidity-table-container">
         <table>
           <thead>
+            <tr>
+              <th className="liquidity-table-title" colSpan={7}>Liquidity Pools <span className="TVL_text">TVL : $44,000.63</span></th>
+            </tr>
             <tr>
               <th>Asset Name</th>
               <th>Status</th>
@@ -21,19 +25,53 @@ const Liquidity = (props: Props) => {
           </thead>
           <tbody>
             <tr>
-            <td>
-                <div className="chain">Ethereum</div>
-            </td>
-            <td></td>
-            <td>$1,002.43</td>
-            <td>$1,002.43</td>
-            <td>$1.43</td>
-            <td>
-                <div className="action_btn">
-                    <button>Deposit</button>
-                    <button>Withdraw</button>
+              <td>
+                <div className="chain">
+                  <img className="chain-logo" src={iconMap[1]} />
+                  Ethereum
                 </div>
-            </td>
+              </td>
+              <td>
+                <div className="statusWrap">
+                  <span className={`status success`}></span>
+                  Success
+                </div>
+              </td>
+              <td>$1,002.43</td>
+              <td>$1,00.43</td>
+              <td>$1,00.43</td>
+              <td>$1.43</td>
+              <td>
+                <div className="action_btn">
+                  <button className="deposit-btn">Deposit</button>
+                  <button className="withdraw-btn">Withdraw</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div className="chain">
+                  <img className="chain-logo" src={iconMap[42161]} />
+                  Arbitrum
+                </div>
+              </td>
+              <td>
+                <div className="statusWrap">
+                  <span className={`status success`}></span>
+                  Success
+                </div>
+              </td>
+              <td>$1,002.43</td>
+              <td>$1,00.43</td>
+              <td>$1,00.43</td>
+              <td>$1.43</td>
+              <td>
+                <div className="action_btn">
+                  <button className="deposit-btn">Deposit</button>
+                  <button className="withdraw-btn">Withdraw</button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

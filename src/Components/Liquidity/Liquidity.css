@@ -4,6 +4,7 @@
     border: 1px solid #E4E7EC;
     box-shadow: 0px 1px 2px 0px #1018280D;
     margin: 20px auto;
+    margin-top: 60px;
 }
 .liquidity-table-container table{
     width: 100%;
@@ -63,7 +64,7 @@
 }
 .liquidity-table-container table tbody tr td:nth-child(1),
 .liquidity-table-container table thead tr th:nth-child(1){
-    /* width:151px; */
+    width:270px;
 }
 .liquidity-table-container table tbody tr td:nth-child(2),
 .liquidity-table-container table thead tr th:nth-child(2){
@@ -128,4 +129,65 @@
 }
 .liquidity-table-container table{
     border-collapse: collapse;
+}
+.action_btn{
+    display: flex;
+    column-gap: 10px;
+}
+.action_btn button{
+    padding: 18px 34px 18px 34px;
+    border-radius: 26px;
+    border: 1px;
+    border: 1px solid #1557E2;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+}
+.action_btn .deposit-btn{
+    background-color: #1557E2;
+    color: #fff;
+}
+.action_btn .withdraw-btn{
+    color:#1557E2
+}
+.chain{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+.chain .chain-logo{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.liquidity-table-container table thead tr th.liquidity-table-title{
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    text-align: left;
+    color: #101828;
+}
+.liquidity-table-container table thead tr th.liquidity-table-title span.TVL_text{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    color: #6941C6;
+    padding: 2px 8px 2px 8px;
+    border-radius: 16px;
+    border: 1px solid #E4E7EC;
+    background-color: #F9F5FF;
+}
+
+@media screen and (max-width:768px) {
+    .liquidity-table-container{
+        max-width: 100%;
+        overflow-x: scroll;
+        padding: 20px;
+        margin-top: 20px;
+    }
 }
