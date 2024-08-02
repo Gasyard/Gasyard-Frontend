@@ -1,12 +1,19 @@
 import React from "react";
 import "./Liquidity.css";
 import { iconMap } from "../../Config/data";
+import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
+import { useDisclosure } from "@chakra-ui/react";
 
 type Props = {};
 
 const Liquidity = (props: Props) => {
+  const {  isOpen, onOpen, onClose} = useDisclosure();
+  const onClickDeposit = () =>{
+    onOpen()
+  }
   return (
     <div className="LiquidityRoot">
+      <LiquidityPopup isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <div className="liquidity-table-container">
         <table>
           <thead>
@@ -43,7 +50,7 @@ const Liquidity = (props: Props) => {
               <td>$1.43</td>
               <td>
                 <div className="action_btn">
-                  <button className="deposit-btn">Deposit</button>
+                  <button className="deposit-btn" onClick={onClickDeposit}>Deposit</button>
                   <button className="withdraw-btn">Withdraw</button>
                 </div>
               </td>
@@ -68,7 +75,7 @@ const Liquidity = (props: Props) => {
               <td>$1.43</td>
               <td>
                 <div className="action_btn">
-                  <button className="deposit-btn">Deposit</button>
+                  <button className="deposit-btn" onClick={onClickDeposit}>Deposit</button>
                   <button className="withdraw-btn">Withdraw</button>
                 </div>
               </td>
