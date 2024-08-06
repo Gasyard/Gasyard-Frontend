@@ -24,6 +24,18 @@ export const BerachainTestnet = defineChain({
   },
 })
 
+export const MorphHolesky = defineChain({
+  id: 2810,
+  name: 'MorphHolesky',
+  nativeCurrency: { name: 'MorphHolesky', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://rpc-holesky.morphl2.io'] },
+  },
+  blockExplorers: {
+    default: { name: 'explorerMorph', url: 'https://explorer-holesky.morphl2.io' },
+  },
+})
+
 export const MovementTestnet = defineChain({
   id: 30732,
   name: 'MovementTestnet',
