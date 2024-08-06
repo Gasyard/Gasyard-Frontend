@@ -40,7 +40,7 @@ import berachianlogo from './assets/chains/berchain.png'
 import movementtestnetlogo from './assets/chains/movmenttestnet.jpg'
 import morphlogo from './assets/chains/Morph.png'
 import { ChainJsonData } from "./Config/data";
-import { MovementTestnet,BerachainTestnet } from "./Config/config";
+import { MovementTestnet,BerachainTestnet, MorphHolesky } from "./Config/config";
 
 
 // 0. Setup queryClient
@@ -75,7 +75,7 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       explorer:ChainJsonData["421614"].explorer
     },
     {
-      ...morphSepolia,
+      ...MorphHolesky,
       iconUrl: morphlogo,
       contractAddress: ChainJsonData["2810"].routerContract,
       explorer:ChainJsonData["2810"].explorer
