@@ -38,7 +38,7 @@ const NavDrawer = (props: Props) => {
                 Transaction History
               </a>
 
-              <a className="na-history" href="#jhj" onClick={onClose}>
+              <a className="na-history" href="/liquidity" onClick={onClose}>
                 {" "}
                 Liquidity
               </a>

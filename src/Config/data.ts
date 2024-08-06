@@ -10,6 +10,7 @@ import selectLogo from "../assets/chains/select.png";
 import morphlogo from '../assets/chains/Morph.png';
 import karakotlogo from '../assets/chains/kakarot.png'
 import berachianlogo from '../assets/chains/berchain.png' 
+import movementLogo from '../assets/chains/movmenttestnet.jpg'
 import { ImageMapType, Networks } from "./types";
 
 const iconMap: ImageMapType = {
@@ -25,7 +26,8 @@ const iconMap: ImageMapType = {
   "84532":sepolialogo,
   "2710":morphlogo,
   "1802203764":karakotlogo,
-  "80085":berachianlogo
+  "80084":berachianlogo,
+  "30732":movementLogo
 };
 const ChainJsonData: Networks = {
   "1": {
