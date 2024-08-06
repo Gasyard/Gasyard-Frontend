@@ -24,7 +24,7 @@ const iconMap: ImageMapType = {
   "11155111": sepolialogo,
   "421614": arbitumlogo,
   "84532":sepolialogo,
-  "2710":morphlogo,
+  "2810":morphlogo,
   "1802203764":karakotlogo,
   "80084":berachianlogo,
   "30732":movementLogo
@@ -154,12 +154,12 @@ const ChainJsonData: Networks = {
     explorer: "https://sepolia.arbiscan.io/tx/",
     explorerAddress: "https://sepolia.arbiscan.io/address/",
   },
-  2710: {
+  2810: {
     networkName: "morphtestnet",
-    chainID: 2710,
+    chainID: 2810,
     baseToken: "ETH",
     decimals: 18,
-    rpc: "https://rpc-testnet.morphl2.io",
+    rpc: "https://rpc-holesky.morphl2.io",
     feedaddress: "0x0000000000000000000000000000000000000000",
     routerContract: "0x962aFaAc50017cA191EE362B60aA137D9BBD2850",
     liquidityPool: "0xB127256729cD60988f681eFe4522aB1E30619e59",
