@@ -77,8 +77,8 @@ if (process.env.REACT_APP_SERVER == "testnet") {
     {
       ...morphSepolia,
       iconUrl: morphlogo,
-      contractAddress: ChainJsonData["2710"].routerContract,
-      explorer:ChainJsonData["2710"].explorer
+      contractAddress: ChainJsonData["2810"].routerContract,
+      explorer:ChainJsonData["2810"].explorer
     },
     {
       ...kakarotSepolia,
