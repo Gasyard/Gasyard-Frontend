@@ -36,8 +36,8 @@ import scrolllogo from './assets/chains/scroll.svg'
 import sepolialogo from "./assets/coins/sepolia.png";
 import mantlelogo from "./assets/chains/mantle.svg"
 import karakotlogo from './assets/chains/kakarot.png'
-import berachianlogo from './assets/chains/berchain.png'
-import movementtestnetlogo from './assets/chains/movmenttestnet.jpg'
+import berachianlogo from './assets/chains/Berachain.svg'
+import movementtestnetlogo from './assets/chains/movement-testnet-token.svg'
 import morphlogo from './assets/chains/Morph.png'
 import { ChainJsonData } from "./Config/data";
 import { MovementTestnet,BerachainTestnet, MorphHolesky } from "./Config/config";

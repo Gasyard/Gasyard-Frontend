@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -25,6 +25,9 @@ import {
 } from "@chakra-ui/react";
 import { iconMap } from "../../Config/data";
 import "./LiquidityPopup.css";
+import { useTransactionReceipt, useWriteContract } from "wagmi";
+import { AbiPool } from "../../Config/JSON/AbiPool";
+import { parseEther } from "viem";
 
 type Props = {
   isOpen: boolean;
@@ -35,6 +38,11 @@ type Props = {
 const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const balance = 10;
+
+  const {writeContract,status,error,data} = useWriteContract();
+  const {data:txReceiptData} = useTransactionReceipt({
+    hash:data
+  })
   const handleInputChange = (e:any) => {
     setInputValue(e.target.value);
   };
@@ -42,6 +50,32 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
   const onClickPercent = (percent:number) =>{
     setInputValue(String(balance*percent))
   }
+  const onSubmit = ()=>{
+    try{
+      const res = writeContract({
+        abi:AbiPool,
+        address:"0x6b175474e89094c44da98b954eedeac495271d0f",
+        functionName: 'removeFromPool',
+        args: [
+                parseEther("0.001"),
+              ],
+        // value:parseEther("12"),
+
+      })
+    }catch(err){
+
+    }
+  }
+
+  useEffect(() => {
+    console.log("Error ->",error?.cause,error?.message,error?.name,error)
+  }, [error])
+  useEffect(() => {
+    
+  }, [data])
+  useEffect(() => {
+    
+  }, [txReceiptData])
   return (
     <div className="LiquidityPopupRoot">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
@@ -56,7 +90,9 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
             boxShadow: "0px 0px 0px 1px #09194821,0px 1px 2px 0px #12376914",
           }}
         >
-          <ModalHeader borderBottom="1px solid #F1F2F4">Withdraw</ModalHeader>
+          <ModalHeader borderBottom="1px solid #F1F2F4">Withdraw {status} {error?.message} 
+            <p>hash {data}</p>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
             <div className="BodyWrap">
@@ -115,7 +151,7 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
                 </div>
               </div>
               <div className="SubmitBtn">
-                <button>Deposit</button>
+                <button onClick={onSubmit}>Deposit</button>
               </div>
             </div>
           </ModalBody>

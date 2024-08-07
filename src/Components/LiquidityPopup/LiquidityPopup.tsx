@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -25,6 +25,9 @@ import {
 } from "@chakra-ui/react";
 import { iconMap } from "../../Config/data";
 import './LiquidityPopup.css'
+import { AbiPool } from "../../Config/JSON/AbiPool";
+import { useTransactionReceipt, useWriteContract } from "wagmi";
+import { ethers, parseEther } from "ethers";
 
 type Props = {
     isOpen:boolean,
@@ -33,8 +36,51 @@ type Props = {
     chain?:any
 };
 
+const addToAbi = [
+  {
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "mintAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "addToPool",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+] as const
+export const abi = [
+  {
+    type: 'function',
+    name: 'approve',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'spender', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+  {
+    type: 'function',
+    name: 'transferFrom',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'sender', type: 'address' },
+      { name: 'recipient', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+] as const
+
 const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
+  const { writeContract, data, isPending, isSuccess, status,error } = useWriteContract();
+  const {data:txReceiptData} = useTransactionReceipt({
+    hash:data
+  })
   const balance = 10;
   const handleInputChange = (e:any) => {
     setInputValue(e.target.value);
@@ -43,6 +89,40 @@ const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
   const onClickPercent = (percent:number) =>{
     setInputValue(String(balance*percent))
   }
+
+  const onSubmit = () =>{
+    console.log("on deposit clicked",inputValue)
+    if(inputValue !== ""){
+      // console.log()
+      try {
+        const result = writeContract({ 
+          abi:AbiPool,
+          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+          functionName: 'addToPool',
+          args: [
+            parseEther("0.001"),
+          ],
+          value:parseEther("0.001")
+        });
+      
+      } catch (err) {
+        console.log("err", err);
+      }
+    }
+    
+  }
+  useEffect(() => {
+    console.log("Error ->",error?.cause,error?.message,error?.name,error)
+  }, [error])
+  useEffect(() => {
+    
+  }, [data])
+  useEffect(() => {
+    
+  }, [txReceiptData])
+
+  
+  
   return (
     <div className="LiquidityPopupRoot">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
@@ -57,7 +137,9 @@ const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
             boxShadow:"0px 0px 0px 1px #09194821,0px 1px 2px 0px #12376914"
            }}
         >
-          <ModalHeader borderBottom="1px solid #F1F2F4">Deposit</ModalHeader>
+          <ModalHeader borderBottom="1px solid #F1F2F4">Deposit {status}-{error && error.message} 
+            <p>hash - {data}</p>
+            </ModalHeader>
           <ModalCloseButton />
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
             <div className="BodyWrap">
@@ -101,7 +183,7 @@ const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
                 </div> */}
               </div>
               <div className="SubmitBtn">
-                <button>Deposit</button>
+                <button onClick={onSubmit}>Deposit</button>
               </div>
             </div>
           </ModalBody>
