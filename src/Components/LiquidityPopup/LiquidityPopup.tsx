@@ -92,8 +92,6 @@ const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
 
   const onSubmit = () =>{
     console.log("on deposit clicked",inputValue)
-    if(inputValue !== ""){
-      // console.log()
       try {
         const result = writeContract({ 
           abi:AbiPool,
@@ -108,8 +106,6 @@ const LiquidityPopup = ({isOpen, onOpen, onClose,chain}: Props) => {
       } catch (err) {
         console.log("err", err);
       }
-    }
-    
   }
   useEffect(() => {
     console.log("Error ->",error?.cause,error?.message,error?.name,error)
