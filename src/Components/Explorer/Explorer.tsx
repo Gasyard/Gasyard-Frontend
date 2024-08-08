@@ -318,7 +318,7 @@ const Explorer = (props: Props) => {
                       Chain:{" "}
                       <img src={iconMap[item.inputChainID]} className="logo" />
                       {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken}
-                      {/* <img src={redirect_logo} /> */}
+                      <img src={redirect_logo} className="redirect"  onClick={() => redirectToExplorer(item.inputChainID,item.inputAddress)}/>
                     </div>
                   </td>
 
@@ -330,7 +330,7 @@ const Explorer = (props: Props) => {
                         className="logo"
                       />
                       {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
-                      {/* <img src={redirect_logo} /> */}
+                      <img src={redirect_logo} className="redirect" onClick={() => redirectToExplorer(item.outputChainID,item.outputAddress)}/>
                     </div>
                   </td>
                   <td>{formatDate(item.updatedAt)}</td>

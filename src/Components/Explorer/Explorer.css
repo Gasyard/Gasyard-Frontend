@@ -319,6 +319,10 @@ table .chain img.logo{
 .status.failed{
     background-color: #FF0000;
 }
+.token .redirect,
+.chain .redirect{
+    cursor: pointer;
+}
 @media screen and (max-width:720px) {
     .ExplorerApp{
         max-width: 100%;
