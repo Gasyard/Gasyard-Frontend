@@ -23,7 +23,7 @@ const iconMap: ImageMapType = {
   "5000": mantlelogo,
   "11155111": sepolialogo,
   "421614": arbitumlogo,
-  "84532":sepolialogo,
+  "84532":baselogo,
   "2810":morphlogo,
   "1802203764":karakotlogo,
   "80084":berachianlogo,

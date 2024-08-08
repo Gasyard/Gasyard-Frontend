@@ -37,8 +37,8 @@ const Liquidity = (props: Props) => {
 
   return (
     <div className="LiquidityRoot">
-      <LiquidityPopup isOpen={isOpen && depositPopup} onOpen={onOpen} onClose={onCloseDeposit} chain={selectedChain} />
-      <LiquidityWithdrawPopup isOpen={isOpen && withdrawPopup} onOpen={onOpen} onClose={onCloseWithdraw} chain={selectedChain}/>
+      <LiquidityPopup is_liquidtyModalOpen={isOpen && depositPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseDeposit} chain={selectedChain} />
+      <LiquidityWithdrawPopup is_liquidtyModalOpen={isOpen && withdrawPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseWithdraw} chain={selectedChain}/>
       <div className="liquidity-table-container">
         <table>
           <thead>

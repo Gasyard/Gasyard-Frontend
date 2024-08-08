@@ -28,14 +28,15 @@ import "./LiquidityPopup.css";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { AbiPool } from "../../Config/JSON/AbiPool";
 import { parseEther } from "viem";
+import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
 
 type Props = {
-  isOpen: boolean;
+  is_liquidtyModalOpen: boolean;
   onOpen: any;
-  onClose: any;
+  on_liquidtyModalClose: any;
   chain?:any;
 };
-const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
+const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const balance = 10;
 
@@ -43,6 +44,16 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
   const {data:txReceiptData} = useTransactionReceipt({
     hash:data
   })
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [openTransactionPopup, setopenTransactionPopup] = useState(false);
+
+  const ClearState = () =>{
+    setInputValue("")
+  }
+  const setTransactionModal = (value: boolean) => {
+    setopenTransactionPopup(value);
+  };
   const handleInputChange = (e:any) => {
     setInputValue(e.target.value);
   };
@@ -62,6 +73,7 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
         // value:parseEther("12"),
 
       })
+      setopenTransactionPopup(true)
     }catch(err){
 
     }
@@ -80,7 +92,7 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
     <div className="LiquidityPopupRoot">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <Modal blockScrollOnMount={false} isOpen={is_liquidtyModalOpen} onClose={on_liquidtyModalClose}>
         <ModalOverlay />
         <ModalContent
           sx={{
@@ -90,8 +102,8 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
             boxShadow: "0px 0px 0px 1px #09194821,0px 1px 2px 0px #12376914",
           }}
         >
-          <ModalHeader borderBottom="1px solid #F1F2F4">Withdraw {status} {error?.message} 
-            <p>hash {data}</p>
+          <ModalHeader borderBottom="1px solid #F1F2F4">Withdraw {status} 
+            
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
@@ -123,7 +135,7 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
               <div className="chainDisplay">
                 <img src={chain && iconMap[chain.id]} className="chainImg" />
                 <div className="chainInfo">
-                  ETH <span className="balance">Balance: {balance}</span>
+                {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {balance}</span>
                 </div>
 
                 <input placeholder="0.0" type="text" className="inputAmount" value={inputValue} onChange={handleInputChange}/>
@@ -151,12 +163,29 @@ const LiquidityWithdrawPopup = ({ isOpen, onOpen, onClose, chain }: Props) => {
                 </div>
               </div>
               <div className="SubmitBtn">
-                <button onClick={onSubmit}>Deposit</button>
+                <button onClick={onSubmit}>Withdraw</button>
               </div>
             </div>
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <LiquidityTransactionPopup 
+       isOpen={openTransactionPopup}
+       onOpen={onOpen}
+       onClose={onClose}
+       setModal={setTransactionModal}
+       rejected={status === "error"}
+       success={status === "success"}
+       pending={status === "pending"}
+       onSubmit={onSubmit}
+       txReceiptHash={txReceiptData}
+       chain={chain}
+       ClearState={ClearState}
+       error={error ? error.message : ""}
+       txHash={data}
+       isDeposit={false}
+      />
     </div>
   );
 };

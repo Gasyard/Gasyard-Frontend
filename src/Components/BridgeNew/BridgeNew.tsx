@@ -323,7 +323,7 @@ const BridgeNew = observer((props: Props) => {
   const ReturnBalance = () => {
     if (address) {
       return (
-        <>{accBalance != "" ? accBalance + " ETH" : <Spinner size="xs" />}</>
+        <>{accBalance != "" ? accBalance + ` ${chain1 && chain1.nativeCurrency.symbol}` : <Spinner size="xs" />}</>
       );
     } else {
     }
