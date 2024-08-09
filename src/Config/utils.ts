@@ -30,11 +30,29 @@ const convertEthToWeiAndBack = (ethString:string) => {
     
     
   };
+  const CompareValues = (input: string, balance: string) => {
+    //console.log("bigint ",parseEther(balance),parseEther(input).valueOf())
+    try{
+      const inp = parseFloat(input) * 1e18
+      const out = parseFloat(balance) * 1e18
+      const to_subtract = parseFloat("0.0001") * 1e18
+      const new_out = out-to_subtract;
+      console.log("CompareValues",new_out,inp)
+      return new_out >= inp
+    }
+    catch(err){
+      console.group("CompareValues err",err)
+      return false
+    }
+    
+  };
+  
 
   const get_wei = (val:string) =>{
 
   }
   
 export {
-    convertEthToWeiAndBack
+    convertEthToWeiAndBack,
+    CompareValues
 }

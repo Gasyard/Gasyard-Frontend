@@ -29,6 +29,7 @@ import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { AbiPool } from "../../Config/JSON/AbiPool";
 import { parseEther } from "viem";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
+import { CompareValues } from "../../Config/utils";
 
 type Props = {
   is_liquidtyModalOpen: boolean;
@@ -55,7 +56,15 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
     setopenTransactionPopup(value);
   };
   const handleInputChange = (e:any) => {
-    setInputValue(e.target.value);
+    var value = e.target.value;
+    console.log(value)
+    // var ele = value.split(".");
+    // if (ele[1] && ele[1].length > 5) {
+    //   var e = ele[1];
+    //   e = e.substring(0, 5);
+    //   value = ele[0] + "." + e;
+    // }
+    setInputValue(value);
   };
 
   const onClickPercent = (percent:number) =>{
@@ -78,6 +87,28 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
 
     }
   }
+
+ 
+  const isNumberKey = (evt: any) => {
+    const charCode = evt.which ? evt.which : evt.keyCode;
+
+    // Check if the character is a dot (.)
+    if (charCode === 46) {
+      // Allow the dot if it's not already present in the input value
+      if (inputValue.indexOf(".") === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      // Allow digits (0-9)
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
 
   useEffect(() => {
     console.log("Error ->",error?.cause,error?.message,error?.name,error)
@@ -138,7 +169,18 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                 {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {balance}</span>
                 </div>
 
-                <input placeholder="0.0" type="text" className="inputAmount" value={inputValue} onChange={handleInputChange}/>
+                <input 
+                placeholder="0.0" 
+                type="text" 
+                className="inputAmount" 
+                onChange={handleInputChange}
+                onKeyPress={(e) => {
+                   if (!isNumberKey(e)) {
+                     e.preventDefault();
+                   }
+                 }}
+                value={inputValue}
+                />
               </div>
               <div className="percentDisplay">
                 <button onClick={() => onClickPercent(0.25)}>25%</button>
@@ -163,7 +205,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                 </div>
               </div>
               <div className="SubmitBtn">
-                <button onClick={onSubmit}>Withdraw</button>
+                <button onClick={onSubmit} disabled={!CompareValues(inputValue,String(balance))}>Withdraw</button>
               </div>
             </div>
           </ModalBody>

@@ -29,6 +29,7 @@ import { AbiPool } from "../../Config/JSON/AbiPool";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { ethers, parseEther } from "ethers";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
+import { CompareValues } from "../../Config/utils";
 
 type Props = {
     is_liquidtyModalOpen:boolean,
@@ -53,7 +54,15 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
   }
 
   const handleInputChange = (e:any) => {
-    setInputValue(e.target.value);
+    var value = e.target.value;
+
+    var ele = value.split(".");
+    if (ele[1] && ele[1].length > 5) {
+      var e = ele[1];
+      e = e.substring(0, 5);
+      value = ele[0] + "." + e;
+    }
+    setInputValue(value);
   };
 
   const onClickPercent = (percent:number) =>{
@@ -81,6 +90,26 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
         console.log("err", err);
       }
   }
+  const isNumberKey = (evt: any) => {
+    const charCode = evt.which ? evt.which : evt.keyCode;
+
+    // Check if the character is a dot (.)
+    if (charCode === 46) {
+      // Allow the dot if it's not already present in the input value
+      if (inputValue.indexOf(".") === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      // Allow digits (0-9)
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
   useEffect(() => {
     console.log("Error ->",error?.cause,error?.message,error?.name,error)
   }, [error])
@@ -118,6 +147,11 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
                    placeholder="0.0"
                    style={{ width: `${inputValue.length + 3}ch` }}
                    onChange={handleInputChange}
+                   onKeyPress={(e) => {
+                      if (!isNumberKey(e)) {
+                        e.preventDefault();
+                      }
+                    }}
                    value={inputValue}
                    /><span className="nativeToken">{chain && chain.nativeCurrency.symbol}</span>
                 </div>
@@ -152,7 +186,7 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
                 </div> */}
               </div>
               <div className="SubmitBtn">
-                <button onClick={onSubmit}>Deposit</button>
+                <button onClick={onSubmit} disabled={!CompareValues(inputValue,String(balance))}>Deposit</button>
               </div>
             </div>
           </ModalBody>

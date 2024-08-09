@@ -118,6 +118,9 @@
     color:#FFFFFF;
     text-align: center;
 }
+.SubmitBtn button:disabled{
+    background-color: #929292;
+}
 .amountDisplayWithdrawWrap{
     padding: 16px;
 }
