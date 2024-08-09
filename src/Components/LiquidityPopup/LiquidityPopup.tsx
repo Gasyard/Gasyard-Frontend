@@ -26,11 +26,11 @@ import {
 import { iconMap } from "../../Config/data";
 import './LiquidityPopup.css'
 import { AbiPool } from "../../Config/JSON/AbiPool";
-import { useTransactionReceipt, useWriteContract } from "wagmi";
+import { useReadContract, useTransactionReceipt, useWriteContract } from "wagmi";
 import { ethers, parseEther } from "ethers";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
 import { CompareValues } from "../../Config/utils";
-
+import { pool_abi } from "../../Config/abi";
 type Props = {
     is_liquidtyModalOpen:boolean,
     onOpen:any,
@@ -45,6 +45,18 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
   const {data:txReceiptData} = useTransactionReceipt({
     hash:data
   })
+  
+  const { data:pool_balance } = useReadContract({
+    abi:pool_abi,
+    functionName: 'balanceOf',
+    args: [chain && chain.liquidityPool],
+  })
+  const fetchBalance = (contract:`0x${string}`) =>{
+    
+
+    console.log("balance",data)
+  }
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const balance = 10;
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
@@ -72,13 +84,16 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
   const setTransactionModal = (value: boolean) => {
     setopenTransactionPopup(value);
   };
+
+  //const web3instance = new <Web></Web>()
   
   const onSubmit = () =>{
     console.log("on deposit clicked",inputValue)
       try {
+
         const result = writeContract({ 
           abi:AbiPool,
-          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+          address: chain.liquidityPool,
           functionName: 'addToPool',
           args: [
             parseEther("0.001"),
@@ -117,8 +132,12 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
     
   }, [data])
   useEffect(() => {
+    if(chain){
+      console.log("pool_balance",chain?.liquidityPool)
+      fetchBalance(chain.liquidityPool)
+    }
     
-  }, [txReceiptData])
+  }, [chain])
 
   
   

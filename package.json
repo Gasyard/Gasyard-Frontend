@@ -33,7 +33,7 @@
     "viem": "2.x",
     "wagmi": "^2.10.2",
     "web-vitals": "^2.1.0",
-    "web3": "^4.10.0"
+    "web3": "^4.11.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Liquidity.css";
 import { iconMap } from "../../Config/data";
 import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
@@ -6,6 +6,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import LiquidityWithdrawPopup from "../LiquidityPopup/LiquidityWithdrawPopup";
 import { useChains } from "wagmi";
 import { chainType } from "../../Config/types";
+import { FetchLiquidityPoolBalance } from "../../Config/utils";
 
 type Props = {};
 
@@ -16,6 +17,7 @@ const Liquidity = (props: Props) => {
   const [depositPopup, setdepositPopup] = useState(false);
   const [withdrawPopup, setwithdrawPopup] = useState(false);
   const [selectedChain, setselectedChain] = useState<chainType | null>(null);
+  const [liquidityPoolBalance, setliquidityPoolBalance] = useState(null)
   const onClickDeposit = (chain:any) =>{
     setdepositPopup(true)
     setselectedChain(chain)
@@ -35,6 +37,20 @@ const Liquidity = (props: Props) => {
     onClose()
   }
 
+  const getBlanace = async(Chains:any) =>{
+    const res = await FetchLiquidityPoolBalance(Chains);
+    console.log(res)
+    setliquidityPoolBalance(res)
+  }
+
+  useEffect(() => {
+    getBlanace(Chains)
+  }, [Chains])
+  useEffect(() => {
+    console.log("liquidityPoolBalance",liquidityPoolBalance)
+  }, [liquidityPoolBalance])
+  
+  
   return (
     <div className="LiquidityRoot">
       <LiquidityPopup is_liquidtyModalOpen={isOpen && depositPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseDeposit} chain={selectedChain} />
@@ -71,7 +87,7 @@ const Liquidity = (props: Props) => {
                   Success
                 </div>
               </td>
-              <td>$1,002.43</td>
+              <td>{liquidityPoolBalance && liquidityPoolBalance[ele.id]} </td>
               <td>$1,00.43</td>
               <td>$1,00.43</td>
               <td>$1.43</td>

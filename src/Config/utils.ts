@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { formatEther, parseEther } from 'ethers';
+import Web3 from "web3";
 
 const convertEthToWeiAndBack = (ethString:string) => {
     try {
@@ -46,7 +47,30 @@ const convertEthToWeiAndBack = (ethString:string) => {
     }
     
   };
-  
+
+  // const FetchLiquidityPoolBalance = async(networkConfig:any) =>{
+  //   const web3Instance = new Web3(networkConfig.rpc);
+  //   const maxBalance = await web3Instance.eth.getBalance(networkConfig.liquidityPool);
+  //   return maxBalance;
+  // }
+  const FetchLiquidityPoolBalance = async(networkConfigList:any) =>{
+    var networkBalance:any = {};
+    
+    networkConfigList.map(async (networkConfig:any) =>{
+      try{
+        const web3Instance = new Web3(networkConfig.rpc);
+        const maxBalance = await web3Instance.eth.getBalance(networkConfig.liquidityPool);
+        console.log("networkConfig",networkConfig.name,maxBalance)
+        networkBalance[networkConfig.id] = maxBalance
+      }catch(err){
+        //networkBalance.push(parseEther("0"));
+        console.log("err",err,networkConfig.name,networkConfig.id)
+      }
+      
+    })
+    console.log("networkBalance",networkBalance)
+    return networkBalance;
+  }
 
   const get_wei = (val:string) =>{
 
@@ -54,5 +78,6 @@ const convertEthToWeiAndBack = (ethString:string) => {
   
 export {
     convertEthToWeiAndBack,
-    CompareValues
+    CompareValues,
+    FetchLiquidityPoolBalance
 }

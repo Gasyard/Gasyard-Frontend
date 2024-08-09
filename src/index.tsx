@@ -66,25 +66,29 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       ...baseSepolia,
       iconUrl: baselogo,
       contractAddress: ChainJsonData["84532"].routerContract,
-      explorer:ChainJsonData["84532"].explorer
+      explorer:ChainJsonData["84532"].explorer,
+      liquidityPool:ChainJsonData["84532"].liquidityPool
     },
     {
       ...arbitrumSepolia,
       iconUrl: arbitumlogo,
       contractAddress: ChainJsonData["421614"].routerContract,
-      explorer:ChainJsonData["421614"].explorer
+      explorer:ChainJsonData["421614"].explorer,
+      liquidityPool:ChainJsonData["421614"].liquidityPool
     },
     {
       ...MorphHolesky,
       iconUrl: morphlogo,
       contractAddress: ChainJsonData["2810"].routerContract,
-      explorer:ChainJsonData["2810"].explorer
+      explorer:ChainJsonData["2810"].explorer,
+      liquidityPool:ChainJsonData["2810"].liquidityPool
     },
     {
       ...kakarotSepolia,
       iconUrl: karakotlogo,
       contractAddress: ChainJsonData["1802203764"].routerContract,
-      explorer:ChainJsonData["1802203764"].explorer
+      explorer:ChainJsonData["1802203764"].explorer,
+      liquidityPool:ChainJsonData["1802203764"].liquidityPool
     },
     // {
     //   ...berachainTestnet,
@@ -96,13 +100,15 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       ...MovementTestnet,
       iconUrl:movementtestnetlogo,
       contractAddress: ChainJsonData["30732"].routerContract,
-      explorer:ChainJsonData["30732"].explorer
+      explorer:ChainJsonData["30732"].explorer,
+      liquidityPool:ChainJsonData["30732"].liquidityPool
     },
     {
       ...BerachainTestnet,
       iconUrl: berachianlogo,
       contractAddress: ChainJsonData["80084"].routerContract,
-      explorer:ChainJsonData["80084"].explorer
+      explorer:ChainJsonData["80084"].explorer,
+      liquidityPool:ChainJsonData["80084"].liquidityPool
 
     }
     
