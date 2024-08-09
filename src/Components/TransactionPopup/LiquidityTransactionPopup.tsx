@@ -177,7 +177,8 @@ const LiquidityTransactionPopup = observer(({ isOpen, onOpen, onClose, setModal,
                 />
 
                 <div className="rejection_text">
-                  {error}
+                  {error.includes("Connector not connected") ? "Please Connect Wallet" : 
+                  error.includes("User rejected the request") ? "User rejected the request!" : error}
                 </div>
 
                 <div className="retry" onClick={onSubmit}>
