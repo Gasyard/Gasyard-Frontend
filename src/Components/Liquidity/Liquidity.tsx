@@ -84,6 +84,8 @@ const Liquidity = (props: Props) => {
     }
   }
 
+  const totalVolumeLocked = liquidityPoolBalance &&
+    Object.values(liquidityPoolBalance).reduce((acc, obj) => acc + parseInt(obj.balanceinusd), 10);
 
   useEffect(() => {
     if (Chains) {
@@ -115,7 +117,7 @@ const Liquidity = (props: Props) => {
         <table>
           <thead>
             <tr>
-              <th className="liquidity-table-title" colSpan={7}>Liquidity Pools <span className="TVL_text">TVL : $44,000.63</span></th>
+              <th className="liquidity-table-title" colSpan={7}>Liquidity Pools <span className="TVL_text">TVL : ${totalVolumeLocked}</span></th>
             </tr>
             <tr>
               <th>Asset Name</th>
