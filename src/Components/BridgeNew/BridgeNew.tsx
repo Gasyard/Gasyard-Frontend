@@ -19,7 +19,7 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { convertEthToWeiAndBack, FetchPortfolioBalance } from "../../Config/utils";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
-import {ethers } from 'ethers';
+import { ethers } from 'ethers';
 import axios from "axios";
 import { getTransactionReceipt } from '@wagmi/core'
 import CloseIcon from "../../assets/CloseIcon.svg";
@@ -47,14 +47,15 @@ const BridgeNew = observer((props: Props) => {
   const [recepientAddress, setrecepientAddress] = useState<`0x${string}` | "">("");
   const [recepientAddressError, setrecepientAddressError] = useState("");
   const [allvalueFilled, setallvalueFilled] = useState(false);
+  const [isQuoteInProgress, setisQuoteInProgress] = useState(false);
 
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const { chains, switchChain } = useSwitchChain();
   const { writeContract, data, isPending, isSuccess, status } =
     useWriteContract();
-  
-  const {data:txReceiptData} = useTransactionReceipt({
-    hash:data
+
+  const { data: txReceiptData } = useTransactionReceipt({
+    hash: data
   })
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [accountBalance, setaccountBalance] = useState<
@@ -71,7 +72,7 @@ const BridgeNew = observer((props: Props) => {
 
   const { open, close } = useWeb3Modal();
 
-  const ClearState = () =>{
+  const ClearState = () => {
     setinputToken("")
     setoutputToken("")
     FormStore.setInputToken("")
@@ -87,7 +88,7 @@ const BridgeNew = observer((props: Props) => {
       debouncedValue !== "" &&
       accBalance != "" &&
       CompareValues(roundDecimal(debouncedValue), accBalance)
-      
+
     ) {
       setallvalueFilled(true);
       setdisableSubmitBtn(false)
@@ -95,18 +96,18 @@ const BridgeNew = observer((props: Props) => {
     } else {
       setallvalueFilled(false)
       setdisableSubmitBtn(true)
-      if(!chain1){
+      if (!chain1) {
         console.log("Chain1 empty")
       }
-      if(!chain2){
+      if (!chain2) {
         console.log("Chain2 empty")
       }
       if (accBalance && !CompareValues(roundDecimal(debouncedValue), accBalance)) {
         //console.log("from form handler");
         setsubmitBtnText("Insufficient Gas");
-        
+
       }
-      
+
       return false
     }
   };
@@ -119,7 +120,7 @@ const BridgeNew = observer((props: Props) => {
     if (chain1 && chain2 && inputToken) {
       const isTestnet = process.env.REACT_APP_SERVER === "testnet"
       const domain = isTestnet ? process.env.REACT_APP_BACKEND_API_TESTNET : process.env.REACT_APP_BACKEND_API
-      console.log("domain",domain,process.env.REACT_APP_BACKEND_API_TESTNET,process.env.REACT_APP_BACKEND_API)
+      console.log("domain", domain, process.env.REACT_APP_BACKEND_API_TESTNET, process.env.REACT_APP_BACKEND_API)
       const url = `${domain}/api/quote`;
 
       const options = {
@@ -133,6 +134,7 @@ const BridgeNew = observer((props: Props) => {
           "Content-type": "application/json",
         },
       };
+      setisQuoteInProgress(true);
       const response = await fetch(url, options);
 
       if (response.status === 400 || response.status === 500) {
@@ -150,24 +152,25 @@ const BridgeNew = observer((props: Props) => {
         });
         setoutputToken(result.outputTokenAmount.toFixed(5));
         FormStore.setOuputToken(result.outputTokenAmount.toFixed(5));
-        if(result.hasLiquidity === false){
+        if (result.hasLiquidity === false) {
           setsubmitBtnText("Low Liquidity!")
           setdisableSubmitBtn(true)
-        }else{
+        } else {
           setsubmitBtnText("Submit Transaction")
           FormHandler();
         }
       }
-    }else{
+      setisQuoteInProgress(false)
+    } else {
       setdisableSubmitBtn(true)
     }
-    
+
   };
 
   const ToggleDD = (ele: 0 | 1 | 2) => {
     settoSelectChain(ele);
     onOpen();
-    
+
   };
 
   const handleInputChange1 = (e: any) => {
@@ -181,7 +184,7 @@ const BridgeNew = observer((props: Props) => {
     }
 
     setinputToken(value);
-    
+
   };
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
@@ -268,7 +271,7 @@ const BridgeNew = observer((props: Props) => {
     setopenChainPopup(value);
     FormHandler()
   };
-  const reverseChain = async() => {
+  const reverseChain = async () => {
     const temp = chain1;
     setchain1(chain2);
     // await FormStore.setChain1(chain2)
@@ -296,15 +299,15 @@ const BridgeNew = observer((props: Props) => {
     setAccountBalance(result);
   };
 
-  const setAccountBalance = (portfolio:any) => {
+  const setAccountBalance = (portfolio: any) => {
     if (chain1 && portfolio && portfolio[chain1.id]) {
       var gweiValue;
       //console.log("setAccountBalance");
-      
-        gweiValue = parseEther(
-          String(portfolio[chain1.id].balance)
-        );
-      
+
+      gweiValue = parseEther(
+        String(portfolio[chain1.id].balance)
+      );
+
 
       const amount = formatEther(gweiValue);
       setaccBalance(roundDecimal(amount));
@@ -335,43 +338,43 @@ const BridgeNew = observer((props: Props) => {
     if (portfolio && chain1 && portfolio[chain1.id]) {
       var gweiValue;
       console.log("max gwei")
-        gweiValue = parseEther(
-          String(portfolio[chain1.id].balance)
-        );
-        console.log("max gwei",gweiValue)
-        if(gweiValue > parseEther("0.0001")){
-          const max_amout = formatEther(gweiValue - parseEther("0.0001"));
-          setinputToken(roundDecimal(max_amout));
-        }else{
-          const max_amout = formatEther(gweiValue);
-          setinputToken(roundDecimal(max_amout));
-        }
+      gweiValue = parseEther(
+        String(portfolio[chain1.id].balance)
+      );
+      console.log("max gwei", gweiValue)
+      if (gweiValue > parseEther("0.0001")) {
+        const max_amout = formatEther(gweiValue - parseEther("0.0001"));
+        setinputToken(roundDecimal(max_amout));
+      } else {
+        const max_amout = formatEther(gweiValue);
+        setinputToken(roundDecimal(max_amout));
       }
+    }
   };
 
-  
+
   const CompareValues = (input: string, balance: string) => {
     //console.log("bigint ",parseEther(balance),parseEther(input).valueOf())
-    try{
+    try {
       const inp = parseFloat(input) * 1e18
       const out = parseFloat(balance) * 1e18
       const to_subtract = parseFloat("0.0001") * 1e18
-      const new_out = out-to_subtract;
-      console.log("CompareValues",new_out,inp)
+      const new_out = out - to_subtract;
+      console.log("CompareValues", new_out, inp)
       return new_out >= inp
     }
-    catch(err){
-      console.group("CompareValues err",err)
+    catch (err) {
+      console.group("CompareValues err", err)
       return false
     }
-    
+
   };
 
-  const getTransactionObjectId = async(data:any,id:any) =>{
-    if(chain1){
-      try{
+  const getTransactionObjectId = async (data: any, id: any) => {
+    if (chain1) {
+      try {
         const objId = await sendTransaction(data, id);
-        if(objId.status && objId.status !== 200){
+        if (objId.status && objId.status !== 200) {
           console.log(objId.msg.response.data.message)
           toast({
             title: 'Unexpected Error Occured!.',
@@ -380,32 +383,32 @@ const BridgeNew = observer((props: Props) => {
             duration: 9000,
             isClosable: true,
           })
-        }else{
+        } else {
           setObjectId(objId.uniqueID)
         }
-        
-        
+
+
       } catch (error) {
         console.error('Error making POST request', error);
       }
     }
   }
 
-  const getTransactionObject = async(id:string) =>{
+  const getTransactionObject = async (id: string) => {
     const response = await fetchTransactionObject(id)
-    if(response.outputTxHash){
+    if (response.outputTxHash) {
       setoutputTxHash(response.outputTxHash)
       settxObject(response)
       PortfolioAPI(address)
       return
-    }else{
+    } else {
       setTimeout(() => {
         getTransactionObject(id)
       }, 5000);
     }
   }
 
-  
+
   // const getTxRecipt = async(data:any) =>{
   //   const result = await getTransactionReceipt(config, {
   //     hash: data,
@@ -417,7 +420,7 @@ const BridgeNew = observer((props: Props) => {
       var ele = inputToken.split(".");
       var value = inputToken
       if (ele[1] === "") {
-        value = ele[0]+"."+"0"
+        value = ele[0] + "." + "0"
       }
       setDebouncedValue(value);
       FormStore.setInputToken(value);
@@ -430,7 +433,7 @@ const BridgeNew = observer((props: Props) => {
     };
   }, [inputToken]);
   useEffect(() => {
-    console.log("debouncedValue",debouncedValue)
+    console.log("debouncedValue", debouncedValue)
     fetchQuote(chain1, chain2, debouncedValue);
     setAccountBalance(portfolio);
   }, [chain1, chain2, debouncedValue]);
@@ -445,31 +448,31 @@ const BridgeNew = observer((props: Props) => {
 
   useEffect(() => {
     if (txReceiptData !== undefined && status === "success" && chain1) {
-      console.log("txreceipt:",txReceiptData)
+      console.log("txreceipt:", txReceiptData)
       getTransactionObjectId(data, chain1.id);
       fetchPortfolio(address)
     }
-    if(data){
-      console.log("txHash:",data)
+    if (data) {
+      console.log("txHash:", data)
     }
     FormStore.setTransactionHash(data)
-  }, [data, status,txReceiptData]);
+  }, [data, status, txReceiptData]);
 
   useEffect(() => {
-    if(objectId){
+    if (objectId) {
       getTransactionObject(objectId)
     }
   }, [objectId]);
 
   useEffect(() => {
-    console.log("chain1 set to",chain1?.name)
+    console.log("chain1 set to", chain1?.name)
     FormStore.setChain1(chain1)
   }, [chain1])
   useEffect(() => {
-    console.log("chain1 set to",chain2?.name)
+    console.log("chain1 set to", chain2?.name)
     FormStore.setChain2(chain2)
   }, [chain2])
-  
+
 
   return (
     <div className="BridgeRoot">
@@ -541,7 +544,7 @@ const BridgeNew = observer((props: Props) => {
         </div>
 
         <div className="review">
-        <AddRecepient setrecepientAddress={setrecepientAddress} recepientAddress={recepientAddress} />
+          <AddRecepient setrecepientAddress={setrecepientAddress} recepientAddress={recepientAddress} />
 
           {address === undefined ? (
             <>
@@ -561,20 +564,30 @@ const BridgeNew = observer((props: Props) => {
             >
               Switch Network
             </button>
-          ) : (
-            <>
-              {/* disabled={!allvalueFilled} */}
+          ) :
+            isQuoteInProgress ?
+              (<>
+                {console.log("inProgress")}
+                <button
+                  className="review-btn"
+                  disabled={true}
+                >
+                  <Spinner size="lg" />
+                </button>
+              </>) : (
+                <>
+                  {/* disabled={!allvalueFilled} */}
 
-              {console.log(!allvalueFilled || disableSubmitBtn,allvalueFilled,disableSubmitBtn)}
-              <button
-                className="review-btn"
-                disabled={!allvalueFilled || disableSubmitBtn}
-                onClick={onSubmit}
-              >
-                {submitBtnText}
-              </button>
-            </>
-          )}
+                  {console.log(!allvalueFilled || disableSubmitBtn, allvalueFilled, disableSubmitBtn)}
+                  <button
+                    className="review-btn"
+                    disabled={!allvalueFilled || disableSubmitBtn}
+                    onClick={onSubmit}
+                  >
+                    {submitBtnText}
+                  </button>
+                </>
+              )}
         </div>
 
         {quoteData && (
