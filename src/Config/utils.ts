@@ -130,6 +130,7 @@ const convertEthToWeiAndBack = (ethString:string) => {
 
   function convertEthToUsd(ethBalanceWei:bigint, ethToUsdRate:number) {
     // Convert wei to ETH (using BigInt for precision)
+    console.log("convertEthToUsd",ethBalanceWei,ethToUsdRate)
     const weiPerEth = BigInt(1e18);
     const ethBalance = Number(ethBalanceWei) / Number(weiPerEth);
 
@@ -145,5 +146,7 @@ export {
     CompareValues,
     FetchLiquidityPoolBalance,
     FetchUserLiquidityPoolBalance,
-    FetchPortfolioBalance
+    FetchPortfolioBalance,
+    convertEthToUsd,
+    getUSDAmount
 }

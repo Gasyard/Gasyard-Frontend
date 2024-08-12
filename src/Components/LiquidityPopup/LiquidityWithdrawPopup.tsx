@@ -36,10 +36,11 @@ type Props = {
   onOpen: any;
   on_liquidtyModalClose: any;
   chain?:any;
+  balance:any;
 };
-const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain }: Props) => {
+const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain,balance }: Props) => {
   const [inputValue, setInputValue] = useState("");
-  const balance = 10;
+  //const balance = 10;
 
   const {writeContract,status,error,data} = useWriteContract();
   const {data:txReceiptData} = useTransactionReceipt({

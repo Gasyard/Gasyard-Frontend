@@ -475,7 +475,7 @@ const BridgeNew = observer((props: Props) => {
     FormStore.setChain2(chain2)
   }, [chain2])
 
-
+  
   return (
     <div className="BridgeRoot">
       <div className="BridgeApp">

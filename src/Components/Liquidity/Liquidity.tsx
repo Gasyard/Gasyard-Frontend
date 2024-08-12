@@ -5,8 +5,8 @@ import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
 import { useDisclosure } from "@chakra-ui/react";
 import LiquidityWithdrawPopup from "../LiquidityPopup/LiquidityWithdrawPopup";
 import { useAccount, useChains, useSwitchChain } from "wagmi";
-import { chainType, LiquidityPoolBalance, NetworkConfigReturnType, TotalChainVolume } from "../../Config/types";
-import { FetchLiquidityPoolBalance, FetchUserLiquidityPoolBalance } from "../../Config/utils";
+import { chainType, LiquidityPoolBalance, NetworkConfigReturnType, PortfolioListReturnType, TotalChainVolume } from "../../Config/types";
+import { FetchLiquidityPoolBalance, FetchPortfolioBalance, FetchUserLiquidityPoolBalance } from "../../Config/utils";
 import { formatUnits } from "viem";
 
 type Props = {};
@@ -21,6 +21,7 @@ const Liquidity = (props: Props) => {
   const [totalChainVolume, settotalChainVolume] = useState<TotalChainVolume | null>(null);
   const [liquidityPoolBalance, setliquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
   const [userLiquidityPoolBalance, setuserLiquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
+  const [portfolio, setportfolio] = useState<PortfolioListReturnType | null>(null);
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const { switchChain } = useSwitchChain();
   const onClickDeposit = (chain_: any) => {
@@ -55,6 +56,13 @@ const Liquidity = (props: Props) => {
     onClose()
   }
 
+  const fetchPortfolio = async (address: any) => {
+    // const result = await PortfolioAPI(address);
+    const result = await FetchPortfolioBalance(Chains, address)
+    console.log("portfolio", result);
+    setportfolio(result);
+    //setAccountBalance(result);
+  };
   const getBlanace = async (Chains: any) => {
     const res = await FetchLiquidityPoolBalance(Chains);
     console.log(res)
@@ -106,11 +114,16 @@ const Liquidity = (props: Props) => {
     console.log("userliquidityPoolBalance", userLiquidityPoolBalance)
   }, [userLiquidityPoolBalance])
 
+  useEffect(() => {
+    if (address) {
+      fetchPortfolio(address);
+    }
+  }, [address]);
 
   return (
     <div className="LiquidityRoot">
-      <LiquidityPopup is_liquidtyModalOpen={isOpen && depositPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseDeposit} chain={selectedChain} />
-      <LiquidityWithdrawPopup is_liquidtyModalOpen={isOpen && withdrawPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseWithdraw} chain={selectedChain} />
+      <LiquidityPopup is_liquidtyModalOpen={isOpen && depositPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseDeposit} chain={selectedChain} balance={portfolio && selectedChain ? portfolio[selectedChain.id].balance : "N/A"}  />
+      <LiquidityWithdrawPopup is_liquidtyModalOpen={isOpen && withdrawPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseWithdraw} chain={selectedChain} balance={portfolio && selectedChain ? portfolio[selectedChain.id].balance : "N/A"}/>
       <div className="liquidity-table-container">
         <table>
           <thead>

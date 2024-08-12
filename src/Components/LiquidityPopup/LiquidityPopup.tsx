@@ -27,27 +27,31 @@ import { iconMap } from "../../Config/data";
 import './LiquidityPopup.css'
 import { AbiPool } from "../../Config/JSON/AbiPool";
 import { useReadContract, useTransactionReceipt, useWriteContract } from "wagmi";
-import { ethers, parseEther } from "ethers";
+import { ethers, formatEther, parseEther } from "ethers";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
-import { CompareValues } from "../../Config/utils";
+import { CompareValues, convertEthToUsd, getUSDAmount } from "../../Config/utils";
 import { pool_abi } from "../../Config/abi";
 type Props = {
     is_liquidtyModalOpen:boolean,
     onOpen:any,
     on_liquidtyModalClose:any
     chain?:any
+    balance:any
+    initialBal?:string
 };
 
 
-const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Props) => {
+const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balance}: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
+  const [inputInUSD, setinputInUSD] = useState<string>("0")
+  const [debouncedValue, setDebouncedValue] = useState(inputValue);
   const { writeContract, data, isPending, isSuccess, status,error } = useWriteContract();
   const {data:txReceiptData} = useTransactionReceipt({
     hash:data
   })
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const balance = 10;
+  //const balance = 10;
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
 
   const ClearState = () =>{
@@ -64,6 +68,7 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
       value = ele[0] + "." + e;
     }
     setInputValue(value);
+    
   };
 
   const onClickPercent = (percent:number) =>{
@@ -118,9 +123,30 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
     console.log("Error ->",error?.cause,error?.message,error?.name,error)
   }, [error])
   useEffect(() => {
-    
-  }, [data])
-  
+    ClearState()
+  }, [])
+  useEffect(() => {
+    const handler = setTimeout(async () => {
+      var ele = inputValue.split(".");
+      var value = inputValue
+      if (ele[1] === "") {
+        value = ele[0] + "." + "0"
+      }
+      setDebouncedValue(value);
+     if(chain){
+      const usdRate = await getUSDAmount(chain.nativeCurrency.symbol)
+      var val = value !== "" ? value : "0";
+      setinputInUSD(convertEthToUsd(parseEther(val),usdRate))
+     }
+     
+      setInputValue(value)
+    }, 1000); // 0.5 seconds
+
+    // Cleanup timeout if the effect is called again before the timeout completes
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputValue]);
 
   
   
@@ -157,7 +183,7 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
                    value={inputValue}
                    /><span className="nativeToken">{chain && chain.nativeCurrency.symbol}</span>
                 </div>
-                <div className="amountInUSD">$291.23</div>
+                <div className="amountInUSD">${inputInUSD}</div>
               </div>
               <div className="chainDisplay">
                 <img src={chain && iconMap[chain.id]} alt="logo" className="chainImg" />
