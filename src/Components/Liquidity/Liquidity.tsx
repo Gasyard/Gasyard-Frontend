@@ -4,9 +4,10 @@ import { iconMap } from "../../Config/data";
 import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
 import { useDisclosure } from "@chakra-ui/react";
 import LiquidityWithdrawPopup from "../LiquidityPopup/LiquidityWithdrawPopup";
-import { useChains } from "wagmi";
-import { chainType } from "../../Config/types";
-import { FetchLiquidityPoolBalance } from "../../Config/utils";
+import { useAccount, useChains, useSwitchChain } from "wagmi";
+import { chainType, LiquidityPoolBalance, NetworkConfigReturnType } from "../../Config/types";
+import { FetchLiquidityPoolBalance, FetchUserLiquidityPoolBalance } from "../../Config/utils";
+import { formatUnits } from "viem";
 
 type Props = {};
 
@@ -17,11 +18,27 @@ const Liquidity = (props: Props) => {
   const [depositPopup, setdepositPopup] = useState(false);
   const [withdrawPopup, setwithdrawPopup] = useState(false);
   const [selectedChain, setselectedChain] = useState<chainType | null>(null);
-  const [liquidityPoolBalance, setliquidityPoolBalance] = useState(null)
-  const onClickDeposit = (chain:any) =>{
-    setdepositPopup(true)
-    setselectedChain(chain)
-    onOpen()
+  const [liquidityPoolBalance, setliquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
+  const [userLiquidityPoolBalance, setuserLiquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
+  const { address, isConnecting, isDisconnected, chain } = useAccount();
+  const { switchChain } = useSwitchChain();
+  const onClickDeposit = (chain_:any) =>{
+    if(chain?.id !== chain_.id){
+      switchChain({
+        chainId: chain_.id,
+      })
+    }else{
+      setdepositPopup(true)
+      setselectedChain(chain_)
+      onOpen()
+      getBlanace(Chains)
+      if(address){
+        getUserLiquidity(Chains,address)
+      }
+      
+
+    }
+    
   }
   const onClickWithdraw = (chain:any) =>{
     setwithdrawPopup(true)
@@ -43,12 +60,29 @@ const Liquidity = (props: Props) => {
     setliquidityPoolBalance(res)
   }
 
+  const getUserLiquidity = async(Chains:any,walletAddress:`0x${string}`) =>{
+    const res = await FetchUserLiquidityPoolBalance(Chains,walletAddress)
+    setuserLiquidityPoolBalance(res)
+  }
   useEffect(() => {
-    getBlanace(Chains)
-  }, [Chains])
+    if(Chains){
+      getBlanace(Chains)
+      //getUserLiquidity(Chains)
+      if(address){
+        console.log("hbxhbhxbhbxh")
+        getUserLiquidity(Chains,address)
+      }
+    }
+    
+  }, [Chains,address])
+
   useEffect(() => {
-    console.log("liquidityPoolBalance",liquidityPoolBalance)
+    console.log("liquidityPoolBalance",liquidityPoolBalance,liquidityPoolBalance && liquidityPoolBalance[2810])
   }, [liquidityPoolBalance])
+  
+  useEffect(() => {
+    console.log("userliquidityPoolBalance",userLiquidityPoolBalance)
+  }, [userLiquidityPoolBalance])
   
   
   return (
@@ -72,7 +106,8 @@ const Liquidity = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {Chains && Chains.map((ele) =>{
+            {Chains && liquidityPoolBalance && Chains.map((ele) =>{
+              
               return(<>
               <tr>
               <td>
@@ -87,14 +122,15 @@ const Liquidity = (props: Props) => {
                   Success
                 </div>
               </td>
-              <td>{liquidityPoolBalance && liquidityPoolBalance[ele.id]} </td>
-              <td>$1,00.43</td>
-              <td>$1,00.43</td>
-              <td>$1.43</td>
+              <td>{liquidityPoolBalance && liquidityPoolBalance[ele.id] && `$${liquidityPoolBalance[ele.id].balanceinusd}`} </td>
+              {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
+              <td>N/A</td>
+              <td>{userLiquidityPoolBalance ? userLiquidityPoolBalance[ele.id] && `$${userLiquidityPoolBalance[ele.id].balanceinusd}` : "N/A"}</td>
+              <td>$0</td>
               <td>
                 <div className="action_btn">
-                  <button className="deposit-btn" onClick={() => onClickDeposit(ele)}>Deposit</button>
-                  <button className="withdraw-btn" onClick={() => onClickWithdraw(ele)}>Withdraw</button>
+                  <button className="deposit-btn" disabled={address === undefined} onClick={() => onClickDeposit(ele)}>Deposit</button>
+                  <button className="withdraw-btn" disabled={address === undefined} onClick={() => onClickWithdraw(ele)}>Withdraw</button>
                 </div>
               </td>
             </tr>

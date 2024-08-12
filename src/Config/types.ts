@@ -40,7 +40,25 @@ interface ImageMapType {
 interface ImageMapType2 {
   [key: number]: string;
 }
+interface NetworkConfigReturnType {
+  balance:bigint;
+  name:string
+  balanceinusd:string
+}
 
+interface PortfolioObjectReturnType {
+  balance:string;
+  networkName:string
+  decimals:number
+}
+interface PortfolioListReturnType{
+  [key:number]:PortfolioObjectReturnType
+}
+
+
+interface LiquidityPoolBalance{
+  [key:number]:NetworkConfigReturnType
+}
 interface explorerMapType {
   [key: number]: string;
 }
@@ -92,5 +110,8 @@ export type {
   portfolioType,
   TxObjectType,
   ImageMapType2,
-  explorerMapType
+  explorerMapType,
+  NetworkConfigReturnType,
+  LiquidityPoolBalance,
+  PortfolioListReturnType
 };

@@ -45,17 +45,6 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
   const {data:txReceiptData} = useTransactionReceipt({
     hash:data
   })
-  
-  const { data:pool_balance } = useReadContract({
-    abi:pool_abi,
-    functionName: 'balanceOf',
-    args: [chain && chain.liquidityPool],
-  })
-  const fetchBalance = (contract:`0x${string}`) =>{
-    
-
-    console.log("balance",data)
-  }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const balance = 10;
@@ -96,9 +85,9 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
           address: chain.liquidityPool,
           functionName: 'addToPool',
           args: [
-            parseEther("0.001"),
+            parseEther(inputValue),
           ],
-          value:parseEther("0.001")
+          value:parseEther(inputValue)
         });
         setopenTransactionPopup(true)
       } catch (err) {
@@ -131,13 +120,7 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain}: Pro
   useEffect(() => {
     
   }, [data])
-  useEffect(() => {
-    if(chain){
-      console.log("pool_balance",chain?.liquidityPool)
-      fetchBalance(chain.liquidityPool)
-    }
-    
-  }, [chain])
+  
 
   
   

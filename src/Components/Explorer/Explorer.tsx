@@ -136,6 +136,11 @@ const Explorer = (props: Props) => {
     window.open(url, '_blank');
   }
 
+  const redirectToTxExplorer = (id:number,hash:any) =>{
+    const url = ChainJsonData[id].explorer+hash
+    window.open(url, '_blank');
+  }
+
   const formatDate = (dateString:string) => {
     const date = new Date(dateString);
   
@@ -318,7 +323,7 @@ const Explorer = (props: Props) => {
                       Chain:{" "}
                       <img src={iconMap[item.inputChainID]} className="logo" />
                       {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken}
-                      <img src={redirect_logo} className="redirect"  onClick={() => redirectToExplorer(item.inputChainID,item.inputAddress)}/>
+                      <img src={redirect_logo} className="redirect"  onClick={() => redirectToTxExplorer(item.inputChainID,item.inputTxHash)}/>
                     </div>
                   </td>
 
@@ -330,7 +335,7 @@ const Explorer = (props: Props) => {
                         className="logo"
                       />
                       {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
-                      <img src={redirect_logo} className="redirect" onClick={() => redirectToExplorer(item.outputChainID,item.outputAddress)}/>
+                      <img src={redirect_logo} className="redirect" onClick={() => redirectToTxExplorer(item.outputChainID,item.outputTxHash)}/>
                     </div>
                   </td>
                   <td>{formatDate(item.updatedAt)}</td>

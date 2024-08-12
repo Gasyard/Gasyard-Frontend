@@ -145,6 +145,10 @@
     line-height: 16px;
     text-align: left;
 }
+.action_btn button:disabled{
+    opacity: 0.6;
+    pointer-events: none;
+}
 .action_btn .deposit-btn{
     background-color: #1557E2;
     color: #fff;

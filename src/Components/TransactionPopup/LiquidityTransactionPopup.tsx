@@ -178,7 +178,8 @@ const LiquidityTransactionPopup = observer(({ isOpen, onOpen, onClose, setModal,
 
                 <div className="rejection_text">
                   {error.includes("Connector not connected") ? "Please Connect Wallet" : 
-                  error.includes("User rejected the request") ? "User rejected the request!" : error}
+                  error.includes("User rejected the request") ? "User rejected the request!" :
+                   error.includes("The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.") ? "Insuficient Balance!":error}
                 </div>
 
                 <div className="retry" onClick={onSubmit}>

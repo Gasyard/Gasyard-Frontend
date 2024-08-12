@@ -4,7 +4,7 @@ import downArrow from "../../assets/SVG-black.svg";
 import { Spinner, Stat, StatNumber, useDisclosure, useToast } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
 import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract,useWaitForTransactionReceipt } from "wagmi";
-import { chainType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
+import { chainType, PortfolioListReturnType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
 import { abi } from "../../Config/abi";
 import { formatEther, parseEther } from "viem";
 import { fetchTransactionObject, PortfolioAPI, sendTransaction } from "../../Config/API/api";
@@ -16,7 +16,7 @@ import { config } from "../../Config/config";
 import { type GetBalanceReturnType } from "@wagmi/core";
 import TransactionPopup from "../TransactionPopup/TransactionPopup";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { convertEthToWeiAndBack } from "../../Config/utils";
+import { convertEthToWeiAndBack, FetchPortfolioBalance } from "../../Config/utils";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
 import {ethers } from 'ethers';
@@ -43,7 +43,7 @@ const BridgeNew = observer((props: Props) => {
   const [openChainPopup, setopenChainPopup] = useState(false);
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
   const [toSelectChain, settoSelectChain] = useState<0 | 1 | 2>(0);
-  const [portfolio, setportfolio] = useState<portfolioType | null>(null);
+  const [portfolio, setportfolio] = useState<PortfolioListReturnType | null>(null);
   const [recepientAddress, setrecepientAddress] = useState<`0x${string}` | "">("");
   const [recepientAddressError, setrecepientAddressError] = useState("");
   const [allvalueFilled, setallvalueFilled] = useState(false);
@@ -289,7 +289,8 @@ const BridgeNew = observer((props: Props) => {
     }
   };
   const fetchPortfolio = async (address: any) => {
-    const result = await PortfolioAPI(address);
+    // const result = await PortfolioAPI(address);
+    const result = await FetchPortfolioBalance(Chains,address)
     console.log("portfolio", result);
     setportfolio(result);
     setAccountBalance(result);
@@ -438,7 +439,7 @@ const BridgeNew = observer((props: Props) => {
     if (address) {
       // setrecepientAddress(address);
       fetchPortfolio(address);
-      // GetBalance();
+            // GetBalance();
     }
   }, [address]);
 
@@ -446,6 +447,7 @@ const BridgeNew = observer((props: Props) => {
     if (txReceiptData !== undefined && status === "success" && chain1) {
       console.log("txreceipt:",txReceiptData)
       getTransactionObjectId(data, chain1.id);
+      fetchPortfolio(address)
     }
     if(data){
       console.log("txHash:",data)
