@@ -166,7 +166,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
               </div>
               {success ? <div className="redirectSection" onClick={redirectApp}>
                 View on Explorer
-                <img src={redirectLogo} onClick={redirectApp}/>
+                <img src={redirectLogo} />
               </div> : ("")}
             </div>
             <div className={`rejected_body ${!rejected ? "hideDiv" : ""}`}>
