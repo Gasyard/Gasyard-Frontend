@@ -3,7 +3,7 @@ import "./BridgeNew.css";
 import downArrow from "../../assets/SVG-black.svg";
 import { Spinner, Stat, StatNumber, useDisclosure, useToast } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
-import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract,useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { chainType, PortfolioListReturnType, portfolioType, quoteType, TxObjectType } from "../../Config/types";
 import { abi } from "../../Config/abi";
 import { formatEther, parseEther } from "viem";
@@ -25,6 +25,8 @@ import { getTransactionReceipt } from '@wagmi/core'
 import CloseIcon from "../../assets/CloseIcon.svg";
 import addAddress from '../../assets/addAddress.svg'
 import AddRecepient from "../AddRecepient/AddRecepient";
+import quoteLoader from '../../assets/animations/quoteLoader.json'
+import Lottie from "lottie-react";
 
 type Props = {};
 
@@ -293,7 +295,7 @@ const BridgeNew = observer((props: Props) => {
   };
   const fetchPortfolio = async (address: any) => {
     // const result = await PortfolioAPI(address);
-    const result = await FetchPortfolioBalance(Chains,address)
+    const result = await FetchPortfolioBalance(Chains, address)
     console.log("portfolio", result);
     setportfolio(result);
     setAccountBalance(result);
@@ -442,7 +444,7 @@ const BridgeNew = observer((props: Props) => {
     if (address) {
       // setrecepientAddress(address);
       fetchPortfolio(address);
-            // GetBalance();
+      // GetBalance();
     }
   }, [address]);
 
@@ -565,39 +567,40 @@ const BridgeNew = observer((props: Props) => {
               Switch Network
             </button>
           ) :
-            isQuoteInProgress ?
-              (<>
-                {console.log("inProgress")}
+            (
+              <>
+                {/* disabled={!allvalueFilled} */}
+
+                {console.log(!allvalueFilled || disableSubmitBtn, allvalueFilled, disableSubmitBtn)}
                 <button
                   className="review-btn"
-                  disabled={true}
+                  disabled={!allvalueFilled || disableSubmitBtn || isQuoteInProgress}
+                  onClick={onSubmit}
                 >
-                  <Spinner size="lg" />
+                  {submitBtnText}
                 </button>
-              </>) : (
-                <>
-                  {/* disabled={!allvalueFilled} */}
-
-                  {console.log(!allvalueFilled || disableSubmitBtn, allvalueFilled, disableSubmitBtn)}
-                  <button
-                    className="review-btn"
-                    disabled={!allvalueFilled || disableSubmitBtn}
-                    onClick={onSubmit}
-                  >
-                    {submitBtnText}
-                  </button>
-                </>
-              )}
+              </>
+            )}
         </div>
 
-        {quoteData && (
-          <QuoteSection
-            address={recepientAddress}
-            transactionTime={"1.2s"}
-            fees={String(quoteData.fees)}
-            chain1={chain1?.name}
-          />
-        )}
+        {isQuoteInProgress ?
+          (<>
+            {console.log("inProgress")}
+            <div className="loader">
+              <Lottie
+                animationData={quoteLoader}
+                loop={true}
+                style={{ height: "100px", width: "400px" }}
+              />
+            </div>
+          </>) : quoteData && (
+            <QuoteSection
+              address={recepientAddress}
+              transactionTime={"1.2s"}
+              fees={String(quoteData.fees)}
+              chain1={chain1?.name}
+            />
+          )}
       </div>
       <SelectChainModalNew
         open={openChainPopup}

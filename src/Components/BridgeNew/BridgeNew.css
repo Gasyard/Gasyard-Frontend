@@ -267,6 +267,11 @@
   width:16px;
   position: absolute;
 }
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .enterAddress .errorMsg{
   font-size: 12px;
   color:red;
