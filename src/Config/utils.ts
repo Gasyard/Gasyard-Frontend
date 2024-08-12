@@ -122,7 +122,7 @@ const convertEthToWeiAndBack = (ethString:string) => {
   }
 
   const getUSDAmount = async(token:string) =>{
-    if(token === "MOVE" || token === "MATIC") return 50;
+    if(token === "MOVE" || token === "MATIC" || token === "BERA") return 50;
     const url = `https://api.bybit.com/v5/market/tickers?category=spot&symbol=${token.toUpperCase()}USDT`
     const res = await axios.get(url)
     return res.data.result.list[0].usdIndexPrice
