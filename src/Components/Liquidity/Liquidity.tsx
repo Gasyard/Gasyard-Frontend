@@ -115,6 +115,14 @@ const Liquidity = (props: Props) => {
       10
     );
 
+    const fetchAllBalance = () =>{
+      if(address){
+        getUserLiquidity(Chains, address);
+        getTotalChainVolume(address);
+        fetchPortfolio(address);
+      }
+      
+    }
   useEffect(() => {
     if (Chains) {
       getBlanace(Chains);
@@ -123,6 +131,7 @@ const Liquidity = (props: Props) => {
         console.log("hbxhbhxbhbxh");
         getUserLiquidity(Chains, address);
         getTotalChainVolume(address);
+        
       }
     }
   }, [Chains, address]);
@@ -157,6 +166,7 @@ const Liquidity = (props: Props) => {
             ? portfolio[selectedChain.id].balance
             : "N/A"
         }
+        fetchAllBalance={fetchAllBalance}
       />
       <LiquidityWithdrawPopup
         is_liquidtyModalOpen={isOpen && withdrawPopup}
@@ -164,10 +174,17 @@ const Liquidity = (props: Props) => {
         on_liquidtyModalClose={onCloseWithdraw}
         chain={selectedChain}
         balance={
-          portfolio && selectedChain
-            ? portfolio[selectedChain.id].balance
+          userLiquidityPoolBalance && selectedChain
+            ? userLiquidityPoolBalance[selectedChain.id].balance
             : "N/A"
         }
+        balanceinUSD={
+          userLiquidityPoolBalance && selectedChain
+            ? userLiquidityPoolBalance[selectedChain.id].balanceinusd
+            : "N/A"
+        }
+        fetchAllBalance={fetchAllBalance}
+        
       />
       <div className="liquidity-table-container">
         <table>

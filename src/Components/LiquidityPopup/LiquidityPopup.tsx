@@ -48,6 +48,7 @@ type Props = {
   chain?: any;
   balance: any;
   initialBal?: string;
+  fetchAllBalance:any
 };
 
 const LiquidityPopup = ({
@@ -55,6 +56,7 @@ const LiquidityPopup = ({
   on_liquidtyModalClose,
   chain,
   balance,
+  fetchAllBalance
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [inputInUSD, setinputInUSD] = useState<string>("0");
@@ -166,6 +168,10 @@ const LiquidityPopup = ({
     };
   }, [inputValue]);
 
+  useEffect(() => {
+    fetchAllBalance()
+  }, [txReceiptData])
+  
   return (
     <div className="LiquidityPopupRoot">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
@@ -187,7 +193,9 @@ const LiquidityPopup = ({
           <ModalHeader borderBottom="1px solid #F1F2F4">
             Deposit {status}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() => {
+             setInputValue("")
+          }}/>
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
             <div className="BodyWrap">
               <div className="amountDisplay">

@@ -25,11 +25,11 @@ import {
 } from "@chakra-ui/react";
 import { iconMap } from "../../Config/data";
 import "./LiquidityPopup.css";
-import { useTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useSwitchChain, useTransactionReceipt, useWriteContract } from "wagmi";
 import { AbiPool } from "../../Config/JSON/AbiPool";
-import { parseEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
-import { CompareValues } from "../../Config/utils";
+import { CompareValues, convertEthToUsd, getUSDAmount } from "../../Config/utils";
 
 type Props = {
   is_liquidtyModalOpen: boolean;
@@ -37,8 +37,10 @@ type Props = {
   on_liquidtyModalClose: any;
   chain?:any;
   balance:any;
+  balanceinUSD?:any
+  fetchAllBalance:any
 };
-const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain,balance }: Props) => {
+const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain,balance,balanceinUSD,fetchAllBalance }: Props) => {
   const [inputValue, setInputValue] = useState("");
   //const balance = 10;
 
@@ -50,6 +52,14 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
 
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
 
+  const {
+    address,
+    isConnecting,
+    isDisconnected,
+    chain: curr_chain,
+  } = useAccount();
+
+  const { switchChain } = useSwitchChain();
   const ClearState = () =>{
     setInputValue("")
   }
@@ -69,19 +79,17 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
   };
 
   const onClickPercent = (percent:number) =>{
-    setInputValue(String(balance*percent))
+    setInputValue(formatEther(balance*BigInt(percent*100)/BigInt(100)))
   }
   const onSubmit = ()=>{
     try{
       const res = writeContract({
         abi:AbiPool,
-        address:"0x6b175474e89094c44da98b954eedeac495271d0f",
+        address:chain.liquidityPool,
         functionName: 'removeFromPool',
         args: [
-                parseEther("0.001"),
-              ],
-        // value:parseEther("12"),
-
+          parseEther(inputValue),
+        ],
       })
       setopenTransactionPopup(true)
     }catch(err){
@@ -89,6 +97,10 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
     }
   }
 
+  const getBalanceInUSD = async(val:any,usdRate:any) =>{
+    const res = await getUSDAmount(usdRate)
+    return convertEthToUsd(parseEther(val), res)
+  }
  
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
@@ -117,8 +129,9 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
   useEffect(() => {
     
   }, [data])
+
   useEffect(() => {
-    
+    fetchAllBalance()
   }, [txReceiptData])
   return (
     <div className="LiquidityPopupRoot">
@@ -137,7 +150,9 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
           <ModalHeader borderBottom="1px solid #F1F2F4">Withdraw {status} 
             
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() =>{
+            setInputValue("")
+          }} />
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
             <div className="BodyWrap">
               <div className="amountDisplayWithdrawWrap">
@@ -153,7 +168,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                     <div className="liquidityInfoRow">
                       <div className="label">Liquidity Provided</div>
                       <div className="value">
-                        0.1 ETH <span>(~ $290.43)</span>
+                        {formatEther(balance)} {chain && chain.nativeCurrency.symbol} <span>(~ {balanceinUSD})</span>
                       </div>
                     </div>
                     <div className="liquidityInfoRow">
@@ -167,7 +182,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
               <div className="chainDisplay">
                 <img src={chain && iconMap[chain.id]} className="chainImg" />
                 <div className="chainInfo">
-                {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {balance}</span>
+                {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {formatEther(balance)}</span>
                 </div>
 
                 <input 
@@ -206,7 +221,20 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                 </div>
               </div>
               <div className="SubmitBtn">
+              {curr_chain && chain && chain.id === curr_chain.id ? (<>
                 <button onClick={onSubmit} disabled={!CompareValues(inputValue,String(balance))}>Withdraw</button>
+              </>):(<>
+                <button
+                    onClick={() => {
+                      switchChain({
+                        chainId: chain.id,
+                      });
+                    }}
+                  >
+                    Switch Chain
+                  </button>
+              </>)}
+                
               </div>
             </div>
           </ModalBody>

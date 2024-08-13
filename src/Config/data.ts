@@ -21,7 +21,7 @@ const iconMap: ImageMapType = {
   "137": polygonlogo,
   "534352": scrolllogo,
   "5000": mantlelogo,
-  "11155111": sepolialogo,
+  "11155111": ethereumlogo,
   "421614": arbitumlogo,
   "84532":baselogo,
   "2810":morphlogo,
