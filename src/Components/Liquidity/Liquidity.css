@@ -64,7 +64,7 @@
 }
 .liquidity-table-container table tbody tr td:nth-child(1),
 .liquidity-table-container table thead tr th:nth-child(1){
-    width:270px;
+    width:240px;
 }
 .liquidity-table-container table tbody tr td:nth-child(2),
 .liquidity-table-container table thead tr th:nth-child(2){
@@ -72,7 +72,7 @@
 }
 .liquidity-table-container table tbody tr td:nth-child(3),
 .liquidity-table-container table thead tr th:nth-child(3){
-    /* width:155px; */
+    width:180px;
 }
 .liquidity-table-container table tbody tr td:nth-child(4),
 .liquidity-table-container table thead tr th:nth-child(4),
@@ -80,9 +80,9 @@
 .liquidity-table-container table thead tr th:nth-child(5){
     /* width:266px; */
 }
-.liquidity-table-container table tbody tr td:nth-child(6),
-.liquidity-table-container table thead tr th:nth-child(6){
-    /* width:267px; */
+.liquidity-table-container table tbody tr td:nth-child(5),
+.liquidity-table-container table thead tr th:nth-child(5){
+    width:180px;
     
 }
 .liquidity-table-container table tbody tr td:nth-child(6){

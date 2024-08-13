@@ -17,7 +17,7 @@ import {
   FetchPortfolioBalance,
   FetchUserLiquidityPoolBalance,
 } from "../../Config/utils";
-import { formatUnits } from "viem";
+import { formatEther, formatUnits, parseEther } from "viem";
 
 type Props = {};
 
@@ -81,6 +81,18 @@ const Liquidity = (props: Props) => {
   ) => {
     const res = await FetchUserLiquidityPoolBalance(Chains, walletAddress);
     setuserLiquidityPoolBalance(res);
+  };
+  const formatToken = (numStr: string) => {
+    if (parseFloat(numStr)) {
+      const num = parseFloat(numStr);
+      const decimalPlaces = numStr.split(".")[1]?.length || 0;
+      if (decimalPlaces > 6) {
+        return num.toFixed(6).toString();
+      } else {
+        return num.toFixed(decimalPlaces).toString();
+      }
+    }
+    return numStr;
   };
 
   const getTotalChainVolume = async (walletAddress: `0x${string}`) => {
@@ -225,20 +237,43 @@ const Liquidity = (props: Props) => {
                         </div>
                       </td>
                       <td>
-                        {liquidityPoolBalance &&
+                        <div className="showAmount">
+                          <div className="amountinETH">
+                          {liquidityPoolBalance &&
                           liquidityPoolBalance[ele.id] &&
-                          `$${liquidityPoolBalance[ele.id].balanceinusd}`}{" "}
+                          `${formatToken(formatEther(liquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`}
+                          </div>
+                          <div className="amountinusd">
+                              {liquidityPoolBalance &&
+                              liquidityPoolBalance[ele.id] &&
+                              `(~ $${liquidityPoolBalance[ele.id].balanceinusd})`}{" "}
+                          </div>
+                        </div>
+                        
+
                       </td>
                       {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
                       <td>
                         {totalChainVolume &&
-                          `${totalChainVolume[ele.id].totalVolume}`}
+                          `$${totalChainVolume[ele.id].totalVolume}`}
                       </td>
                       <td>
+                      <div className="showAmount">
+                        <div className="amountinETH">
+                        {userLiquidityPoolBalance
+                          ? userLiquidityPoolBalance[ele.id] &&
+                            `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
+                          : "N/A"}
+                        </div>
+                        <div className="amountinusd">
                         {userLiquidityPoolBalance
                           ? userLiquidityPoolBalance[ele.id] &&
                             `$${userLiquidityPoolBalance[ele.id].balanceinusd}`
                           : "N/A"}
+
+                        </div>
+                      </div>
+                        
                       </td>
                       <td>$0</td>
                       <td>
