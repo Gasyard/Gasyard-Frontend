@@ -246,7 +246,7 @@ const Liquidity = (props: Props) => {
                           <div className="amountinusd">
                               {liquidityPoolBalance &&
                               liquidityPoolBalance[ele.id] &&
-                              `(~ $${liquidityPoolBalance[ele.id].balanceinusd})`}{" "}
+                              `($${liquidityPoolBalance[ele.id].balanceinusd})`}{" "}
                           </div>
                         </div>
                         
@@ -268,7 +268,7 @@ const Liquidity = (props: Props) => {
                         <div className="amountinusd">
                         {userLiquidityPoolBalance
                           ? userLiquidityPoolBalance[ele.id] &&
-                            `$${userLiquidityPoolBalance[ele.id].balanceinusd}`
+                            `($${userLiquidityPoolBalance[ele.id].balanceinusd})`
                           : "N/A"}
 
                         </div>

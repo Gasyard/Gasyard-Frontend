@@ -88,6 +88,14 @@
   height: 20px;
 
 }
+.token-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.token-container .tokenInUSD{
+  margin-left: auto;
+}
 .inputToken,
 .outputToken {
   font-family: Inter;

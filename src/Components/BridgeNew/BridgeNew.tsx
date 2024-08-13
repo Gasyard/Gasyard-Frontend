@@ -16,7 +16,7 @@ import { config } from "../../Config/config";
 import { type GetBalanceReturnType } from "@wagmi/core";
 import TransactionPopup from "../TransactionPopup/TransactionPopup";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { convertEthToWeiAndBack, FetchPortfolioBalance } from "../../Config/utils";
+import { convertEthToUsd, convertEthToWeiAndBack, FetchPortfolioBalance, getUSDAmount } from "../../Config/utils";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
 import { ethers } from 'ethers';
@@ -51,6 +51,7 @@ const BridgeNew = observer((props: Props) => {
   const [allvalueFilled, setallvalueFilled] = useState(false);
   const [isQuoteInProgress, setisQuoteInProgress] = useState(false);
 
+  const [usdRate, setusdRate] = useState("")
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const { chains, switchChain } = useSwitchChain();
   const { writeContract, data, isPending, isSuccess, status } =
@@ -71,6 +72,7 @@ const BridgeNew = observer((props: Props) => {
   const [outputTxHash, setoutputTxHash] = useState<string | null>(null)
   const [txObject, settxObject] = useState<TxObjectType | null>(null)
   const [showAddress, setshowAddress] = useState(false);
+  const [inputInUSD, setinputInUSD] = useState("")
 
   const { open, close } = useWeb3Modal();
 
@@ -335,6 +337,12 @@ const BridgeNew = observer((props: Props) => {
     }
   };
 
+  const ReturnConvertedValue = () =>{
+    if(inputToken === "") return <>$0</>
+    const res = 70;
+    const usdPrice = convertEthToUsd(parseEther(inputToken),res)
+    return <>{`$${usdPrice}`}</>
+  }
   const calculateMaxValue = () => {
     console.log("max called")
     if (portfolio && chain1 && portfolio[chain1.id]) {
@@ -418,7 +426,7 @@ const BridgeNew = observer((props: Props) => {
   // }
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const handler = setTimeout(async() => {
       var ele = inputToken.split(".");
       var value = inputToken
       if (ele[1] === "") {
@@ -426,6 +434,11 @@ const BridgeNew = observer((props: Props) => {
       }
       setDebouncedValue(value);
       FormStore.setInputToken(value);
+      if (chain1) {
+        const usdRate = await getUSDAmount(chain1.nativeCurrency.symbol);
+        var val = value !== "" ? value : "0";
+        setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
+      }
       setinputToken(value)
     }, 1000); // 0.5 seconds
 
@@ -469,6 +482,12 @@ const BridgeNew = observer((props: Props) => {
   useEffect(() => {
     console.log("chain1 set to", chain1?.name)
     FormStore.setChain1(chain1)
+    const prev= inputToken
+    setinputToken("0")
+    setTimeout(() => {
+      setinputToken(prev)
+    }, 500);
+    
   }, [chain1])
   useEffect(() => {
     console.log("chain1 set to", chain2?.name)
@@ -496,6 +515,7 @@ const BridgeNew = observer((props: Props) => {
             {chain1 !== null ? chain1.name : "Select Network"}
             <img className="downArrow" src={downArrow} />
           </button>
+          <div className="token-container">
           <input
             type="text"
             placeholder="0.0"
@@ -509,6 +529,8 @@ const BridgeNew = observer((props: Props) => {
               }
             }}
           />
+          <div className="tokenInUSD">${inputInUSD}</div>
+          </div>
           <button
             className="max-btn"
             onClick={() => {
