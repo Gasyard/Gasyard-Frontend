@@ -159,7 +159,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                 <div className="amountDisplayWithdraw">
                   <div className="chain-token-display">
                     <div className="displayImage">
-                      <img src={iconMap[1]} className="chain" />
+                      <img src={chain && iconMap[chain.nativeCurrency.symbol]} className="chain" />
                       <img src={chain && iconMap[chain.id]} className="token" />
                     </div>
                     <div className="displayName">{chain && chain.nativeCurrency.symbol}-{chain && chain.name}</div>

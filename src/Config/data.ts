@@ -27,7 +27,11 @@ const iconMap: ImageMapType = {
   "2810":morphlogo,
   "1802203764":karakotlogo,
   "80084":berachianlogo,
-  "30732":movementLogo
+  "30732":movementLogo,
+  "MOVE":movementLogo,
+  "BERA":berachianlogo,
+  "ETH":ethereumlogo,
+  "MATIC":polygonlogo
 };
 const ChainJsonData: Networks = {
   "1": {
