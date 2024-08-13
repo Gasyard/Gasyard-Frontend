@@ -173,7 +173,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                     </div>
                     <div className="liquidityInfoRow">
                       <div className="label">Fees Earned</div>
-                      <div className="value">$ 123.45</div>
+                      <div className="value">$0</div>
                     </div>
                   </div>
                 </div>
