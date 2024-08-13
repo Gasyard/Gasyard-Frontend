@@ -148,7 +148,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                     {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
-                    <div className="token_amount">{FormStore.inputToken} ETH</div>
+                    <div className="token_amount">{FormStore.inputToken} {chain1 && chain1.nativeCurrency.symbol}</div>
                     <div className="chain_network">{chain1 && chain1.name}</div>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                     {/* <img src={arblogo} className="chainlogo" alt="" /> */}
                   </div>
                   <div className="chainInfo">
-                    <div className="token_amount">{FormStore.outputToken} ETH</div>
+                    <div className="token_amount">{FormStore.outputToken} {chain2 && chain2.nativeCurrency.symbol}</div>
                     <div className="chain_network">{chain2 && chain2.name}</div>
                   </div>
                 </div>

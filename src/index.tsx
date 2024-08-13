@@ -22,7 +22,7 @@ import {
   arbitrumSepolia,
   morphSepolia,
   kakarotSepolia,
-  berachainTestnet,
+  berachainTestnet
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -109,8 +109,15 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       contractAddress: ChainJsonData["80084"].routerContract,
       explorer:ChainJsonData["80084"].explorer,
       liquidityPool:ChainJsonData["80084"].liquidityPool
-
+    },
+    {
+      ...sepolia,
+      iconUrl: sepolialogo,
+      contractAddress: ChainJsonData["11155111"].routerContract,
+      explorer:ChainJsonData["11155111"].explorer,
+      liquidityPool:ChainJsonData["11155111"].liquidityPool
     }
+    
     
   ] as const;
 
