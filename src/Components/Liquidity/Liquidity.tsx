@@ -5,79 +5,95 @@ import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
 import { useDisclosure } from "@chakra-ui/react";
 import LiquidityWithdrawPopup from "../LiquidityPopup/LiquidityWithdrawPopup";
 import { useAccount, useChains, useSwitchChain } from "wagmi";
-import { chainType, LiquidityPoolBalance, NetworkConfigReturnType, PortfolioListReturnType, TotalChainVolume } from "../../Config/types";
-import { FetchLiquidityPoolBalance, FetchPortfolioBalance, FetchUserLiquidityPoolBalance } from "../../Config/utils";
+import {
+  chainType,
+  LiquidityPoolBalance,
+  NetworkConfigReturnType,
+  PortfolioListReturnType,
+  TotalChainVolume,
+} from "../../Config/types";
+import {
+  FetchLiquidityPoolBalance,
+  FetchPortfolioBalance,
+  FetchUserLiquidityPoolBalance,
+} from "../../Config/utils";
 import { formatUnits } from "viem";
 
 type Props = {};
 
 const Liquidity = (props: Props) => {
   const Chains = useChains();
-  console.log("Chains", Chains)
+  console.log("Chains", Chains);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [depositPopup, setdepositPopup] = useState(false);
   const [withdrawPopup, setwithdrawPopup] = useState(false);
   const [selectedChain, setselectedChain] = useState<chainType | null>(null);
-  const [totalChainVolume, settotalChainVolume] = useState<TotalChainVolume | null>(null);
-  const [liquidityPoolBalance, setliquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
-  const [userLiquidityPoolBalance, setuserLiquidityPoolBalance] = useState<LiquidityPoolBalance | null>(null)
-  const [portfolio, setportfolio] = useState<PortfolioListReturnType | null>(null);
+  const [totalChainVolume, settotalChainVolume] =
+    useState<TotalChainVolume | null>(null);
+  const [liquidityPoolBalance, setliquidityPoolBalance] =
+    useState<LiquidityPoolBalance | null>(null);
+  const [userLiquidityPoolBalance, setuserLiquidityPoolBalance] =
+    useState<LiquidityPoolBalance | null>(null);
+  const [portfolio, setportfolio] = useState<PortfolioListReturnType | null>(
+    null
+  );
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const { switchChain } = useSwitchChain();
   const onClickDeposit = (chain_: any) => {
-    if (chain?.id !== chain_.id) {
-      switchChain({
-        chainId: chain_.id,
-      })
-    } else {
-      setdepositPopup(true)
-      setselectedChain(chain_)
-      onOpen()
-      getBlanace(Chains)
-      if (address) {
-        getUserLiquidity(Chains, address)
-      }
-
-
+    setdepositPopup(true);
+    setselectedChain(chain_);
+    onOpen();
+    getBlanace(Chains);
+    if (address) {
+      getUserLiquidity(Chains, address);
     }
-
-  }
+  };
   const onClickWithdraw = (chain: any) => {
-    setwithdrawPopup(true)
-    setselectedChain(chain)
-    onOpen()
-  }
+    setwithdrawPopup(true);
+    setselectedChain(chain);
+    onOpen();
+  };
   const onCloseDeposit = () => {
-    setdepositPopup(false)
-    onClose()
-  }
+    setdepositPopup(false);
+    onClose();
+  };
   const onCloseWithdraw = () => {
-    setwithdrawPopup(false)
-    onClose()
-  }
+    setwithdrawPopup(false);
+    onClose();
+  };
 
   const fetchPortfolio = async (address: any) => {
     // const result = await PortfolioAPI(address);
-    const result = await FetchPortfolioBalance(Chains, address)
+    const result = await FetchPortfolioBalance(Chains, address);
     console.log("portfolio", result);
     setportfolio(result);
     //setAccountBalance(result);
   };
   const getBlanace = async (Chains: any) => {
     const res = await FetchLiquidityPoolBalance(Chains);
-    console.log(res)
-    setliquidityPoolBalance(res)
-  }
+    console.log(res);
+    setliquidityPoolBalance(res);
+  };
 
-  const getUserLiquidity = async (Chains: any, walletAddress: `0x${string}`) => {
-    const res = await FetchUserLiquidityPoolBalance(Chains, walletAddress)
-    setuserLiquidityPoolBalance(res)
-  }
+  const getUserLiquidity = async (
+    Chains: any,
+    walletAddress: `0x${string}`
+  ) => {
+    const res = await FetchUserLiquidityPoolBalance(Chains, walletAddress);
+    setuserLiquidityPoolBalance(res);
+  };
 
   const getTotalChainVolume = async (walletAddress: `0x${string}`) => {
-    const isTestnet = process.env.REACT_APP_SERVER === "testnet"
-    const domain = isTestnet ? process.env.REACT_APP_BACKEND_API_TESTNET : process.env.REACT_APP_BACKEND_API
-    console.log("domain", domain, process.env.REACT_APP_BACKEND_API_TESTNET, process.env.REACT_APP_BACKEND_API)
+    const isTestnet = process.env.REACT_APP_SERVER === "testnet";
+    const domain = isTestnet
+      ? process.env.REACT_APP_BACKEND_API_TESTNET
+      : process.env.REACT_APP_BACKEND_API;
+    console.log(
+      "domain",
+      domain,
+      process.env.REACT_APP_BACKEND_API_TESTNET,
+      process.env.REACT_APP_BACKEND_API
+    );
     const url = `${domain}/api/pools/${walletAddress}`;
 
     const response = await fetch(url);
@@ -90,31 +106,38 @@ const Liquidity = (props: Props) => {
       console.log(result);
       settotalChainVolume(result);
     }
-  }
+  };
 
-  const totalVolumeLocked = liquidityPoolBalance &&
-    Object.values(liquidityPoolBalance).reduce((acc, obj) => acc + parseInt(obj.balanceinusd), 10);
+  const totalVolumeLocked =
+    liquidityPoolBalance &&
+    Object.values(liquidityPoolBalance).reduce(
+      (acc, obj) => acc + parseInt(obj.balanceinusd),
+      10
+    );
 
   useEffect(() => {
     if (Chains) {
-      getBlanace(Chains)
+      getBlanace(Chains);
       //getUserLiquidity(Chains)
       if (address) {
-        console.log("hbxhbhxbhbxh")
+        console.log("hbxhbhxbhbxh");
         getUserLiquidity(Chains, address);
-        getTotalChainVolume(address)
+        getTotalChainVolume(address);
       }
     }
-
-  }, [Chains, address])
-
-  useEffect(() => {
-    console.log("liquidityPoolBalance", liquidityPoolBalance, liquidityPoolBalance && liquidityPoolBalance[2810])
-  }, [liquidityPoolBalance])
+  }, [Chains, address]);
 
   useEffect(() => {
-    console.log("userliquidityPoolBalance", userLiquidityPoolBalance)
-  }, [userLiquidityPoolBalance])
+    console.log(
+      "liquidityPoolBalance",
+      liquidityPoolBalance,
+      liquidityPoolBalance && liquidityPoolBalance[2810]
+    );
+  }, [liquidityPoolBalance]);
+
+  useEffect(() => {
+    console.log("userliquidityPoolBalance", userLiquidityPoolBalance);
+  }, [userLiquidityPoolBalance]);
 
   useEffect(() => {
     if (address) {
@@ -124,13 +147,36 @@ const Liquidity = (props: Props) => {
 
   return (
     <div className="LiquidityRoot">
-      <LiquidityPopup is_liquidtyModalOpen={isOpen && depositPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseDeposit} chain={selectedChain} balance={portfolio && selectedChain ? portfolio[selectedChain.id].balance : "N/A"}  />
-      <LiquidityWithdrawPopup is_liquidtyModalOpen={isOpen && withdrawPopup} onOpen={onOpen} on_liquidtyModalClose={onCloseWithdraw} chain={selectedChain} balance={portfolio && selectedChain ? portfolio[selectedChain.id].balance : "N/A"}/>
+      <LiquidityPopup
+        is_liquidtyModalOpen={isOpen && depositPopup}
+        onOpen={onOpen}
+        on_liquidtyModalClose={onCloseDeposit}
+        chain={selectedChain}
+        balance={
+          portfolio && selectedChain
+            ? portfolio[selectedChain.id].balance
+            : "N/A"
+        }
+      />
+      <LiquidityWithdrawPopup
+        is_liquidtyModalOpen={isOpen && withdrawPopup}
+        onOpen={onOpen}
+        on_liquidtyModalClose={onCloseWithdraw}
+        chain={selectedChain}
+        balance={
+          portfolio && selectedChain
+            ? portfolio[selectedChain.id].balance
+            : "N/A"
+        }
+      />
       <div className="liquidity-table-container">
         <table>
           <thead>
             <tr>
-              <th className="liquidity-table-title" colSpan={7}>Liquidity Pools <span className="TVL_text">TVL : ${totalVolumeLocked}</span></th>
+              <th className="liquidity-table-title" colSpan={7}>
+                Liquidity Pools{" "}
+                <span className="TVL_text">TVL : ${totalVolumeLocked}</span>
+              </th>
             </tr>
             <tr>
               <th>Asset Name</th>
@@ -143,36 +189,63 @@ const Liquidity = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {Chains && liquidityPoolBalance && Chains.map((ele) => {
-
-              return (<>
-                <tr>
-                  <td>
-                    <div className="chain">
-                      <img className="chain-logo" src={iconMap[ele.id]} />
-                      {ele.name}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="statusWrap">
-                      <span className={`status success`}></span>
-                      Active
-                    </div>
-                  </td>
-                  <td>{liquidityPoolBalance && liquidityPoolBalance[ele.id] && `$${liquidityPoolBalance[ele.id].balanceinusd}`} </td>
-                  {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
-                  <td>{totalChainVolume && `${totalChainVolume[ele.id].totalVolume}`}</td>
-                  <td>{userLiquidityPoolBalance ? userLiquidityPoolBalance[ele.id] && `$${userLiquidityPoolBalance[ele.id].balanceinusd}` : "N/A"}</td>
-                  <td>$0</td>
-                  <td>
-                    <div className="action_btn">
-                      <button className="deposit-btn" disabled={address === undefined} onClick={() => onClickDeposit(ele)}>Deposit</button>
-                      <button className="withdraw-btn" disabled={address === undefined} onClick={() => onClickWithdraw(ele)}>Withdraw</button>
-                    </div>
-                  </td>
-                </tr>
-              </>)
-            })}
+            {Chains &&
+              liquidityPoolBalance &&
+              Chains.map((ele) => {
+                return (
+                  <>
+                    <tr>
+                      <td>
+                        <div className="chain">
+                          <img className="chain-logo" src={iconMap[ele.id]} />
+                          {ele.name}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="statusWrap">
+                          <span className={`status success`}></span>
+                          Active
+                        </div>
+                      </td>
+                      <td>
+                        {liquidityPoolBalance &&
+                          liquidityPoolBalance[ele.id] &&
+                          `$${liquidityPoolBalance[ele.id].balanceinusd}`}{" "}
+                      </td>
+                      {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
+                      <td>
+                        {totalChainVolume &&
+                          `${totalChainVolume[ele.id].totalVolume}`}
+                      </td>
+                      <td>
+                        {userLiquidityPoolBalance
+                          ? userLiquidityPoolBalance[ele.id] &&
+                            `$${userLiquidityPoolBalance[ele.id].balanceinusd}`
+                          : "N/A"}
+                      </td>
+                      <td>$0</td>
+                      <td>
+                        <div className="action_btn">
+                          <button
+                            className="deposit-btn"
+                            disabled={address === undefined}
+                            onClick={() => onClickDeposit(ele)}
+                          >
+                            Deposit
+                          </button>
+                          <button
+                            className="withdraw-btn"
+                            disabled={address === undefined}
+                            onClick={() => onClickWithdraw(ele)}
+                          >
+                            Withdraw
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </>
+                );
+              })}
             {/* <tr>
               <td>
                 <div className="chain">

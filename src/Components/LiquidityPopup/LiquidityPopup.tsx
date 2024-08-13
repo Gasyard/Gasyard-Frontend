@@ -24,41 +24,63 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { iconMap } from "../../Config/data";
-import './LiquidityPopup.css'
+import "./LiquidityPopup.css";
 import { AbiPool } from "../../Config/JSON/AbiPool";
-import { useReadContract, useTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useReadContract,
+  useSwitchChain,
+  useTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { ethers, formatEther, parseEther } from "ethers";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
-import { CompareValues, convertEthToUsd, getUSDAmount } from "../../Config/utils";
+import {
+  CompareValues,
+  convertEthToUsd,
+  getUSDAmount,
+} from "../../Config/utils";
 import { pool_abi } from "../../Config/abi";
 type Props = {
-    is_liquidtyModalOpen:boolean,
-    onOpen:any,
-    on_liquidtyModalClose:any
-    chain?:any
-    balance:any
-    initialBal?:string
+  is_liquidtyModalOpen: boolean;
+  onOpen: any;
+  on_liquidtyModalClose: any;
+  chain?: any;
+  balance: any;
+  initialBal?: string;
 };
 
-
-const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balance}: Props) => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [inputInUSD, setinputInUSD] = useState<string>("0")
+const LiquidityPopup = ({
+  is_liquidtyModalOpen,
+  on_liquidtyModalClose,
+  chain,
+  balance,
+}: Props) => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputInUSD, setinputInUSD] = useState<string>("0");
   const [debouncedValue, setDebouncedValue] = useState(inputValue);
-  const { writeContract, data, isPending, isSuccess, status,error } = useWriteContract();
-  const {data:txReceiptData} = useTransactionReceipt({
-    hash:data
-  })
+  const { writeContract, data, isPending, isSuccess, status, error } =
+    useWriteContract();
+  const { data: txReceiptData } = useTransactionReceipt({
+    hash: data,
+  });
 
+  const { switchChain } = useSwitchChain();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    address,
+    isConnecting,
+    isDisconnected,
+    chain: curr_chain,
+  } = useAccount();
   //const balance = 10;
   const [openTransactionPopup, setopenTransactionPopup] = useState(false);
 
-  const ClearState = () =>{
-    setInputValue("")
-  }
+  const ClearState = () => {
+    setInputValue("");
+  };
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e: any) => {
     var value = e.target.value;
 
     var ele = value.split(".");
@@ -68,37 +90,33 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balan
       value = ele[0] + "." + e;
     }
     setInputValue(value);
-    
   };
 
-  const onClickPercent = (percent:number) =>{
-    setInputValue(String(balance*percent))
-  }
+  const onClickPercent = (percent: number) => {
+    setInputValue(String(balance * percent));
+  };
 
   const setTransactionModal = (value: boolean) => {
     setopenTransactionPopup(value);
   };
 
   //const web3instance = new <Web></Web>()
-  
-  const onSubmit = () =>{
-    console.log("on deposit clicked",inputValue)
-      try {
 
-        const result = writeContract({ 
-          abi:AbiPool,
-          address: chain.liquidityPool,
-          functionName: 'addToPool',
-          args: [
-            parseEther(inputValue),
-          ],
-          value:parseEther(inputValue)
-        });
-        setopenTransactionPopup(true)
-      } catch (err) {
-        console.log("err", err);
-      }
-  }
+  const onSubmit = () => {
+    console.log("on deposit clicked", inputValue);
+    try {
+      const result = writeContract({
+        abi: AbiPool,
+        address: chain.liquidityPool,
+        functionName: "addToPool",
+        args: [parseEther(inputValue)],
+        value: parseEther(inputValue),
+      });
+      setopenTransactionPopup(true);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
 
@@ -120,26 +138,26 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balan
     return true;
   };
   useEffect(() => {
-    console.log("Error ->",error?.cause,error?.message,error?.name,error)
-  }, [error])
+    console.log("Error ->", error?.cause, error?.message, error?.name, error);
+  }, [error]);
   useEffect(() => {
-    ClearState()
-  }, [])
+    ClearState();
+  }, []);
   useEffect(() => {
     const handler = setTimeout(async () => {
       var ele = inputValue.split(".");
-      var value = inputValue
+      var value = inputValue;
       if (ele[1] === "") {
-        value = ele[0] + "." + "0"
+        value = ele[0] + "." + "0";
       }
       setDebouncedValue(value);
-     if(chain){
-      const usdRate = await getUSDAmount(chain.nativeCurrency.symbol)
-      var val = value !== "" ? value : "0";
-      setinputInUSD(convertEthToUsd(parseEther(val),usdRate))
-     }
-     
-      setInputValue(value)
+      if (chain) {
+        const usdRate = await getUSDAmount(chain.nativeCurrency.symbol);
+        var val = value !== "" ? value : "0";
+        setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
+      }
+
+      setInputValue(value);
     }, 1000); // 0.5 seconds
 
     // Cleanup timeout if the effect is called again before the timeout completes
@@ -148,47 +166,59 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balan
     };
   }, [inputValue]);
 
-  
-  
   return (
     <div className="LiquidityPopupRoot">
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-      <Modal blockScrollOnMount={false} isOpen={is_liquidtyModalOpen} onClose={on_liquidtyModalClose}>
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={is_liquidtyModalOpen}
+        onClose={on_liquidtyModalClose}
+      >
         <ModalOverlay />
         <ModalContent
-           sx={{
-            backgroundColor:"#FFFFFF",
-            borderRadius:"26px",
-            width:"434px",
-            boxShadow:"0px 0px 0px 1px #09194821,0px 1px 2px 0px #12376914"
-           }}
+          sx={{
+            backgroundColor: "#FFFFFF",
+            borderRadius: "26px",
+            width: "434px",
+            boxShadow: "0px 0px 0px 1px #09194821,0px 1px 2px 0px #12376914",
+          }}
         >
-          <ModalHeader borderBottom="1px solid #F1F2F4">Deposit {status} 
-            </ModalHeader>
+          <ModalHeader borderBottom="1px solid #F1F2F4">
+            Deposit {status}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody paddingLeft={"0px"} paddingRight={"0px"}>
             <div className="BodyWrap">
               <div className="amountDisplay">
                 <div className="nativeAmount">
-                  <input type="text"
-                   placeholder="0.0"
-                   style={{ width: `${inputValue.length + 3}ch` }}
-                   onChange={handleInputChange}
-                   onKeyPress={(e) => {
+                  <input
+                    type="text"
+                    placeholder="0.0"
+                    style={{ width: `${inputValue.length + 3}ch` }}
+                    onChange={handleInputChange}
+                    onKeyPress={(e) => {
                       if (!isNumberKey(e)) {
                         e.preventDefault();
                       }
                     }}
-                   value={inputValue}
-                   /><span className="nativeToken">{chain && chain.nativeCurrency.symbol}</span>
+                    value={inputValue}
+                  />
+                  <span className="nativeToken">
+                    {chain && chain.nativeCurrency.symbol}
+                  </span>
                 </div>
                 <div className="amountInUSD">${inputInUSD}</div>
               </div>
               <div className="chainDisplay">
-                <img src={chain && iconMap[chain.id]} alt="logo" className="chainImg" />
+                <img
+                  src={chain && iconMap[chain.id]}
+                  alt="logo"
+                  className="chainImg"
+                />
                 <div className="chainInfo">
-                   {chain && chain.nativeCurrency.symbol}<span className="balance">Balance: {balance}</span>
+                  {chain && chain.nativeCurrency.symbol}
+                  <span className="balance">Balance: {balance}</span>
                 </div>
               </div>
               <div className="percentDisplay">
@@ -214,31 +244,48 @@ const LiquidityPopup = ({is_liquidtyModalOpen, on_liquidtyModalClose,chain,balan
                 </div> */}
               </div>
               <div className="SubmitBtn">
-                <button onClick={onSubmit} disabled={!CompareValues(inputValue,String(balance))}>Deposit</button>
+                {curr_chain && chain && chain.id === curr_chain.id ? (
+                  <button
+                    onClick={onSubmit}
+                    disabled={!CompareValues(inputValue, String(balance))}
+                  >
+                    Deposit
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      switchChain({
+                        chainId: chain.id,
+                      });
+                    }}
+                  >
+                    Switch Chain
+                  </button>
+                )}
               </div>
             </div>
           </ModalBody>
         </ModalContent>
       </Modal>
 
-      <LiquidityTransactionPopup 
-       isOpen={openTransactionPopup}
-       onOpen={onOpen}
-       onClose={onClose}
-       setModal={setTransactionModal}
-       rejected={status === "error"}
-       success={status === "success"}
-       pending={status === "pending"}
-       onSubmit={onSubmit}
-       txReceiptHash={txReceiptData}
-       chain={chain}
-       ClearState={ClearState}
-       error={error ? error.message : ""}
-       txHash={data}
-       isDeposit={true}
+      <LiquidityTransactionPopup
+        isOpen={openTransactionPopup}
+        onOpen={onOpen}
+        onClose={onClose}
+        setModal={setTransactionModal}
+        rejected={status === "error"}
+        success={status === "success"}
+        pending={status === "pending"}
+        onSubmit={onSubmit}
+        txReceiptHash={txReceiptData}
+        chain={chain}
+        ClearState={ClearState}
+        error={error ? error.message : ""}
+        txHash={data}
+        isDeposit={true}
       />
     </div>
   );
 };
 
-export default LiquidityPopup
+export default LiquidityPopup;
