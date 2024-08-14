@@ -30,6 +30,7 @@ import { AbiPool } from "../../Config/JSON/AbiPool";
 import { formatEther, parseEther } from "viem";
 import LiquidityTransactionPopup from "../TransactionPopup/LiquidityTransactionPopup";
 import { CompareValues, convertEthToUsd, getUSDAmount } from "../../Config/utils";
+import { observer } from "mobx-react";
 
 type Props = {
   is_liquidtyModalOpen: boolean;
@@ -40,7 +41,7 @@ type Props = {
   balanceinUSD?:any
   fetchAllBalance:any
 };
-const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, chain,balance,balanceinUSD,fetchAllBalance }: Props) => {
+const LiquidityWithdrawPopup = observer(({ is_liquidtyModalOpen, on_liquidtyModalClose, chain,balance,balanceinUSD,fetchAllBalance }: Props) => {
   const [inputValue, setInputValue] = useState("");
   //const balance = 10;
 
@@ -97,10 +98,7 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
     }
   }
 
-  const getBalanceInUSD = async(val:any,usdRate:any) =>{
-    const res = await getUSDAmount(usdRate)
-    return convertEthToUsd(parseEther(val), res)
-  }
+
  
   const isNumberKey = (evt: any) => {
     const charCode = evt.which ? evt.which : evt.keyCode;
@@ -205,20 +203,20 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
                 <button onClick={() => onClickPercent(1)}>100%</button>
               </div>
               <div className="QuoteDisplay">
-                <div className="quote_row">
+                {/* <div className="quote_row">
                   <div className="quote_column col1">Points Earned</div>
                   <div className="quote_column col2">
                     <span className="coin"></span>+400
                   </div>
-                </div>
+                </div> */}
                 <div className="quote_row">
                   <div className="quote_column col1">Network</div>
                   <div className="quote_column col2">Base</div>
                 </div>
-                <div className="quote_row">
+                {/* <div className="quote_row">
                   <div className="quote_column col1">Network Fee</div>
                   <div className="quote_column col2">$0.12 USD</div>
-                </div>
+                </div> */}
               </div>
               <div className="SubmitBtn">
               {curr_chain && chain && chain.id === curr_chain.id ? (<>
@@ -259,6 +257,6 @@ const LiquidityWithdrawPopup = ({ is_liquidtyModalOpen, on_liquidtyModalClose, c
       />
     </div>
   );
-};
+});
 
 export default LiquidityWithdrawPopup;

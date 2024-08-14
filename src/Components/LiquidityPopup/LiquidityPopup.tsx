@@ -41,6 +41,8 @@ import {
   getUSDAmount,
 } from "../../Config/utils";
 import { pool_abi } from "../../Config/abi";
+import { observer } from "mobx-react";
+import FormStore from "../../Config/Store/FormStore";
 type Props = {
   is_liquidtyModalOpen: boolean;
   onOpen: any;
@@ -51,7 +53,7 @@ type Props = {
   fetchAllBalance:any
 };
 
-const LiquidityPopup = ({
+const LiquidityPopup = observer(({
   is_liquidtyModalOpen,
   on_liquidtyModalClose,
   chain,
@@ -154,9 +156,9 @@ const LiquidityPopup = ({
       }
       setDebouncedValue(value);
       if (chain) {
-        const usdRate = await getUSDAmount(chain.nativeCurrency.symbol);
+        const usdRate = FormStore.getTokenRateKey(chain.nativeCurrency.symbol);
         var val = value !== "" ? value : "0";
-        setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
+        usdRate && setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
       }
 
       setInputValue(value);
@@ -294,6 +296,6 @@ const LiquidityPopup = ({
       />
     </div>
   );
-};
+});
 
 export default LiquidityPopup;

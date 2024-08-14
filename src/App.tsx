@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Header from "./Components/Header/Header";
@@ -12,8 +12,27 @@ import { observer } from "mobx-react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Explorer from "./Components/Explorer/Explorer";
 import Liquidity from "./Components/Liquidity/Liquidity";
+import { useChains } from "wagmi";
+import { getUSDAmount } from "./Config/utils";
+import FormStore from "./Config/Store/FormStore";
 
 const App = observer(() => {
+
+  const token = ['ETH','MATIC','MOVE','BERA']
+
+  const getAllUSDValues = async(chain:any) =>{
+    await Promise.all(
+    chain.map(async(ele:any)=>{
+      const res = await getUSDAmount(ele);
+      FormStore.updateTokenRate(ele,res)
+    }))
+  }
+
+  useEffect(() => {
+      getAllUSDValues(token)
+  }, [])
+  
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <ChakraProvider>

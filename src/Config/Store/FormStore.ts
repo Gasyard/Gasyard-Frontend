@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from "mobx"
+import { action, makeAutoObservable,observable } from "mobx"
 import { chainType } from "../types"
 
 
@@ -8,6 +8,7 @@ class FormStore{
     inputToken:any = ""
     outputToken:any = ""
     transactionHash:any = ""
+    TokenUSDRates = observable.map<string, number>({})
 
     constructor(){
         makeAutoObservable(this,{
@@ -23,6 +24,13 @@ class FormStore{
     setInputToken = (data:any) =>{this.inputToken = data}
     setOuputToken = (data:any) =>{this.outputToken = data}
     setTransactionHash = (data:any) =>{this.transactionHash = data}
+    
+    updateTokenRate = (key:string, value:number) => {
+        this.TokenUSDRates.set(key, value);
+    }
+    getTokenRateKey(key: string): number | undefined {
+        return this.TokenUSDRates.get(key);
+    }
 }
 
 export default new FormStore()

@@ -33,7 +33,7 @@ import ethereumlogo from './assets/chains/ethereum.svg'
 import optimismlogo from './assets/chains/optimism.svg'
 import polygonlogo from './assets/chains/polygon.svg'
 import scrolllogo from './assets/chains/scroll.svg'
-import sepolialogo from "./assets/coins/sepolia.png";
+import sepolialogo from "./assets/chains/etherum_2.svg";
 import mantlelogo from "./assets/chains/mantle.svg"
 import karakotlogo from './assets/chains/kakarot.png'
 import berachianlogo from './assets/chains/Berachain.svg'

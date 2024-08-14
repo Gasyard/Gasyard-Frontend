@@ -204,7 +204,7 @@ const Liquidity = (props: Props) => {
             <tr>
               <th className="liquidity-table-title" colSpan={7}>
                 Liquidity Pools{" "}
-                <span className="TVL_text">TVL : ${totalVolumeLocked}</span>
+                <span className="TVL_text">Pooled Liquidity (TVL) : ${totalVolumeLocked}</span>
               </th>
             </tr>
             <tr>

@@ -435,9 +435,9 @@ const BridgeNew = observer((props: Props) => {
       setDebouncedValue(value);
       FormStore.setInputToken(value);
       if (chain1) {
-        const usdRate = await getUSDAmount(chain1.nativeCurrency.symbol);
+        const usdRate = FormStore.getTokenRateKey(chain1.nativeCurrency.symbol);
         var val = value !== "" ? value : "0";
-        setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
+        if(usdRate) setinputInUSD(convertEthToUsd(parseEther(val), usdRate));
       }
       setinputToken(value)
     }, 1000); // 0.5 seconds

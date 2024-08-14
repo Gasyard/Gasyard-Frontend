@@ -4,6 +4,7 @@ import Web3 from "web3";
 import { LiquidityPoolBalance, NetworkConfigReturnType, PortfolioListReturnType } from "./types";
 import { pool_abi } from "./abi";
 import axios from "axios";
+import FormStore from "./Store/FormStore";
 
 const convertEthToWeiAndBack = (ethString:string) => {
     try {
@@ -61,10 +62,11 @@ const convertEthToWeiAndBack = (ethString:string) => {
           const feedInstance = new web3Instance.eth.Contract(pool_abi, networkConfig.liquidityPool);
           const userbalance = await feedInstance.methods.balanceOf(walletAddress).call();
           const balanceBigInt = BigInt(userbalance)
+          const usdRate = FormStore.getTokenRateKey(networkConfig.nativeCurrency.symbol)
           networkBalance[networkConfig.id] = {
               "balance":balanceBigInt,
               "name":networkConfig.name,
-              "balanceinusd":convertEthToUsd(balanceBigInt,await getUSDAmount(networkConfig.nativeCurrency.symbol))
+              "balanceinusd":usdRate ? convertEthToUsd(balanceBigInt,usdRate):"N/A"
             }
         }catch(err){
           console.log("user err",err,networkConfig.name,networkConfig.id)
@@ -82,10 +84,11 @@ const convertEthToWeiAndBack = (ethString:string) => {
         const web3Instance = new Web3(networkConfig.rpcUrls.default.http[0]);
         const maxBalance = await web3Instance.eth.getBalance(networkConfig.liquidityPool);
         console.log("networkConfig",networkConfig.name,maxBalance,networkConfig.rpc)
+        const usdRate = FormStore.getTokenRateKey(networkConfig.nativeCurrency.symbol)
         networkBalance[networkConfig.id] = {
           "balance":maxBalance,
           "name":networkConfig.name,
-          "balanceinusd":convertEthToUsd(maxBalance,await getUSDAmount(networkConfig.nativeCurrency.symbol))
+          "balanceinusd":usdRate ? convertEthToUsd(maxBalance,usdRate):"N/A"
         }
       }catch(err){
         //networkBalance.push(parseEther("0"));
@@ -122,7 +125,7 @@ const convertEthToWeiAndBack = (ethString:string) => {
   }
 
   const getUSDAmount = async(token:string) =>{
-    if(token === "MOVE" || token === "MATIC" || token === "BERA") return 50;
+    if(token === "MOVE" || token === "BERA") return 50;
     const url = `https://api.bybit.com/v5/market/tickers?category=spot&symbol=${token.toUpperCase()}USDT`
     const res = await axios.get(url)
     return res.data.result.list[0].usdIndexPrice
