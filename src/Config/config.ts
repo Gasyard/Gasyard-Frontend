@@ -48,3 +48,15 @@ export const MovementTestnet = defineChain({
   },
 })
 
+export const AbstractTestnet = defineChain({
+  id: 11124,
+  name: 'AbstractTestnet',
+  nativeCurrency: { name: 'AbstractTestnet', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://api.testnet.abs.xyz',] },
+  },
+  blockExplorers: {
+    default: { name: 'AbstractTestnetscan', url: 'https://explorer.testnet.abs.xyz/tx/' },
+  },
+})
+

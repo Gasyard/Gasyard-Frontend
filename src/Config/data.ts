@@ -11,6 +11,7 @@ import morphlogo from '../assets/chains/Morph.png';
 import karakotlogo from '../assets/chains/kakarot_logo_mini.svg'
 import berachianlogo from '../assets/chains/Berachain.svg' 
 import movementLogo from '../assets/chains/movement-testnet-token.svg'
+import abstractLogo from '../assets/chains/abstract.png'
 import { ImageMapType, Networks } from "./types";
 
 const iconMap: ImageMapType = {
@@ -28,10 +29,12 @@ const iconMap: ImageMapType = {
   "1802203764":karakotlogo,
   "80084":berachianlogo,
   "30732":movementLogo,
+  "11124":abstractLogo,
   "MOVE":movementLogo,
   "BERA":berachianlogo,
   "ETH":ethereumlogo,
-  "MATIC":polygonlogo
+  "MATIC":polygonlogo,
+
 };
 const ChainJsonData: Networks = {
   "1": {
@@ -240,7 +243,22 @@ const ChainJsonData: Networks = {
     explorer: "https://bartio.beratrail.io/tx/",
     explorerAddress: "https://bartio.beratrail.io/address/",
   },
-  
+  11124:{
+    "networkName": "abstracttestnet",
+    "chainID":11124,
+    "baseToken": "ETH",
+    "decimals":18,
+    "rpc": "https://api.testnet.abs.xyz",
+    "feedaddress": "0x0000000000000000000000000000000000000000",
+    "routerContract":"0x269A40BeC1649345E52c94441DbDb7549E49B7e8",
+    "liquidityPool":"0x2866b80ba977e0bb16D12c654aCeE47359327EB7",
+    "priceProvider":"https://api.bybit.com/v5/market/tickers?category=spot&symbol=ETHUSDT",
+    "platformFeePercentage":1,
+    "gweiLimit":100000,
+    "isGasByLifi":false,
+    "minimumGas":0.0001,
+    "explorer":"https://explorer.testnet.abs.xyz/tx/"
+}
 };
 
 

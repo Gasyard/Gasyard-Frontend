@@ -86,8 +86,8 @@ const Liquidity = (props: Props) => {
     if (parseFloat(numStr)) {
       const num = parseFloat(numStr);
       const decimalPlaces = numStr.split(".")[1]?.length || 0;
-      if (decimalPlaces > 6) {
-        return num.toFixed(6).toString();
+      if (decimalPlaces > 2) {
+        return num.toFixed(2).toString();
       } else {
         return num.toFixed(decimalPlaces).toString();
       }
