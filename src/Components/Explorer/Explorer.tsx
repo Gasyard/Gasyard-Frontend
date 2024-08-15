@@ -302,7 +302,7 @@ const Explorer = (props: Props) => {
                     <div className="dflex-row hash">
                       {shortenAddress(item.managerHash)} 
                       <Tooltip label='Copy' fontSize='sm' bg="#E4E7EC" color="#444" placement='bottom'>
-                      <img src={copytext} onClick={() => item.managerHash && navigator.clipboard.writeText(item.managerHash)} />
+                      <img src={redirect_logo} className="redirect" onClick={() => redirectToTxExplorer(item.outputChainID,item.managerHash)}/>
                       </Tooltip>
                     </div>
                   </td>

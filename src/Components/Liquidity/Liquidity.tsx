@@ -163,6 +163,9 @@ const Liquidity = (props: Props) => {
   useEffect(() => {
     if (address) {
       fetchPortfolio(address);
+    }else{
+      setuserLiquidityPoolBalance(null)
+      settotalChainVolume(null)
     }
   }, [address]);
 
@@ -254,25 +257,30 @@ const Liquidity = (props: Props) => {
                       </td>
                       {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
                       <td>
-                        {totalChainVolume &&
-                          `$${totalChainVolume[ele.id].totalVolume}`}
+                        {totalChainVolume ?
+                          `$${totalChainVolume[ele.id].totalVolume}` : "N/A"}
                       </td>
                       <td>
-                      <div className="showAmount">
-                        <div className="amountinETH">
-                        {userLiquidityPoolBalance
-                          ? userLiquidityPoolBalance[ele.id] &&
-                            `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
-                          : "N/A"}
-                        </div>
-                        <div className="amountinusd">
-                        {userLiquidityPoolBalance
-                          ? userLiquidityPoolBalance[ele.id] &&
-                            `($${userLiquidityPoolBalance[ele.id].balanceinusd})`
-                          : "N/A"}
+                        {userLiquidityPoolBalance ? (
+                          <>
+                          <div className="showAmount">
+                            <div className="amountinETH">
+                            {userLiquidityPoolBalance
+                              ? userLiquidityPoolBalance[ele.id] &&
+                                `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
+                              : "N/A"}
+                            </div>
+                            <div className="amountinusd">
+                            {userLiquidityPoolBalance
+                              ? userLiquidityPoolBalance[ele.id] &&
+                                `($${userLiquidityPoolBalance[ele.id].balanceinusd})`
+                              : "N/A"}
 
-                        </div>
-                      </div>
+                            </div>
+                          </div>
+                          </>
+                        ):"N/A"}
+                      
                         
                       </td>
                       <td>$0</td>
