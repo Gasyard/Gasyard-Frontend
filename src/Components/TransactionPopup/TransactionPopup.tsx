@@ -133,7 +133,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
                     />
                   </>
                 ) : (<>
-                    <div className="transaction_details">Transaction Submitted on <span className="chain_name">Arbitrum one</span></div>
+                    <div className="transaction_details">Transaction Submitted on <span className="chain_name">{chain1 && chain1.name}</span></div>
                     <Lottie
                       animationData={on_going_trxn_animation}
                       loop={true}
