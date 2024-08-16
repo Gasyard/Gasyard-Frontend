@@ -83,6 +83,16 @@ const BridgeNew = observer((props: Props) => {
     FormStore.setOuputToken("")
   }
 
+  const showToast = () =>{
+    toast({
+      title: 'Migrating to v2!',
+      description: "We are Migrating to v2 will be back soon",
+      status: 'info',
+      duration: null,
+      isClosable: true,
+      position:"bottom-left"
+    })
+  }
   const FormHandler = () => {
     console.log("Form handler called");
     if (
@@ -493,7 +503,8 @@ const BridgeNew = observer((props: Props) => {
     console.log("chain1 set to", chain2?.name)
     FormStore.setChain2(chain2)
   }, [chain2])
-
+ 
+  
   
   return (
     <div className="BridgeRoot">
@@ -649,6 +660,8 @@ const BridgeNew = observer((props: Props) => {
         chain2={chain2}
         ClearState={ClearState}
       />
+
+        
     </div>
   );
 });

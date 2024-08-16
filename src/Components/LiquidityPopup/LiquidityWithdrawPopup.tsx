@@ -92,6 +92,7 @@ const LiquidityWithdrawPopup = observer(({ is_liquidtyModalOpen, on_liquidtyModa
           parseEther(inputValue),
         ],
       })
+      on_liquidtyModalClose()
       setopenTransactionPopup(true)
     }catch(err){
 

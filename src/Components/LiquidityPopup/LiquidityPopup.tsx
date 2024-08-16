@@ -116,7 +116,9 @@ const LiquidityPopup = observer(({
         args: [parseEther(inputValue)],
         value: parseEther(inputValue),
       });
+      on_liquidtyModalClose()
       setopenTransactionPopup(true);
+      
     } catch (err) {
       console.log("err", err);
     }

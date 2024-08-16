@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import "./Header.css"
 import logo from '../../assets/Gasyard Logo.svg'
 import NavDrawer from '../NavDrawer/NavDrawer'
+import closeIcon from '../../assets/close_2x_white.svg'
 type Props = {}
 
 const Header = (props: Props) => {
   const [selected, setselected] = useState("")
+  const [closeNotification, setcloseNotification] = useState(false)
   return (
     <div className="nav-root">
+      <div className={`nav-notification ${closeNotification ? "hideDiv":""}`}>
+        🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience!
+        <img src={closeIcon} alt="close" onClick={() => setcloseNotification(true)} />
+      </div>
       <div className='nav-section'>
         <div className='left-section'>
           <a href="/" className='title'>
