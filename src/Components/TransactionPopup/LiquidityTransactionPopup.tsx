@@ -38,6 +38,7 @@ import pending_animation from "../../assets/animations/pending-animation.json"
 import Lottie from "lottie-react";
 import { observer } from "mobx-react";
 import FormStore from "../../Config/Store/FormStore";
+import { notifyTransaction } from "../../Config/API/api";
 
 type Props = {
   isOpen?: any;
@@ -63,7 +64,9 @@ const LiquidityTransactionPopup = observer(({ isOpen, onOpen, onClose, setModal,
 
   useEffect(() => {
     console.log("count txReceiptHash from modal",txReceiptHash)
-    
+    if(txReceiptHash){
+      notifyTransaction(chain.id,txHash)
+    }
   }, [txReceiptHash])
 
   

@@ -66,3 +66,20 @@ export const getListTransactions = async(page:number,inputAddress:`0x${string}`|
         return null
     }
 }
+
+export const notifyTransaction = async(chainid:number,trnx_hash:`0x${string}`) =>{
+    console.log("notifyTransaction called!")
+    try{
+        const url = `${domain}/api/notify`
+        const body = {
+            inputNetwork:chainid,
+            eventTxHash:trnx_hash
+        }
+
+        const res = await axios.post(url,body)
+        console.log("notifyTransaction response",res.data)
+
+    }catch(err){
+        console.log(err)
+    }
+}
