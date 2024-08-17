@@ -257,7 +257,8 @@ const ChainJsonData: Networks = {
     "gweiLimit":100000,
     "isGasByLifi":false,
     "minimumGas":0.0001,
-    "explorer":"https://explorer.testnet.abs.xyz/tx/"
+    "explorer":"https://explorer.testnet.abs.xyz/tx/",
+    explorerAddress: "https://explorer.testnet.abs.xyz/address/",
 }
 };
 
