@@ -7,7 +7,7 @@ type Props = {}
 
 const Header = (props: Props) => {
   const [selected, setselected] = useState("")
-  const [closeNotification, setcloseNotification] = useState(false)
+  const [closeNotification, setcloseNotification] = useState(true)
   return (
     <div className="nav-root">
       <div className={`nav-notification ${closeNotification ? "hideDiv":""}`}>
