@@ -141,6 +141,11 @@ const Explorer = (props: Props) => {
     window.open(url, '_blank');
   }
 
+  const redirectManagerHash = (hash:any) =>{
+    const url = "https://sepolia.arbiscan.io/tx/"+hash 
+    window.open(url,'_blank')
+  }
+
   const formatDate = (dateString:string) => {
     const date = new Date(dateString);
   
@@ -301,9 +306,9 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="dflex-row hash">
                       {shortenAddress(item.managerHash)} 
-                      <Tooltip label='Copy' fontSize='sm' bg="#E4E7EC" color="#444" placement='bottom'>
-                      <img src={redirect_logo} className="redirect" onClick={() => redirectToTxExplorer(item.outputChainID,item.managerHash)}/>
-                      </Tooltip>
+                      {/* <Tooltip label='Copy' fontSize='sm' bg="#E4E7EC" color="#444" placement='bottom'> */}
+                      <img src={redirect_logo} className="redirect" onClick={() => redirectManagerHash(item.managerHash)}/>
+                      {/* </Tooltip> */}
                     </div>
                   </td>
                   <td>
