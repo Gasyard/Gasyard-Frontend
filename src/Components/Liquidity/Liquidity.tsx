@@ -10,6 +10,7 @@ import {
   LiquidityPoolBalance,
   NetworkConfigReturnType,
   PortfolioListReturnType,
+  rewardsType,
   TotalChainVolume,
 } from "../../Config/types";
 import {
@@ -18,6 +19,7 @@ import {
   FetchUserLiquidityPoolBalance,
 } from "../../Config/utils";
 import { formatEther, formatUnits, parseEther } from "viem";
+import { fetchRewards } from "../../Config/API/api";
 
 type Props = {};
 
@@ -38,6 +40,7 @@ const Liquidity = (props: Props) => {
     null
   );
   const { address, isConnecting, isDisconnected, chain } = useAccount();
+  const [rewardsEarned, setrewardsEarned] = useState<rewardsType | null>(null)
   const { switchChain } = useSwitchChain();
   const onClickDeposit = (chain_: any) => {
     setdepositPopup(true);
@@ -69,6 +72,12 @@ const Liquidity = (props: Props) => {
     setportfolio(result);
     //setAccountBalance(result);
   };
+  const getRewardsEarned = async(address:any) =>{
+    const result = await fetchRewards(address);
+    console.log("portfolio", result);
+    setrewardsEarned(result)
+    //setportfolio(result);
+  }
   const getBlanace = async (Chains: any) => {
     const res = await FetchLiquidityPoolBalance(Chains);
     console.log(res);
@@ -132,9 +141,11 @@ const Liquidity = (props: Props) => {
         getUserLiquidity(Chains, address);
         getTotalChainVolume(address);
         fetchPortfolio(address);
+        getRewardsEarned(address)
       }
       
     }
+
   useEffect(() => {
     if (Chains) {
       getBlanace(Chains);
@@ -163,9 +174,11 @@ const Liquidity = (props: Props) => {
   useEffect(() => {
     if (address) {
       fetchPortfolio(address);
+      getRewardsEarned(address);
     }else{
       setuserLiquidityPoolBalance(null)
       settotalChainVolume(null)
+      setrewardsEarned(null)
     }
   }, [address]);
 
@@ -283,7 +296,7 @@ const Liquidity = (props: Props) => {
                       
                         
                       </td>
-                      <td>$0</td>
+                      <td>{ rewardsEarned ? rewardsEarned[ele.id] ? `${rewardsEarned[ele.id]}` : `0` : "N/A"}</td>
                       <td>
                         <div className="action_btn">
                           <button

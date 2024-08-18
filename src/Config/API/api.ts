@@ -83,3 +83,15 @@ export const notifyTransaction = async(chainid:number,trnx_hash:`0x${string}`) =
         console.log(err)
     }
 }
+
+export const fetchRewards = async(walletId:any) =>{
+    console.log("fetchreward called")
+    try{
+        const url = `${domain}/api/show-rewards/${walletId}`
+        const res = await axios.get(url)
+        console.log("fetchreward response",res)
+        return res.data;
+    }catch(err){
+        console.log('err', err)
+    }
+}

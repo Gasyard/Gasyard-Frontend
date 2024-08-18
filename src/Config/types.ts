@@ -64,7 +64,6 @@ interface PortfolioListReturnType {
   [key: number]: PortfolioObjectReturnType
 }
 
-
 interface LiquidityPoolBalance {
   [key: number]: NetworkConfigReturnType
 }
@@ -110,6 +109,10 @@ interface TxObjectType {
   "updatedAt": string,
   "id": string
 }
+
+interface rewardsType {
+  [key: string]: string;
+}
 export type {
   chainType,
   Network,
@@ -123,5 +126,6 @@ export type {
   NetworkConfigReturnType,
   LiquidityPoolBalance,
   PortfolioListReturnType,
-  TotalChainVolume
+  TotalChainVolume,
+  rewardsType
 };

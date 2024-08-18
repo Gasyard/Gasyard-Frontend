@@ -124,8 +124,7 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       contractAddress: ChainJsonData["11124"].routerContract,
       explorer:ChainJsonData["11124"].explorer,
       liquidityPool:ChainJsonData["11124"].liquidityPool
-    }
-    
+    },
   ] as const;
 
   config = defaultWagmiConfig({

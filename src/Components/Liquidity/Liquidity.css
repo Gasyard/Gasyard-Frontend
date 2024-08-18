@@ -83,7 +83,11 @@
 .liquidity-table-container table tbody tr td:nth-child(5),
 .liquidity-table-container table thead tr th:nth-child(5){
     width:180px;
-    
+}
+
+.liquidity-table-container table thead tr th:nth-child(6),
+.liquidity-table-container table tbody tr td:nth-child(6){
+    width: 125px;
 }
 .liquidity-table-container table tbody tr td:nth-child(6){
     font-family: Inter;
