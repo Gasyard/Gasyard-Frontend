@@ -72,10 +72,10 @@ const Liquidity = (props: Props) => {
     setportfolio(result);
     //setAccountBalance(result);
   };
-  const getRewardsEarned = async(address:any) =>{
+  const getRewardsEarned = async (address: any) => {
     const result = await fetchRewards(address);
     console.log("portfolio", result);
-    setrewardsEarned(result)
+    setrewardsEarned(result.holderRewards)
     //setportfolio(result);
   }
   const getBlanace = async (Chains: any) => {
@@ -136,15 +136,15 @@ const Liquidity = (props: Props) => {
       10
     );
 
-    const fetchAllBalance = () =>{
-      if(address){
-        getUserLiquidity(Chains, address);
-        getTotalChainVolume(address);
-        fetchPortfolio(address);
-        getRewardsEarned(address)
-      }
-      
+  const fetchAllBalance = () => {
+    if (address) {
+      getUserLiquidity(Chains, address);
+      getTotalChainVolume(address);
+      fetchPortfolio(address);
+      getRewardsEarned(address)
     }
+
+  }
 
   useEffect(() => {
     if (Chains) {
@@ -154,7 +154,7 @@ const Liquidity = (props: Props) => {
         console.log("hbxhbhxbhbxh");
         getUserLiquidity(Chains, address);
         getTotalChainVolume(address);
-        
+
       }
     }
   }, [Chains, address]);
@@ -175,7 +175,7 @@ const Liquidity = (props: Props) => {
     if (address) {
       fetchPortfolio(address);
       getRewardsEarned(address);
-    }else{
+    } else {
       setuserLiquidityPoolBalance(null)
       settotalChainVolume(null)
       setrewardsEarned(null)
@@ -212,7 +212,7 @@ const Liquidity = (props: Props) => {
             : "N/A"
         }
         fetchAllBalance={fetchAllBalance}
-        
+
       />
       <div className="liquidity-table-container">
         <table>
@@ -255,17 +255,17 @@ const Liquidity = (props: Props) => {
                       <td>
                         <div className="showAmount">
                           <div className="amountinETH">
-                          {liquidityPoolBalance &&
-                          liquidityPoolBalance[ele.id] &&
-                          `${formatToken(formatEther(liquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`}
+                            {liquidityPoolBalance &&
+                              liquidityPoolBalance[ele.id] &&
+                              `${formatToken(formatEther(liquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`}
                           </div>
                           <div className="amountinusd">
-                              {liquidityPoolBalance &&
+                            {liquidityPoolBalance &&
                               liquidityPoolBalance[ele.id] &&
                               `($${liquidityPoolBalance[ele.id].balanceinusd})`}{" "}
                           </div>
                         </div>
-                        
+
 
                       </td>
                       {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
@@ -276,27 +276,37 @@ const Liquidity = (props: Props) => {
                       <td>
                         {userLiquidityPoolBalance ? (
                           <>
-                          <div className="showAmount">
-                            <div className="amountinETH">
-                            {userLiquidityPoolBalance
-                              ? userLiquidityPoolBalance[ele.id] &&
-                                `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
-                              : "N/A"}
-                            </div>
-                            <div className="amountinusd">
-                            {userLiquidityPoolBalance
-                              ? userLiquidityPoolBalance[ele.id] &&
-                                `($${userLiquidityPoolBalance[ele.id].balanceinusd})`
-                              : "N/A"}
+                            <div className="showAmount">
+                              <div className="amountinETH">
+                                {userLiquidityPoolBalance
+                                  ? userLiquidityPoolBalance[ele.id] &&
+                                  `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
+                                  : "N/A"}
+                              </div>
+                              <div className="amountinusd">
+                                {userLiquidityPoolBalance
+                                  ? userLiquidityPoolBalance[ele.id] &&
+                                  `($${userLiquidityPoolBalance[ele.id].balanceinusd})`
+                                  : "N/A"}
 
+                              </div>
                             </div>
-                          </div>
                           </>
-                        ):"N/A"}
-                      
-                        
+                        ) : "N/A"}
+
+
                       </td>
-                      <td>{ rewardsEarned ? rewardsEarned[ele.id] ? `${rewardsEarned[ele.id]}` : `0` : "N/A"}</td>
+                      <td><div className="showAmount">
+                        <div className="amountinETH">
+                          {rewardsEarned ? rewardsEarned[ele.id] ?
+                            `${parseFloat(rewardsEarned[ele.id]) / 10 ** ele.nativeCurrency.decimals} ${ele.nativeCurrency.symbol}` :
+                            `0` : "N/A"}
+                        </div>
+                        <div className="amountinusd">
+                          {rewardsEarned ? rewardsEarned[ele.id] && `($${(rewardsEarned[ele.id])})` : "N/A"}
+                        </div>
+                      </div>
+                      </td>
                       <td>
                         <div className="action_btn">
                           <button
