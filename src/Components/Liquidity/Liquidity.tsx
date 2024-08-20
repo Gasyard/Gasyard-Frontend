@@ -17,9 +17,13 @@ import {
   FetchLiquidityPoolBalance,
   FetchPortfolioBalance,
   FetchUserLiquidityPoolBalance,
+  convertEthToUsd,
+  FetchRewards
 } from "../../Config/utils";
 import { formatEther, formatUnits, parseEther } from "viem";
 import { fetchRewards } from "../../Config/API/api";
+import FormStore from "../../Config/Store/FormStore";
+import { net } from "web3";
 
 type Props = {};
 
@@ -40,7 +44,7 @@ const Liquidity = (props: Props) => {
     null
   );
   const { address, isConnecting, isDisconnected, chain } = useAccount();
-  const [rewardsEarned, setrewardsEarned] = useState<rewardsType | null>(null)
+  const [rewardsEarned, setrewardsEarned] = useState<rewardsType[] | null>(null)
   const { switchChain } = useSwitchChain();
   const onClickDeposit = (chain_: any) => {
     setdepositPopup(true);
@@ -73,9 +77,9 @@ const Liquidity = (props: Props) => {
     //setAccountBalance(result);
   };
   const getRewardsEarned = async (address: any) => {
-    const result = await fetchRewards(address);
-    console.log("portfolio", result);
-    setrewardsEarned(result.holderRewards)
+    const result = await FetchRewards(Chains, address);
+    console.log("REWARDS " + JSON.stringify(result))
+    setrewardsEarned(result)
     //setportfolio(result);
   }
   const getBlanace = async (Chains: any) => {
@@ -129,6 +133,30 @@ const Liquidity = (props: Props) => {
     }
   };
 
+  const getRewardsInToken = (networkConfig: any) => {
+    if (rewardsEarned != null) {
+      const reward = rewardsEarned.find((token) => token.chainID == networkConfig.id);
+      if (reward != null) {
+        return reward.reward;
+      }
+      else {
+        return 0
+      }
+    }
+  }
+
+  const getRewardsInUSD = (chainID: Number) => {
+    if (rewardsEarned != null) {
+      const reward = rewardsEarned.find((token) => token.chainID == chainID);
+      if (reward != null) {
+        return reward.rewardInUsd
+      }
+      else {
+        return 0
+      }
+    }
+  }
+
   const totalVolumeLocked =
     liquidityPoolBalance &&
     Object.values(liquidityPoolBalance).reduce(
@@ -136,12 +164,12 @@ const Liquidity = (props: Props) => {
       10
     );
 
-  const fetchAllBalance = () => {
+  const fetchAllBalance = async () => {
     if (address) {
       getUserLiquidity(Chains, address);
       getTotalChainVolume(address);
       fetchPortfolio(address);
-      getRewardsEarned(address)
+      await getRewardsEarned(address)
     }
 
   }
@@ -298,12 +326,13 @@ const Liquidity = (props: Props) => {
                       </td>
                       <td><div className="showAmount">
                         <div className="amountinETH">
-                          {rewardsEarned ? rewardsEarned[ele.id] ?
-                            `${parseFloat(rewardsEarned[ele.id]) / 10 ** ele.nativeCurrency.decimals} ${ele.nativeCurrency.symbol}` :
-                            `0` : "N/A"}
+                          {rewardsEarned ?
+                            `${getRewardsInToken(ele)} ${ele.nativeCurrency.symbol}` :
+                            `0`}
                         </div>
                         <div className="amountinusd">
-                          {rewardsEarned ? rewardsEarned[ele.id] && `($${(rewardsEarned[ele.id])})` : "N/A"}
+                          {rewardsEarned ?
+                            `($${getRewardsInUSD(ele.id)})` : `N/A`}
                         </div>
                       </div>
                       </td>

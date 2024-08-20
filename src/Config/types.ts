@@ -111,7 +111,10 @@ interface TxObjectType {
 }
 
 interface rewardsType {
-  [key: string]: string;
+  holderAddress: string;
+  chainID: Number;
+  reward: bigint;
+  rewardInUsd: Number;
 }
 export type {
   chainType,
