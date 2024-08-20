@@ -86,6 +86,7 @@ const FetchLiquidityPoolBalance = async (networkConfigList: any) => {
         const maxBalance = await web3Instance.eth.getBalance(networkConfig.liquidityPool);
         console.log("networkConfig", networkConfig.name, maxBalance, networkConfig.rpc)
         const usdRate = FormStore.getTokenRateKey(networkConfig.nativeCurrency.symbol)
+        console.log("fetchpoolbalance usdRate",usdRate)
         networkBalance[networkConfig.id] = {
           "balance": maxBalance,
           "name": networkConfig.name,
@@ -93,7 +94,7 @@ const FetchLiquidityPoolBalance = async (networkConfigList: any) => {
         }
       } catch (err) {
         //networkBalance.push(parseEther("0"));
-        console.log("err", err, networkConfig.name, networkConfig.id)
+        console.log("fetchpoolbalance err", err, networkConfig.name, networkConfig.id)
       }
 
     }))

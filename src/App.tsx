@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import "./App.css";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Header from "./Components/Header/Header";
@@ -24,12 +24,16 @@ const App = observer(() => {
     await Promise.all(
     chain.map(async(ele:any)=>{
       const res = await getUSDAmount(ele);
+      console.log("getAllUSDValues",res,ele.name)
       FormStore.updateTokenRate(ele,res)
     }))
   }
 
+  useLayoutEffect(() => {
+    getAllUSDValues(token)
+  }, [])
   useEffect(() => {
-      getAllUSDValues(token)
+      
   }, [])
   
 
