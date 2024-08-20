@@ -265,7 +265,7 @@ const Explorer = (props: Props) => {
               <MenuList>
               <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
               {Chains.map((chain) =>{
-                  if(chain.id ===1) return <></>gt
+                  if(chain.id ===1) return <></>
                   return(<MenuItem key={chain.id} onClick={() => onSelectChain(2,{id:chain.id,name:chain.name})}>{chain.name}</MenuItem>)
                 })}
               </MenuList>
