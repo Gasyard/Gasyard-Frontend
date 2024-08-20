@@ -21,9 +21,11 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useChains } from "wagmi";
+import { useChains, useEnsName } from "wagmi";
 import { ChainJsonData } from "../../Config/data";
 import { iconMap } from "../../Config/data";
+import { shortenAddress } from "../../Config/utils";
+import WalletEnsName from "./WalletEnsName";
 
 
 type Props = {};
@@ -63,13 +65,6 @@ const Explorer = (props: Props) => {
 
   const Chains = useChains()
 
-  const getData = async (pageNo: number) => {
-    const data = await getListTransactions(pageNo);
-    console.log("tnxobj", data);
-    settransactions(data.results);
-    setInitailTxns(data.results)
-    settotalPages(data.totalPages);
-  };
 
   const getFilteredData = async(page:number,inputAddress:`0x${string}`| "" | string,chain1:chains_type|null,chain2:chains_type|null) =>{
     const response = await getListTransactions(page,inputAddress === "" ? null : inputAddress, chain1 && chain1.id ? chain1.id : null,chain2 && chain2.id ? chain2.id : null)
@@ -87,19 +82,7 @@ const Explorer = (props: Props) => {
     
   }
 
-  const shortenAddress = (
-    address: string | null,
-    startLength = 8,
-    endLength = 8
-  ): string => {
-    if (address) {
-      if (address.length <= startLength + endLength) {
-        return address;
-      }
-      return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
-    }
-    return "";
-  };
+ 
 
   const onClickPrev = () => {
     setpageNo(pageNo-1)
@@ -167,6 +150,7 @@ const Explorer = (props: Props) => {
     
     return `${formattedDate} ${formattedTime}`;
   }
+
 
   useEffect(() => {
     if(inputAddress || chain1 || chain2){
@@ -319,7 +303,9 @@ const Explorer = (props: Props) => {
                   </td>
                   <td>
                     <div className="dflex-row address">
-                      {shortenAddress(item.outputAddress)}{" "}
+                      {/* {shortenAddress(item.outputAddress)}{" "} */}
+                      <WalletEnsName address={item.outputAddress}/>
+                      {/* <ReturnWalletEnsName address={item.outputAddress} /> */}
                       <img src={redirect_logo} onClick={() => redirectToExplorer(item.outputChainID,item.outputAddress)} />
                     </div>
                   </td>

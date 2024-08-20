@@ -125,6 +125,12 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       explorer:ChainJsonData["11124"].explorer,
       liquidityPool:ChainJsonData["11124"].liquidityPool
     },
+      {
+      ...mainnet,
+      iconUrl: ethereumlogo,
+      contractAddress:ChainJsonData["1"].routerContract
+
+  },
   ] as const;
 
   config = defaultWagmiConfig({

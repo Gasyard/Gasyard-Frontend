@@ -169,6 +169,21 @@ function convertEthToUsd(ethBalanceWei: bigint, ethToUsdRate: number) {
   // Return the USD value formatted to two decimal places
   return usdValue.toFixed(2);
 }
+const shortenAddress = (
+  address: string | null,
+  startLength = 8,
+  endLength = 8
+): string => {
+
+  if (address) {
+    if (address.length <= startLength + endLength) {
+      return address;
+    }
+    console.log("shortenAddress",address,typeof(address))
+    return `${address.slice(0, startLength)}...${address.slice(-endLength)}`;
+  }
+  return "";
+};
 
 export {
   convertEthToWeiAndBack,
@@ -178,5 +193,6 @@ export {
   FetchPortfolioBalance,
   FetchRewards,
   convertEthToUsd,
-  getUSDAmount
+  getUSDAmount,
+  shortenAddress
 }

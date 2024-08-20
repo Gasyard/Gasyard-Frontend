@@ -20,7 +20,7 @@
     "@types/react-dom": "^18.0.0",
     "@web3modal/wagmi": "^4.2.3",
     "axios": "^1.7.2",
-    "ethers": "^6.13.1",
+    "ethers": "^6.13.2",
     "framer-motion": "^11.2.12",
     "lottie-react": "^2.4.0",
     "mobx": "^6.13.0",
