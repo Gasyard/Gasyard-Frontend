@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Liquidity.css";
 import { iconMap } from "../../Config/data";
 import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
-import { useDisclosure } from "@chakra-ui/react";
+import { Spinner, useDisclosure } from "@chakra-ui/react";
 import LiquidityWithdrawPopup from "../LiquidityPopup/LiquidityWithdrawPopup";
 import { useAccount, useChains, useSwitchChain } from "wagmi";
 import {
@@ -45,7 +45,9 @@ const Liquidity = (props: Props) => {
   );
   const { address, isConnecting, isDisconnected, chain } = useAccount();
   const [rewardsEarned, setrewardsEarned] = useState<rewardsType[] | null>(null)
+  const [TotalVolumeLocked, settotalVolumeLocked] = useState()
   const { switchChain } = useSwitchChain();
+
   const onClickDeposit = (chain_: any) => {
     setdepositPopup(true);
     setselectedChain(chain_);
@@ -157,12 +159,16 @@ const Liquidity = (props: Props) => {
     }
   }
 
-  const totalVolumeLocked =
+  const CalculateTotalVolume = (liquidityPoolBalance:any) =>{
+    const totalVolumeLocked =
     liquidityPoolBalance &&
     Object.values(liquidityPoolBalance).reduce(
-      (acc, obj) => acc + parseInt(obj.balanceinusd),
+      (acc:any, obj:any) => acc + parseInt(obj.balanceinusd),
       10
     );
+    settotalVolumeLocked(totalVolumeLocked)
+  }
+
 
   const fetchAllBalance = async () => {
     if (address) {
@@ -193,6 +199,9 @@ const Liquidity = (props: Props) => {
       liquidityPoolBalance,
       liquidityPoolBalance && liquidityPoolBalance[2810]
     );
+    if(liquidityPoolBalance){
+      CalculateTotalVolume(liquidityPoolBalance)
+    }
   }, [liquidityPoolBalance]);
 
   useEffect(() => {
@@ -248,7 +257,7 @@ const Liquidity = (props: Props) => {
             <tr>
               <th className="liquidity-table-title" colSpan={7}>
                 Liquidity Pools{" "}
-                <span className="TVL_text">Pooled Liquidity (TVL) : ${totalVolumeLocked}</span>
+                <span className="TVL_text">Pooled Liquidity (TVL) : {TotalVolumeLocked ? `${TotalVolumeLocked}` : <Spinner size={"xs"}/>}</span>
               </th>
             </tr>
             <tr>
