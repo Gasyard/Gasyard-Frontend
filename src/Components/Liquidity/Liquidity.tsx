@@ -139,7 +139,7 @@ const Liquidity = (props: Props) => {
     if (rewardsEarned != null) {
       const reward = rewardsEarned.find((token) => token.chainID == networkConfig.id);
       if (reward != null) {
-        return reward.reward;
+        return (reward.reward / 10 ** networkConfig.nativeCurrency.decimals).toFixed(6);
       }
       else {
         return 0

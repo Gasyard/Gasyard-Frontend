@@ -113,7 +113,7 @@ interface TxObjectType {
 interface rewardsType {
   holderAddress: string;
   chainID: Number;
-  reward: bigint;
+  reward: number;
   rewardInUsd: Number;
 }
 export type {

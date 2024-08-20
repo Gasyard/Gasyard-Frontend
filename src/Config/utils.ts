@@ -138,7 +138,8 @@ const FetchRewards = async (networkConfigList: any, walletAddress: any) => {
       if (chain != null) {
         const usdRate = FormStore.getTokenRateKey(chain.nativeCurrency.symbol)
         if (usdRate != null) {
-          const usdRewards = await convertEthToUsd(holderReward.reward, usdRate)
+          let integerPart = String(holderReward.reward).split('.')[0];
+          const usdRewards = await convertEthToUsd(BigInt(integerPart), usdRate)
           holderReward.rewardInUsd = parseFloat(usdRewards)
         }
       }
