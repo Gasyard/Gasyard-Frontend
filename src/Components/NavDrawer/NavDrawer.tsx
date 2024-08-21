@@ -35,7 +35,7 @@ const NavDrawer = (props: Props) => {
             
             <div className="navigation">
               <a className="na-transfer" href="/explorer" onClick={onClose}>
-                Transaction History
+               Explorer
               </a>
 
               <a className="na-history" href="/liquidity" onClick={onClose}>

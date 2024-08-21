@@ -291,10 +291,17 @@ const Explorer = (props: Props) => {
                 <tr>
                   <td>
                     <div className="dflex-row hash">
-                      {shortenAddress(item.managerHash)} 
-                      {/* <Tooltip label='Copy' fontSize='sm' bg="#E4E7EC" color="#444" placement='bottom'> */}
-                      <img src={redirect_logo} className="redirect" onClick={() => redirectManagerHash(item.managerHash)}/>
-                      {/* </Tooltip> */}
+                      {
+                        item.managerHash ? 
+                        <>
+                        {shortenAddress(item.managerHash)} 
+                         <img src={redirect_logo} className="redirect" onClick={() => redirectManagerHash(item.managerHash)}/>
+                    
+                        </>
+                        :"Pending"
+                      }
+
+                      
                     </div>
                   </td>
                   <td>
