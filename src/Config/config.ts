@@ -60,3 +60,15 @@ export const AbstractTestnet = defineChain({
   },
 })
 
+//soneiumTestnet
+export const SoneiumTestnet = defineChain({
+  id: 1946,
+  name: 'SoneiumTestnet',
+  nativeCurrency: { name: 'SoneiumTestnet', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://rpc.minato.soneium.org',] },
+  },
+  blockExplorers: {
+    default: { name: 'SoneiumTestnetScan', url: 'https://explorer-testnet.soneium.org/tx/' },
+  },
+})

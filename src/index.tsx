@@ -22,7 +22,8 @@ import {
   arbitrumSepolia,
   morphSepolia,
   kakarotSepolia,
-  berachainTestnet
+  berachainTestnet,
+  
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -40,8 +41,9 @@ import berachianlogo from './assets/chains/Berachain.svg'
 import movementtestnetlogo from './assets/chains/movement-testnet-token.svg'
 import morphlogo from './assets/chains/Morph.png'
 import abstractlogo from './assets/chains/abstract.png'
+import sonieumlogo from './assets/chains/soneium.jpg'
 import { ChainJsonData } from "./Config/data";
-import { MovementTestnet,BerachainTestnet, MorphHolesky, AbstractTestnet } from "./Config/config";
+import { MovementTestnet,BerachainTestnet, MorphHolesky, AbstractTestnet,SoneiumTestnet } from "./Config/config";
 
 
 // 0. Setup queryClient
@@ -124,6 +126,13 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       contractAddress: ChainJsonData["11124"].routerContract,
       explorer:ChainJsonData["11124"].explorer,
       liquidityPool:ChainJsonData["11124"].liquidityPool
+    },
+    {
+      ...SoneiumTestnet,
+      iconUrl:sonieumlogo,
+      contractAddress: ChainJsonData["1946"].routerContract,
+      explorer:ChainJsonData["1946"].explorer,
+      liquidityPool:ChainJsonData["1946"].liquidityPool
     },
       {
       ...mainnet,
