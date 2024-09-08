@@ -205,8 +205,8 @@ const ChainJsonData: Networks = {
     gweiLimit: 400000,
     isGasByLifi: false,
     minimumGas: 0.001,
-    explorer: "https://explorer.mevm.devnet.m2.movementlabs.xyz/tx/",
-    explorerAddress: "https://explorer.mevm.devnet.m2.movementlabs.xyz/address/",
+    explorer: "https://explorer.devnet.imola.movementlabs.xyz/#/txn/",
+    explorerAddress: "https://explorer.devnet.imola.movementlabs.xyz/#/account/",
   },
   1802203764: {
     networkName: "kakarottestnet",

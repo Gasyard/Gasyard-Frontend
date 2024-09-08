@@ -14,7 +14,7 @@ export const movementTestnet: Chain = {
         default: { http: ['https://sui.imola.testnet.movementlabs.xyz'] }, // Replace with actual RPC URL
     },
     blockExplorers: {
-        default: { name: 'Movement Explorer', url: 'https://explorer.movement-testnet.com' }, // Replace with actual explorer URL
+        default: { name: 'Movement Explorer', url: 'https://explorer.devnet.imola.movementlabs.xyz/#/' }, // Replace with actual explorer URL
     },
     testnet: true,
 };
