@@ -7,11 +7,12 @@ type Props = {}
 
 const Header = (props: Props) => {
   const [selected, setselected] = useState("")
-  const [closeNotification, setcloseNotification] = useState(true)
+  const [closeNotification, setcloseNotification] = useState(false)
   return (
     <div className="nav-root">
       <div className={`nav-notification ${closeNotification ? "hideDiv":""}`}>
-        🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience!
+        {/* 🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience! */}
+        Welcome Gasyard testnet. For this phase we’ve limited the Bridge amount to 0.1 ETH max on all networks!
         <img src={closeIcon} alt="close" onClick={() => setcloseNotification(true)} />
       </div>
       <div className='nav-section'>
