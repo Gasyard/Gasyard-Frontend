@@ -86,7 +86,7 @@ const Liquidity = (props: Props) => {
   }
   const getBlanace = async (Chains: any) => {
     const res = await FetchLiquidityPoolBalance(Chains);
-    console.log(res);
+    console.log("getBlanace",res);
     setliquidityPoolBalance(res);
   };
 
