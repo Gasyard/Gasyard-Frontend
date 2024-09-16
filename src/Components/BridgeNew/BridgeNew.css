@@ -52,13 +52,15 @@
 }
 .chain1-btn,
 .chain2-btn {
-  background-color: #f4f5f5;
+  /* background-color: #f4f5f5; */
+  background-color: #919191;
   box-shadow: 0px -1px 1px 0px #0000000a inset;
   box-shadow: 0px 1px 3px 0px #00000033;
   min-width: 153px;
   padding: 10px 7px 10px 16px;
   border-radius: 26px;
-  color: #31353c;
+  /* color: #31353c; */
+  color:#FFFFFF;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -70,6 +72,9 @@
   line-height: 16px;
   text-align: left;
   margin-bottom: 20px;
+}
+.chain2-btn{
+  background-color: #003D29;
 }
 .chain1-btn img,
 .chain2-btn img {
@@ -142,8 +147,9 @@
   padding: 20px;
 }
 .review-btn {
-  background-color: #1557E2;
-  color: #ffffff;
+  /* background-color: #1557E2; */
+  background-color: #F1F2F4;
+  color: #5E6773;
   width: 386px;
   padding: 17.75px 0px 18.25px 0px;
   border-radius: 26px;
