@@ -8,12 +8,13 @@
     align-items: center;
     font-family: Inter;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 30px;
     text-align: center;
     color: #FFFFFF;
     border: 2px solid #FFFFFF;
-    background-color: #2A2928;
+    /* background-color: #2A2928; */
+    background-color: #FF7500;
     padding: 20px;
     position: relative;
 }
