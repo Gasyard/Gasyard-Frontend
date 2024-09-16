@@ -34,10 +34,10 @@ const BridgeNew = observer((props: Props) => {
   const Chains = useChains();
   const toast = useToast()
   const [chain1, setchain1] = useState<chainType | null>(Chains[0]);
-  const [chain2, setchain2] = useState<chainType | null>(Chains[1]);
+  const [chain2, setchain2] = useState<chainType | null>(Chains[3]);
 
   FormStore.setChain1(Chains[0])
-  FormStore.setChain2(Chains[1])
+  FormStore.setChain2(Chains[3])
 
   const [inputToken, setinputToken] = useState("");
   const [outputToken, setoutputToken] = useState("");
@@ -286,6 +286,7 @@ const BridgeNew = observer((props: Props) => {
     FormHandler()
   };
   const reverseChain = async () => {
+    return;
     const temp = chain1;
     setchain1(chain2);
     // await FormStore.setChain1(chain2)
@@ -564,7 +565,7 @@ const BridgeNew = observer((props: Props) => {
           <div className="labels">
             <span className="tagline">To</span>
           </div>
-          <button className="chain2-btn" onClick={() => ToggleDD(2)}>
+          <button className="chain2-btn" disabled onClick={() => ToggleDD(2)}>
             {chain2 && <img className="logo" src={chain2?.iconUrl} />}
             {chain2 !== null ? chain2.name : "Select Network"}
             <img src={downArrow} className="downArrow" />

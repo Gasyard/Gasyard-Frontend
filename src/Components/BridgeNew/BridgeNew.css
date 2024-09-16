@@ -132,6 +132,7 @@
 }
 .chain2-btn {
   /* background-color: #1557E2; */
+  pointer-events: none;
 }
 .review {
   display: flex;
@@ -174,7 +175,8 @@
   position: absolute;
   left:45%;
   bottom: -10%;
-  cursor: pointer;
+  /* cursor: pointer; */
+  pointer-events: none;
 }
 
 .AddAddress{

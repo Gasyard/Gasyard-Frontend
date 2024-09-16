@@ -256,11 +256,12 @@ const Explorer = (props: Props) => {
                   fontWeight: "400",
                   lineHeight: "20px",
                   textAlign: "left",
-                  color:"#878794"
+                  color:"#878794",
+                  pointerEvents:"none"
                 }}
-                disabled={true}
+                disabled
               >
-                {chain2 ? chain2.name :"All Chains"}
+                {chain2 ? chain2.name :"Kakarot Sepolia"}
               </MenuButton>
               <MenuList>
               <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
@@ -287,7 +288,9 @@ const Explorer = (props: Props) => {
           </thead>
           <tbody>
             {transactions ? (
-              transactions.map((item, index) => (
+              transactions.map((item, index) => {
+                if(item.outputChainID !== 1802203764) return ""
+                return(
                 <tr>
                   <td>
                     <div className="dflex-row hash">
@@ -340,7 +343,7 @@ const Explorer = (props: Props) => {
                   </td>
                   <td>{formatDate(item.updatedAt)}</td>
                 </tr>
-              ))
+              )})
             ) : (
               <tr>
                 <td colSpan={6}>
