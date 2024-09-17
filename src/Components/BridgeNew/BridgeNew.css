@@ -53,7 +53,7 @@
 .chain1-btn,
 .chain2-btn {
   /* background-color: #f4f5f5; */
-  background-color: #919191;
+  background-color: #003D29;
   box-shadow: 0px -1px 1px 0px #0000000a inset;
   box-shadow: 0px 1px 3px 0px #00000033;
   min-width: 153px;
@@ -148,8 +148,8 @@
 }
 .review-btn {
   /* background-color: #1557E2; */
-  background-color: #F1F2F4;
-  color: #5E6773;
+  background-color: #003D29;
+  color: #FFFFFF;
   width: 386px;
   padding: 17.75px 0px 18.25px 0px;
   border-radius: 26px;
