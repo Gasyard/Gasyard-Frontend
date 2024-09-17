@@ -3,6 +3,7 @@ import "./Header.css"
 import logo from '../../assets/Gasyard Logo.svg'
 import NavDrawer from '../NavDrawer/NavDrawer'
 import closeIcon from '../../assets/close_2x_white.svg'
+import { NavLink } from 'react-router-dom'
 type Props = {}
 
 const Header = (props: Props) => {
@@ -17,15 +18,26 @@ const Header = (props: Props) => {
       </div>
       <div className='nav-section'>
         <div className='left-section'>
-          <a href="/" className='title'>
+      
+        <NavLink to="/" className='title' >
             <img src={logo} />
-          </a>
+          </NavLink>
 
-          <a className="nav-transfer" href="/explorer">
+          <NavLink
+            className={({ isActive }) => (isActive ? 'nav-transfer active' : 'nav-transfer')}
+            to="/">
+            Bridge
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) => (isActive ? 'nav-transfer active' : 'nav-transfer')}
+            to="/explorer">
             Explorer
-          </a>
+          </NavLink>
 
-          <a className="nav-history" href="/liquidity"> Liquidity</a>
+          <NavLink 
+          className={({ isActive }) => (isActive ? 'nav-history active' : 'nav-history')}
+          to="/liquidity"> Liquidity</NavLink>
         </div>
 
         

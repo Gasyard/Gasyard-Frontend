@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./BridgeNew.css";
-import downArrow from "../../assets/SVG-black.svg";
+import downArrow from "../../assets/down-arrow-white.svg";
 import { Spinner, Stat, StatNumber, useDisclosure, useToast } from "@chakra-ui/react";
 import QuoteSection from "../QuoteSection/QuoteSection";
 import { useAccount, useChains, useSwitchChain, useTransactionReceipt, useWriteContract, useWaitForTransactionReceipt } from "wagmi";

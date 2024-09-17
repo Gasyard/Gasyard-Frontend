@@ -55,6 +55,17 @@
     line-height: 20px;
     text-align: center;
 }
+.left-section a.active {
+    color: #FF7500;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 3px;
+  }
 .left-section .title{
     margin-right: 86px;
  
