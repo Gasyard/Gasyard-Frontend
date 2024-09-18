@@ -11,10 +11,10 @@
     font-weight: 600;
     line-height: 30px;
     text-align: center;
-    color: #FFFFFF;
+    color: #000000;
     border: 2px solid #FFFFFF;
     /* background-color: #2A2928; */
-    background-color: #FF7500;
+    background-color: #FFDA35;
     padding: 20px;
     position: relative;
 }
@@ -56,7 +56,7 @@
     text-align: center;
 }
 .left-section a.active {
-    color: #FF7500;
+    color: #FFDA35;
     font-family: Poppins;
     font-size: 14px;
     font-weight: 500;

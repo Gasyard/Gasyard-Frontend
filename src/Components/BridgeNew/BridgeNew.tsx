@@ -34,10 +34,10 @@ const BridgeNew = observer((props: Props) => {
   const Chains = useChains();
   const toast = useToast()
   const [chain1, setchain1] = useState<chainType | null>(Chains[0]);
-  const [chain2, setchain2] = useState<chainType | null>(Chains[3]);
+  const [chain2, setchain2] = useState<chainType | null>(Chains[4]);
 
   FormStore.setChain1(Chains[0])
-  FormStore.setChain2(Chains[3])
+  FormStore.setChain2(Chains[4])
 
   const [inputToken, setinputToken] = useState("");
   const [outputToken, setoutputToken] = useState("");

@@ -5,7 +5,8 @@
   width: 434px;
   min-height: 468px;
   border-radius: 26px;
-  background-color: #fff;
+  background-color: #EEEAE6;
+  ;
   margin: 0px auto;
   margin-top: 50px;
   position: relative;
@@ -53,7 +54,7 @@
 .chain1-btn,
 .chain2-btn {
   /* background-color: #f4f5f5; */
-  background-color: #003d29;
+  background-color: #919191;
   box-shadow: 0px -1px 1px 0px #0000000a inset;
   box-shadow: 0px 1px 3px 0px #00000033;
   min-width: 153px;
@@ -74,7 +75,7 @@
   margin-bottom: 20px;
 }
 .chain2-btn{
-  background-color: #919191;
+  background-color: #000000;
 }
 .chain1-btn img,
 .chain2-btn img {
@@ -115,6 +116,8 @@
   outline: none;
   border: none;
   width: 80%;
+  background-color: #EEEAE6;
+  ;
 }
 .inputToken:focus,
 .inputToken:active,
@@ -151,8 +154,8 @@
 }
 .review-btn {
   /* background-color: #1557E2; */
-  background-color: #003D29;
-  color: #FFFFFF;
+  background-color: #FFDA35;
+  color: #000000;
   width: 386px;
   padding: 17.75px 0px 18.25px 0px;
   border-radius: 26px;

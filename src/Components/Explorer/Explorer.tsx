@@ -261,7 +261,7 @@ const Explorer = (props: Props) => {
                 }}
                 disabled
               >
-                {chain2 ? chain2.name :"Kakarot Sepolia"}
+                {chain2 ? chain2.name :"Movement Sepolia"}
               </MenuButton>
               <MenuList>
               <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
@@ -289,7 +289,7 @@ const Explorer = (props: Props) => {
           <tbody>
             {transactions ? (
               transactions.map((item, index) => {
-                if(item.outputChainID !== 1802203764) return ""
+                if(item.outputChainID !== 30732) return ""
                 return(
                 <tr>
                   <td>
