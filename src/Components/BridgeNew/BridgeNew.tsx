@@ -363,9 +363,15 @@ const BridgeNew = observer((props: Props) => {
         String(portfolio[chain1.id].balance)
       );
       console.log("max gwei", gweiValue)
+
       if (gweiValue > parseEther("0.0001")) {
-        const max_amout = formatEther(gweiValue - parseEther("0.0001"));
-        setinputToken(roundDecimal(max_amout));
+        if(gweiValue > parseEther("0.051")){
+          setinputToken("0.05");
+        }else{
+          const max_amout = formatEther(gweiValue - parseEther("0.0001"));
+          setinputToken(roundDecimal(max_amout));
+        }
+        
       } else {
         const max_amout = formatEther(gweiValue);
         setinputToken(roundDecimal(max_amout));
