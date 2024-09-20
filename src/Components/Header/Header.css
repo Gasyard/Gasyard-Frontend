@@ -131,4 +131,16 @@
         position: unset;
         margin-left: auto;
     }
+    .nav-notification .quest-btn{
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 30px;
+        text-align: center;
+        color: #FFFFFF;
+        background-color: #003D29;
+        padding: 4px 8px;
+        text-decoration: none;
+        border-radius: 10px;
+        width:200px;
+    }
 }
