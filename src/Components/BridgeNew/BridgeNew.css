@@ -54,7 +54,7 @@
 .chain1-btn,
 .chain2-btn {
   /* background-color: #f4f5f5; */
-  background-color: #919191;
+  background-color: #000000;
   box-shadow: 0px -1px 1px 0px #0000000a inset;
   box-shadow: 0px 1px 3px 0px #00000033;
   min-width: 153px;
@@ -75,7 +75,8 @@
   margin-bottom: 20px;
 }
 .chain2-btn{
-  background-color: #000000;
+  /* background-color: #000000; */
+  background-color: #919191;
 }
 .chain1-btn img,
 .chain2-btn img {
