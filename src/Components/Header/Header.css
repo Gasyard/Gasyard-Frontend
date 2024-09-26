@@ -85,7 +85,70 @@
 .mobile-nav{
     display: none;
 }
+.nav-history{
+    margin-right: 20px;
+}
+.left-section a.nav-funds{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: #123769;
+    align-items: center;
 
+}
+.down-arrow{
+    background-image: url('../../assets/down-arrow1.svg');
+    width: 24px;
+    height: 24px;
+}
+.left-section button.chakra-button,
+.left-section button.chakra-button:hover{
+    background: none;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: #123769;
+}
+
+.left-section .chakra-menu__menu-list{
+    padding: 0px;
+}
+.left-section .chakra-menu__menu-list button:hover{
+    background: #b9b6b4;
+}
+.left-section .chakra-menu__menu-list button{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: #36394A;
+}
+.left-section .chakra-menu__menu-list .divider{
+    border-top: 1px solid #12376914;
+    width: 100%;
+    border-top: 1px solid #12376914;
+    height: 20px;
+    width: 100%;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: -10px;
+}
+
+.right-section .social_media_logo{
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    margin-right: 40px;
+    align-items: center;
+}
 @media screen and (max-width:720px){
     .nav-history,.nav-transfer{
         display: none;

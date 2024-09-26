@@ -4,6 +4,10 @@ import logo from '../../assets/Gasyard Logo.svg'
 import NavDrawer from '../NavDrawer/NavDrawer'
 import closeIcon from '../../assets/close_2x_white.svg'
 import { NavLink } from 'react-router-dom'
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import telegarmIcon from '../../assets/telegram-fill.svg'
+import xLogo from '../../assets/twitter.svg'
 type Props = {}
 
 const Header = (props: Props) => {
@@ -38,12 +42,41 @@ const Header = (props: Props) => {
           <NavLink 
           className={({ isActive }) => (isActive ? 'nav-history active' : 'nav-history')}
           to="/liquidity"> Liquidity</NavLink>
+
+          {/* <NavLink 
+          className={({ isActive }) => (isActive ? 'nav-funds active' : 'nav-funds')}
+          to="/funds"> Don’t have funds? <span className='down-arrow'></span></NavLink> */}
+
+          <Menu>
+            <MenuButton as={Button} background={"none"} rightIcon={<ChevronDownIcon />}>
+              Don’t have funds?
+            </MenuButton>
+            <MenuList background={"#EEEAE6"}>
+              <MenuItem background={"#EEEAE6"} minH='48px'>
+                <a href="https://faucet.movementlabs.xyz/" target="_blank">Movement Faucet</a>
+              </MenuItem>
+              <span className='divider'></span>
+              <MenuItem background={"#EEEAE6"} minH='40px'>
+                <span>TG bot Faucet</span>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+
+
         </div>
 
         
         
 
         <div className='right-section'>
+          <div className="social_media_logo">
+            <a href="https://t.me/gasyardfi" target='_blank'>
+            <img src={telegarmIcon} alt="telegram" />
+            </a>
+            <a href="https://x.com/gasyardfi" target='_blank'>
+            <img src={xLogo} alt="twitter" />
+            </a>
+          </div>
           <w3m-button balance='show'/>
           {/* <w3m-network-button /> */}
         </div>
