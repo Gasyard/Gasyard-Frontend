@@ -181,4 +181,10 @@
         position: unset;
         margin-left: auto;
     }
+    .right-section .social_media_logo{
+        display: none;
+    }
+    .left-section .chakra-menu__menu-button.css-1t3zy1p{
+        display: none;
+    }
 }
