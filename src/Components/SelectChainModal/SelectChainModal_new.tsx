@@ -106,12 +106,10 @@ const SelectChainModalNew = observer(({open,isOpen,onOpen, onClose,setModal,chai
                         <div className="chains disabled" key={chain.id}>
                             <img className="chain-img" src={chain.iconUrl}/>
                             <div className='chain-info'>
-                                <div className="chain-name">Move-AptosVM (Coming soon to the balance side)</div>
+                                <div className="chain-name">Move-AptosVM</div>
                             </div>
                             <div className="chain-balance">
-                                N/A
-                                {" "}
-                                {chain.nativeCurrency.symbol}
+                            (Coming soon)
                             </div>
                             
                         </div>
