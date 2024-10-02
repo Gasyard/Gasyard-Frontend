@@ -17,6 +17,19 @@
     background-color: #FFDA35;
     padding: 20px;
     position: relative;
+    flex-direction: row;
+    column-gap: 16px;
+}
+.nav-notification .quest-btn{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #003D29;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 10px;
 }
 .nav-notification img{
     /* margin-left: auto; */

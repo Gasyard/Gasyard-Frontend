@@ -17,7 +17,9 @@ const Header = (props: Props) => {
     <div className="nav-root">
       <div className={`nav-notification ${closeNotification ? "hideDiv":""}`}>
         {/* 🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience! */}
-        Welcome to Movement Testnet by Gasyard.fi. For this phase we’ve limited the Bridge amount to 0.05 ETH / $200 max on all networks!
+        {/* Welcome to Movement Testnet by Gasyard.fi. For this phase we’ve limited the Bridge amount to 0.05 ETH / $200 max on all networks! */}
+        New Quest Live! Complete tasks like bridging MOVE and providing liquidity on Movement testnet to earn rewards!
+        <a href="#" target="_blank" className="quest-btn">Go to Quest</a>
         <img src={closeIcon} alt="close" onClick={() => setcloseNotification(true)} />
       </div>
       <div className='nav-section'>
@@ -57,7 +59,7 @@ const Header = (props: Props) => {
               </MenuItem>
               <span className='divider'></span>
               <MenuItem background={"#EEEAE6"} minH='40px'>
-                <span>TG bot Faucet</span>
+                <a href="https://web.telegram.org/k/#@gasyardbot" target="_blank">TG bot Faucet</a>
               </MenuItem>
             </MenuList>
           </Menu>

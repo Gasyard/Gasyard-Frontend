@@ -38,8 +38,8 @@ export const MorphHolesky = defineChain({
 
 export const MovementTestnet = defineChain({
   id: 30732,
-  name: 'MovementTestnet',
-  nativeCurrency: { name: 'MovementTestnet', symbol: 'MOVE', decimals: 18 },
+  name: 'Move-EVM',
+  nativeCurrency: { name: 'Move-EVM', symbol: 'MOVE', decimals: 18 },
   rpcUrls: {
     default: { http: ['https://mevm.devnet.imola.movementlabs.xyz'] },
   },

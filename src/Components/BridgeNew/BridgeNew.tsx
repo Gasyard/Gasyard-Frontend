@@ -571,7 +571,7 @@ const BridgeNew = observer((props: Props) => {
           <div className="labels">
             <span className="tagline">To</span>
           </div>
-          <button className="chain2-btn" disabled onClick={() => ToggleDD(2)}>
+          <button className="chain2-btn" onClick={() => ToggleDD(2)}>
             {chain2 && <img className="logo" src={chain2?.iconUrl} />}
             {chain2 !== null ? chain2.name : "Select Network"}
             <img src={downArrow} className="downArrow" />

@@ -144,7 +144,7 @@
 }
 .chain2-btn {
   /* background-color: #1557E2; */
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 .review {
   display: flex;

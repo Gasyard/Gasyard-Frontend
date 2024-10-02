@@ -53,7 +53,7 @@ const NavDrawer = (props: Props) => {
                   </MenuItem>
                   <span className='divider'></span>
                   <MenuItem background={"#EEEAE6"} minH='40px'>
-                    <a href="#">TG bot Faucet</a>
+                    <a href="https://web.telegram.org/k/#@gasyardbot" target="_blank">TG bot Faucet</a>
                   </MenuItem>
                 </MenuList>
               </Menu>

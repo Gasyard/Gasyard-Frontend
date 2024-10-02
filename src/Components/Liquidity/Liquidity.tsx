@@ -161,11 +161,11 @@ const Liquidity = (props: Props) => {
 
   const CalculateTotalVolume = (liquidityPoolBalance:any) =>{
     const totalVolumeLocked =
-    liquidityPoolBalance &&
-    Object.values(liquidityPoolBalance).reduce(
-      (acc:any, obj:any) => acc + parseInt(obj.balanceinusd),
-      10
-    );
+    liquidityPoolBalance && liquidityPoolBalance["30732"].balanceinusd
+    // Object.values(liquidityPoolBalance).reduce(
+    //   (acc:any, obj:any) => acc + parseInt(obj.balanceinusd),
+    //   10
+    // );
     settotalVolumeLocked(totalVolumeLocked)
   }
 

@@ -79,6 +79,46 @@ const SelectChainModalNew = observer(({open,isOpen,onOpen, onClose,setModal,chai
                     if(toselectChain === 2 && chain.id !== 30732){
                         return("")
                     }
+                    if(toselectChain === 2 && chain.id === 30732){
+                      return(
+                        <>
+                        <div className="chains" key={chain.id} onClick={() => onChainSelect(chain)}>
+                            <img className="chain-img" src={chain.iconUrl}/>
+                            <div className='chain-info'>
+                                <div className="chain-name">{chain.name}</div>
+                                {/* <div className="chain-token">{chain.nativeCurrency.symbol}</div> */}
+                            </div>
+                            <div className="chain-balance">
+                              
+                                {/* { portfolio && portfolio["bsc"] && key === "BNB Smart Chain" ? Math.round(portfolio["bsc"].balance * 100000) / 100000
+                                : portfolio && key === "Arbitrum One" ? Math.round(portfolio["arbitrum"].balance * 100000) / 100000 
+                                : portfolio && portfolio[key.toLowerCase()] ? Math.round(portfolio[key.toLowerCase()].balance * 100000)/100000 : ""}
+                                {" "} */}
+
+                                {/* {portfolio && toselectChain === 1 && chain_1 ? portfolio[String(chain_1.id)].balance : chain_2 && portfolio[String(chain_2.id)].balance } */}
+                                
+                                {portfolio && chain && portfolio[chain.id] ? (portfolio[chain.id].balance * 100000)/100000 :"N/A" }
+                                {" "}
+                                {chain.nativeCurrency.symbol}
+                            </div>
+                            
+                        </div>
+                        <div className="chains disabled" key={chain.id}>
+                            <img className="chain-img" src={chain.iconUrl}/>
+                            <div className='chain-info'>
+                                <div className="chain-name">Move-AptosVM (Coming soon to the balance side)</div>
+                            </div>
+                            <div className="chain-balance">
+                                N/A
+                                {" "}
+                                {chain.nativeCurrency.symbol}
+                            </div>
+                            
+                        </div>
+                        </>
+                       
+                      )
+                    }
                     return(
                         <div className="chains" key={chain.id} onClick={() => onChainSelect(chain)}>
                             <img className="chain-img" src={chain.iconUrl}/>
