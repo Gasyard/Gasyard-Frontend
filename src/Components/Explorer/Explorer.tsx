@@ -310,7 +310,7 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="statusWrap">
                       <span className={`status ${item.status}`}></span>
-                      {item.status}
+                      {item.status === "pending" ? "in progress" : item.status}
                     </div>
                   </td>
                   <td>
