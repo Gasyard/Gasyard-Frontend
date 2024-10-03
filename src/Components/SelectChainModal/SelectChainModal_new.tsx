@@ -73,7 +73,7 @@ const SelectChainModalNew = observer(({open,isOpen,onOpen, onClose,setModal,chai
             {chainList.map((chain)=>{
                     var key = chain.name
                     if(chain.id === 1) return ""
-                    if(toselectChain === 1 && (chain.id === 30732 || chain.id === 2810)){
+                    if(toselectChain === 1 && (chain.id === 30732)){
                       return("")
                     }
                     if(toselectChain === 2 && chain.id !== 30732){
