@@ -274,7 +274,7 @@ const Liquidity = (props: Props) => {
             {Chains &&
               liquidityPoolBalance &&
               Chains.map((ele) => {
-                if(ele.id === 1) return(<></>)
+                if(ele.id === 1 || ele.id === 11155111) return(<></>)
                 return (
                   <>
                     <tr>
