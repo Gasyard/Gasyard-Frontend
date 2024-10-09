@@ -192,7 +192,8 @@
   display: flex;
   flex-direction: row;
   column-gap: 10px;
-  background-color: #F4f5f5;
+  /* background-color: #F4f5f5; */
+  background-color: #F9FAFB;
   padding: 5px 10px;
   width:fit-content;
   border-radius: 30px;
@@ -203,7 +204,7 @@
   font-weight: 600;
   line-height: 20px;
   text-align: center;
-  box-shadow: 0 1px 3px 0 #0003;
+  /* box-shadow: 0 1px 3px 0 #0003; */
 }
 .AddAddress img{
   width:32px;

@@ -26,7 +26,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import addAddress from "../../assets/addAddress.svg";
+import addAddress from "../../assets/addAddress-kkrt.svg";
 import GreenTick from "../../assets/green-tick.svg";
 import tooltip_icon from '../../assets/modal-tooltip.svg'
 import walletIcon from '../../assets/Wallet Address.png'
