@@ -261,7 +261,7 @@ const Explorer = (props: Props) => {
                 }}
                 disabled
               >
-                {chain2 ? chain2.name :"Move-EVM"}
+                {chain2 ? chain2.name :"MorphHolesky"}
               </MenuButton>
               <MenuList>
               <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
@@ -289,7 +289,7 @@ const Explorer = (props: Props) => {
           <tbody>
             {transactions ? (
               transactions.map((item, index) => {
-                if(item.outputChainID !== 30732) return ""
+                if(item.outputChainID !== 2810) return ""
                 return(
                 <tr>
                   <td>

@@ -54,7 +54,7 @@ export const fetchTransactionObject = async(id:string) =>{
 export const getListTransactions = async(page:number,inputAddress:`0x${string}`| string | null=null,chain1:number | null=null,chain2:number | null=null) => {
     try{
         var url = ""
-        url = `${domain}/api/list-transactions?sortBy=updatedAt:desc&page=${page}&${inputAddress && `inputAddress=${inputAddress}`}&${chain1 && `inputChainID=${chain1}`}&outputChainID=30732`
+        url = `${domain}/api/list-transactions?sortBy=updatedAt:desc&page=${page}&${inputAddress && `inputAddress=${inputAddress}`}&${chain1 && `inputChainID=${chain1}`}&outputChainID=2810`
         url = url.replace(/&null/g, "").replace("null","")
         const response = await axios.get(url)
         if(response.status === 400){

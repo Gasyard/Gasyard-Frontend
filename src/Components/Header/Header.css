@@ -11,10 +11,10 @@
     font-weight: 600;
     line-height: 30px;
     text-align: center;
-    color: #000000;
+    color: #FFFFFF;
     border: 2px solid #FFFFFF;
     /* background-color: #2A2928; */
-    background-color: #FFDA35;
+    background-color: #00AB00;
     padding: 20px;
     position: relative;
     flex-direction: row;
@@ -78,7 +78,7 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 3px;
-    text-decoration-color: #FFDA35;
+    text-decoration-color: #018601;
   }
 .left-section .title{
     margin-right: 86px;
