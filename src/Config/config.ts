@@ -72,3 +72,15 @@ export const SoneiumTestnet = defineChain({
     default: { name: 'SoneiumTestnetScan', url: 'https://explorer-testnet.soneium.org/tx/' },
   },
 })
+
+export const UnichainTestnet = defineChain({
+  id: 1301,
+  name: 'UnichainTestnet',
+  nativeCurrency: { name: 'UnichainTestnet', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://sepolia.unichain.org',] },
+  },
+  blockExplorers: {
+    default: { name: 'UnichainTestnetScan', url: 'https://sepolia.uniscan.xyz/' },
+  },
+})
