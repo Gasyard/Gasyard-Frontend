@@ -19,6 +19,7 @@ import {
   MenuList,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useChains, useEnsName } from "wagmi";
@@ -26,6 +27,7 @@ import { ChainJsonData } from "../../Config/data";
 import { iconMap } from "../../Config/data";
 import { shortenAddress } from "../../Config/utils";
 import WalletEnsName from "./WalletEnsName";
+import ResubmitTxPopup from "../ResubmitTransactionPopup/ResubmitTxPopup";
 
 
 type Props = {};
@@ -62,7 +64,7 @@ const Explorer = (props: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<`0x${string}` | string>(inputAddress);
   const [chain1, setchain1] = useState<chains_type | null>(null)
   const [chain2, setchain2] = useState<chains_type | null>(null)
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const Chains = useChains()
 
 
@@ -274,6 +276,9 @@ const Explorer = (props: Props) => {
           </div>
         </div>
       </div>
+      <div className="find-tx" >
+        <span onClick={onOpen}>Can’t find your transaction?</span>
+      </div>
       <div className="table-container">
         <table>
           <thead>
@@ -377,6 +382,8 @@ const Explorer = (props: Props) => {
           </tbody>
         </table>
       </div>
+
+      <ResubmitTxPopup isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };
