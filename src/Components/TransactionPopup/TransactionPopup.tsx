@@ -110,6 +110,7 @@ const TransactionPopup = observer(({ isOpen, onOpen, onClose, setModal, rejected
           <ModalBody>
             <div className={`success_body ${rejected ? "hideDiv" : ""}`}>
               <div className="loaderDiv">
+                
                 {!success ? (
                   <>
                     

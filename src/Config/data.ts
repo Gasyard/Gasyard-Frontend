@@ -13,6 +13,7 @@ import berachianlogo from '../assets/chains/Berachain.svg'
 import movementLogo from '../assets/chains/movement-testnet-token.svg'
 import abstractLogo from '../assets/chains/abstract.png'
 import sonieumLogo from '../assets/chains/soneium.jpg'
+import unichainlogo from '../assets/chains/uniswap.jpg'
 import { ImageMapType, Networks } from "./types";
 
 const iconMap: ImageMapType = {
@@ -25,17 +26,18 @@ const iconMap: ImageMapType = {
   "5000": mantlelogo,
   "11155111": ethereumlogo,
   "421614": arbitumlogo,
-  "84532":baselogo,
-  "2810":morphlogo,
-  "1802203764":karakotlogo,
-  "80084":berachianlogo,
-  "30732":movementLogo,
-  "11124":abstractLogo,
-  "MOVE":movementLogo,
-  "BERA":berachianlogo,
-  "ETH":ethereumlogo,
-  "MATIC":polygonlogo,
-  "1946":sonieumLogo
+  "84532": baselogo,
+  "2810": morphlogo,
+  "920637907288165": karakotlogo,
+  "80084": berachianlogo,
+  "30732": movementLogo,
+  "11124": abstractLogo,
+  MOVE: movementLogo,
+  BERA: berachianlogo,
+  ETH: ethereumlogo,
+  MATIC: polygonlogo,
+  "1946": sonieumLogo,
+  "1301": unichainlogo,
 };
 const ChainJsonData: Networks = {
   "1": {
@@ -208,9 +210,9 @@ const ChainJsonData: Networks = {
     explorer: "https://explorer.devnet.imola.movementlabs.xyz/#/txn/",
     explorerAddress: "https://explorer.devnet.imola.movementlabs.xyz/#/account/",
   },
-  1802203764: {
+  920637907288165: {
     networkName: "kakarottestnet",
-    chainID: 1802203764,
+    chainID: 920637907288165,
     baseToken: "ETH",
     decimals: 18,
     rpc: "https://sepolia-rpc.kakarot.org",
@@ -277,7 +279,24 @@ const ChainJsonData: Networks = {
   "minimumGas":0.0001,
   "explorer":"https://explorer-testnet.soneium.org/tx/",
   "explorerAddress":"https://explorer-testnet.soneium.org/address/"
- }
+ },
+ 1301: {
+  networkName: "unichainTestnet",
+  chainID: 1301,
+  baseToken: "ETH",
+  decimals: 18,
+  rpc: "https://sepolia.unichain.org",
+  feedaddress: "0x0000000000000000000000000000000000000000",
+  routerContract: "0x7E9b9560bdd2fC749E0DA75573B9300C8Cc24F6f",
+  liquidityPool: "0x4aB0137be5cb4b8EB6a755e4c16243724Bf44dC2",
+  priceProvider:
+    "https://api.bybit.com/v5/market/tickers?category=spot&symbol=ETHUSDT",
+  platformFeePercentage: 1,
+  gweiLimit: 600000,
+  isGasByLifi: false,
+  minimumGas: 0.0001,
+  explorer: "sepolia.uniscan.xyz",
+},
 };
 
 

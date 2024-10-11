@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./Liquidity.css";
 import { iconMap } from "../../Config/data";
 import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
@@ -130,7 +130,7 @@ const Liquidity = (props: Props) => {
       console.log(result);
     } else {
       const result = await response.json();
-      console.log(result);
+      console.log("totalChainVolume",result);
       settotalChainVolume(result);
     }
   };
@@ -239,12 +239,12 @@ const Liquidity = (props: Props) => {
         on_liquidtyModalClose={onCloseWithdraw}
         chain={selectedChain}
         balance={
-          userLiquidityPoolBalance && selectedChain
+          userLiquidityPoolBalance && selectedChain && userLiquidityPoolBalance[selectedChain.id]
             ? userLiquidityPoolBalance[selectedChain.id].balance
             : "N/A"
         }
         balanceinUSD={
-          userLiquidityPoolBalance && selectedChain
+          userLiquidityPoolBalance && selectedChain && userLiquidityPoolBalance[selectedChain.id]
             ? userLiquidityPoolBalance[selectedChain.id].balanceinusd
             : "N/A"
         }
@@ -275,7 +275,7 @@ const Liquidity = (props: Props) => {
               liquidityPoolBalance &&
               Chains.map((ele) => {
                 if(ele.id === 1) return(<></>)
-                if(ele.id !== 1802203764) return (<></>)
+                if(ele.id !== 920637907288165) return (<></>)
                 return (
                   <>
                     <tr>
@@ -309,7 +309,7 @@ const Liquidity = (props: Props) => {
                       </td>
                       {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
                       <td>
-                        {totalChainVolume ?
+                        {totalChainVolume && totalChainVolume[ele.id] ?
                           `$${totalChainVolume[ele.id].totalVolume}` : "N/A"}
                       </td>
                       <td>
@@ -318,8 +318,9 @@ const Liquidity = (props: Props) => {
                             <div className="showAmount">
                               <div className="amountinETH">
                                 {userLiquidityPoolBalance
-                                  ? userLiquidityPoolBalance[ele.id] &&
+                                  ? userLiquidityPoolBalance[ele.id] ?
                                   `${formatToken(formatEther(userLiquidityPoolBalance[ele.id].balance))} ${ele.nativeCurrency.symbol}`
+                                  : "Failed to fetch"
                                   : "N/A"}
                               </div>
                               <div className="amountinusd">

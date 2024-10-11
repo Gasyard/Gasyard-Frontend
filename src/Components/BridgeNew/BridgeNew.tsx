@@ -141,7 +141,7 @@ const BridgeNew = observer((props: Props) => {
         method: "POST",
         body: JSON.stringify({
           inputNetwork: chain1 && chain1.id,
-          outputNetwork: chain2 && chain2.id,
+          outputNetwork: 1802203764,
           inputTokenAmount: parseFloat(debouncedValue) * 1000000000000000000,
         }),
         headers: {
@@ -235,18 +235,18 @@ const BridgeNew = observer((props: Props) => {
         accBalance
       )
     ) {
-      // try {
-      //   const result = await writeContract({
-      //     abi,
-      //     address: chain1.contractAddress,
-      //     functionName: "bridgeTo",
-      //     args: [chain2.id, recepientAddress !== "" ? recepientAddress : address],
-      //     value: parseEther(debouncedValue),
-      //   });
-      //   setopenTransactionPopup(true);
-      // } catch (err) {
-      //   console.log("err", err);
-      // }
+      try {
+        const result = await writeContract({
+          abi,
+          address: chain1.contractAddress,
+          functionName: "bridgeTo",
+          args: [1802203764, recepientAddress !== "" ? recepientAddress : address],
+          value: parseEther(debouncedValue),
+        });
+        setopenTransactionPopup(true);
+      } catch (err) {
+        console.log("err", err);
+      }
     }
     // else{
     //   if(accBalance === ""){

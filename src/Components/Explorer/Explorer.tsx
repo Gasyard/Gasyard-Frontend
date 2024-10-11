@@ -122,7 +122,8 @@ const Explorer = (props: Props) => {
   }
 
   const redirectToTxExplorer = (id:number,hash:any) =>{
-    const url = ChainJsonData[id].explorer+hash
+    
+    const url = ChainJsonData[id === 1802203764 ? 920637907288165 : id].explorer+hash
     window.open(url, '_blank');
   }
 
@@ -339,10 +340,20 @@ const Explorer = (props: Props) => {
                     <div className="dflex-row chain">
                       Chain:{" "}
                       <img
-                        src={iconMap[item.outputChainID]}
+                        src={item.outputChainID === 1802203764 ?  iconMap[920637907288165] : iconMap[item.outputChainID]}
                         className="logo"
                       />
-                      {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
+
+                      {
+                        item.outputChainID === 1802203764 ?
+                        <>
+                        {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[920637907288165].baseToken}
+                        </>:<>
+                        {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
+                        </>
+                      }
+
+                      
                       <img src={redirect_logo} className="redirect" onClick={() => redirectToTxExplorer(item.outputChainID,item.outputTxHash)}/>
                     </div>
                   </td>

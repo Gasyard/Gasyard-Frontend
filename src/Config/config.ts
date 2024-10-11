@@ -72,3 +72,36 @@ export const SoneiumTestnet = defineChain({
     default: { name: 'SoneiumTestnetScan', url: 'https://explorer-testnet.soneium.org/tx/' },
   },
 })
+
+export const UnichainTestnet = defineChain({
+  id: 1301,
+  name: 'UnichainTestnet',
+  nativeCurrency: { name: 'UnichainTestnet', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://sepolia.unichain.org',] },
+  },
+  blockExplorers: {
+    default: { name: 'UnichainTestnetScan', url: 'https://sepolia.uniscan.xyz/' },
+  },
+})
+export const kakarotSepolia = /*#__PURE__*/ defineChain({
+  id: 920637907288165,
+  name: 'Kakarot Sepolia',
+  nativeCurrency: {
+    name: 'Ether',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://sepolia-rpc.kakarot.org'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Kakarot Scan',
+      url: 'https://sepolia.kakarotscan.org',
+    },
+  },
+  testnet: true,
+})

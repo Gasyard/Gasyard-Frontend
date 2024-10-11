@@ -167,7 +167,7 @@ const LiquidityWithdrawPopup = observer(({ is_liquidtyModalOpen, on_liquidtyModa
                     <div className="liquidityInfoRow">
                       <div className="label">Liquidity Provided</div>
                       <div className="value">
-                        {formatEther(balance)} {chain && chain.nativeCurrency.symbol} <span>(~ {balanceinUSD})</span>
+                        {balance !== "N/A" ? formatEther(balance) : "N/A"} {chain && chain.nativeCurrency.symbol} <span>(~ {balanceinUSD})</span>
                       </div>
                     </div>
                     <div className="liquidityInfoRow">
@@ -181,7 +181,7 @@ const LiquidityWithdrawPopup = observer(({ is_liquidtyModalOpen, on_liquidtyModa
               <div className="chainDisplay">
                 <img src={chain && iconMap[chain.id]} className="chainImg" />
                 <div className="chainInfo">
-                {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {formatEther(balance)}</span>
+                {chain && chain.nativeCurrency.symbol} <span className="balance">Balance: {balance !== "N/A" ? formatEther(balance) : "N/A"}</span>
                 </div>
 
                 <input 
