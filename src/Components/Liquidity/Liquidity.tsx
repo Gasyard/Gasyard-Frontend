@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./Liquidity.css";
 import { iconMap } from "../../Config/data";
 import LiquidityPopup from "../LiquidityPopup/LiquidityPopup";
@@ -130,7 +130,7 @@ const Liquidity = (props: Props) => {
       console.log(result);
     } else {
       const result = await response.json();
-      console.log(result);
+      console.log("totalChainVolume",result);
       settotalChainVolume(result);
     }
   };
@@ -308,7 +308,7 @@ const Liquidity = (props: Props) => {
                       </td>
                       {/* formatUnits(liquidityPoolBalance[ele.id].balance */}
                       <td>
-                        {totalChainVolume ?
+                        {totalChainVolume && totalChainVolume[ele.id] ?
                           `$${totalChainVolume[ele.id].totalVolume}` : "N/A"}
                       </td>
                       <td>

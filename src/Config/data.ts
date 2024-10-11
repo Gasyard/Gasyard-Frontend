@@ -28,7 +28,7 @@ const iconMap: ImageMapType = {
   "421614": arbitumlogo,
   "84532": baselogo,
   "2810": morphlogo,
-  "1802203764": karakotlogo,
+  "920637907288165": karakotlogo,
   "80084": berachianlogo,
   "30732": movementLogo,
   "11124": abstractLogo,
@@ -212,9 +212,9 @@ const ChainJsonData: Networks = {
     explorerAddress:
       "https://explorer.devnet.imola.movementlabs.xyz/#/account/",
   },
-  1802203764: {
+  920637907288165: {
     networkName: "kakarottestnet",
-    chainID: 1802203764,
+    chainID: 920637907288165,
     baseToken: "ETH",
     decimals: 18,
     rpc: "https://sepolia-rpc.kakarot.org",
