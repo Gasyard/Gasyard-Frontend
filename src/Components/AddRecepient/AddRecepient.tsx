@@ -89,7 +89,7 @@ const AddRecepient = ({ setrecepientAddress, recepientAddress }: Props) => {
         ) : (
           <>
             <img src={addAddress} onClick={onOpen} />
-            Add Receipent Address
+            Add Recipient Address
           </>
         )}
       </div>
