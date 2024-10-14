@@ -219,8 +219,8 @@ const ChainJsonData: Networks = {
     feedaddress: "0x0000000000000000000000000000000000000000",
     priceProvider:
       "https://api.bybit.com/v5/market/tickers?category=spot&symbol=ETHUSDT",
-    routerContract: "0x7E9b9560bdd2fC749E0DA75573B9300C8Cc24F6f",
-    liquidityPool: "0x4aB0137be5cb4b8EB6a755e4c16243724Bf44dC2",
+    routerContract: "0x45Ae6f1998F48e4feD718958c657becDFF5fF925",
+    liquidityPool: "0x772F0d0798a1C798C8fB0AC876443B9C855ead55",
     platformFeePercentage: 1,
     gweiLimit: 400000,
     isGasByLifi: false,
