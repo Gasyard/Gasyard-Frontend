@@ -16,9 +16,9 @@ const Header = (props: Props) => {
   return (
     <div className="nav-root">
       <div className={`nav-notification ${closeNotification ? "hideDiv":""}`}>
-        {/* 🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience! */}
+        🚧 Website Maintenance in Progress 🚧    We're currently performing some updates and will be back online shortly. Thank you for your patience!
         {/* Welcome to Movement Testnet by Gasyard.fi. For this phase we’ve limited the Bridge amount to 0.05 ETH / $200 max on all networks! */}
-        New Quest Live! Complete tasks like bridging ETH and providing liquidity on Morph testnet to earn points!
+        {/* New Quest Live! Complete tasks like bridging ETH and providing liquidity on Morph testnet to earn points! */}
         {/* <a href="https://app.galxe.com/quest/Gasyard" target="_blank" className="quest-btn">Go to Quest</a> */}
         <img src={closeIcon} alt="close" onClick={() => setcloseNotification(true)} />
       </div>
