@@ -21,6 +21,7 @@ export const PortfolioAPI = async(address:any) =>{
 
 export const sendTransaction = async(hash:`0x${string}` | undefined,inputNetwork:number) => {
     console.log('send transaction called')
+    inputNetwork = inputNetwork === 920637907288165 ? 1802203764 : inputNetwork
     try{
         if(hash){
             const url = `${domain}/api/submit-tx`
@@ -54,6 +55,8 @@ export const fetchTransactionObject = async(id:string) =>{
 export const getListTransactions = async(page:number,inputAddress:`0x${string}`| string | null=null,chain1:number | null=null,chain2:number | null=null) => {
     try{
         var url = ""
+        chain1 = chain1 === 920637907288165 ? 1802203764 : chain1
+        chain2 = chain2 === 920637907288165 ? 1802203764 : chain2
         url = `${domain}/api/list-transactions?sortBy=updatedAt:desc&page=${page}&${inputAddress && `inputAddress=${inputAddress}`}&${chain1 && `inputChainID=${chain1}`}&${chain2 && `outputChainID=${chain2}`}`
         url = url.replace(/&null/g, "").replace("null","")
         const response = await axios.get(url)

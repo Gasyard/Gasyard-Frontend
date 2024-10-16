@@ -136,12 +136,13 @@ const BridgeNew = observer((props: Props) => {
       const domain = isTestnet ? process.env.REACT_APP_BACKEND_API_TESTNET : process.env.REACT_APP_BACKEND_API
       console.log("domain", domain, process.env.REACT_APP_BACKEND_API_TESTNET, process.env.REACT_APP_BACKEND_API)
       const url = `${domain}/api/quote`;
-
+      var c1 = chain1.id === 920637907288165 ? 1802203764 : chain1.id
+      var c2 = chain2.id === 920637907288165 ? 1802203764 : chain2.id
       const options = {
         method: "POST",
         body: JSON.stringify({
-          inputNetwork: chain1 && chain1.id,
-          outputNetwork: chain2 && chain2.id,
+          inputNetwork: c1,
+          outputNetwork: c2,
           inputTokenAmount: parseFloat(debouncedValue) * 1000000000000000000,
         }),
         headers: {
@@ -240,7 +241,7 @@ const BridgeNew = observer((props: Props) => {
           abi,
           address: chain1.contractAddress,
           functionName: "bridgeTo",
-          args: [chain2.id, recepientAddress !== "" ? recepientAddress : address],
+          args: [chain2.id === 920637907288165 ? 1802203764 : chain2.id , recepientAddress !== "" ? recepientAddress : address],
           value: parseEther(debouncedValue),
         });
         setopenTransactionPopup(true);
