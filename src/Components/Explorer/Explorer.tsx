@@ -329,8 +329,18 @@ const Explorer = (props: Props) => {
                   <td>
                     <div className="dflex-row token">
                       Chain:{" "}
-                      <img src={iconMap[item.inputChainID]} className="logo" />
-                      {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken}
+                      <img 
+                      src={item.inputChainID === 1802203764 ?  iconMap[920637907288165] : iconMap[item.inputChainID]}
+                      className="logo" />
+                       {
+                        item.inputChainID === 1802203764 ?
+                        <>
+                        {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[920637907288165].baseToken}
+                        </>:<>
+                        {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken}
+                        </>
+                      }
+                      {/* {formatToken(formatEther(item.inputChainAmount))} {ChainJsonData[item.inputChainID].baseToken} */}
                       <img src={redirect_logo} className="redirect"  onClick={() => redirectToTxExplorer(item.inputChainID,item.inputTxHash)}/>
                     </div>
                   </td>
@@ -342,6 +352,7 @@ const Explorer = (props: Props) => {
                         src={iconMap[item.outputChainID]}
                         className="logo"
                       />
+                       
                       {formatToken(formatEther(item.outputChainAmount))} {ChainJsonData[item.outputChainID].baseToken}
                       <img src={redirect_logo} className="redirect" onClick={() => redirectToTxExplorer(item.outputChainID,item.outputTxHash)}/>
                     </div>
