@@ -21,7 +21,7 @@ import {
   mantle,
   arbitrumSepolia,
   morphSepolia,
-  kakarotSepolia,
+  //kakarotSepolia,
   berachainTestnet,
   
 } from "wagmi/chains";
@@ -43,7 +43,7 @@ import morphlogo from './assets/chains/Morph.png'
 import abstractlogo from './assets/chains/abstract.png'
 import sonieumlogo from './assets/chains/soneium.jpg'
 import { ChainJsonData } from "./Config/data";
-import { MovementTestnet,BerachainTestnet, MorphHolesky, AbstractTestnet,SoneiumTestnet } from "./Config/config";
+import { MovementTestnet,BerachainTestnet, MorphHolesky, AbstractTestnet,SoneiumTestnet,kakarotSepolia } from "./Config/config";
 
 
 // 0. Setup queryClient
@@ -89,9 +89,9 @@ if (process.env.REACT_APP_SERVER == "testnet") {
     {
       ...kakarotSepolia,
       iconUrl: karakotlogo,
-      contractAddress: ChainJsonData["1802203764"].routerContract,
-      explorer:ChainJsonData["1802203764"].explorer,
-      liquidityPool:ChainJsonData["1802203764"].liquidityPool
+      contractAddress: ChainJsonData["920637907288165"].routerContract,
+      explorer:ChainJsonData["920637907288165"].explorer,
+      liquidityPool:ChainJsonData["920637907288165"].liquidityPool
     },
     // {
     //   ...berachainTestnet,
