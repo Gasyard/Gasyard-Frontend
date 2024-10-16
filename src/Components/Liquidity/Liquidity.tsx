@@ -173,7 +173,7 @@ const Liquidity = (props: Props) => {
   const fetchAllBalance = async () => {
     if (address) {
       getUserLiquidity(Chains, address);
-      getTotalChainVolume(address);
+      //getTotalChainVolume(address);
       fetchPortfolio(address);
       await getRewardsEarned(address)
     }
@@ -187,7 +187,7 @@ const Liquidity = (props: Props) => {
       if (address) {
         console.log("hbxhbhxbhbxh");
         getUserLiquidity(Chains, address);
-        getTotalChainVolume(address);
+        //getTotalChainVolume(address);
 
       }
     }
