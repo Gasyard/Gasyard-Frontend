@@ -85,6 +85,7 @@ export const notifyTransaction = async(chainid:number,trnx_hash:`0x${string}`) =
 }
 
 export const fetchRewards = async(walletId:any) =>{
+    return null
     console.log("fetchreward called")
     try{
         const url = `${domain}/api/show-rewards/${walletId}`
