@@ -264,7 +264,7 @@ const Explorer = (props: Props) => {
                 }}
                 disabled
               >
-                {chain2 ? chain2.name :"Kakarot Sepolia"}
+                {chain2 ? chain2.name :" Kakaort STRK Sepolia"}
               </MenuButton>
               <MenuList>
               <MenuItem key={0} onClick={() => setchain2(null)}>All Chains</MenuItem>
