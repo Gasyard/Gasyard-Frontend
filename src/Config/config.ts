@@ -86,7 +86,7 @@ export const UnichainTestnet = defineChain({
 })
 export const kakarotSepolia = /*#__PURE__*/ defineChain({
   id: 920637907288165,
-  name: 'Kakaort STRK Sepolia',
+  name: 'Kakarot STRK Sepolia',
   nativeCurrency: {
     name: 'Ether',
     symbol: 'ETH',
