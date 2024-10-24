@@ -127,13 +127,13 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       explorer:ChainJsonData["11155111"].explorer,
       liquidityPool:ChainJsonData["11155111"].liquidityPool
     },
-    {
-      ...AbstractTestnet,
-      iconUrl:abstractlogo,
-      contractAddress: ChainJsonData["11124"].routerContract,
-      explorer:ChainJsonData["11124"].explorer,
-      liquidityPool:ChainJsonData["11124"].liquidityPool
-    },
+    // {
+    //   ...AbstractTestnet,
+    //   iconUrl:abstractlogo,
+    //   contractAddress: ChainJsonData["11124"].routerContract,
+    //   explorer:ChainJsonData["11124"].explorer,
+    //   liquidityPool:ChainJsonData["11124"].liquidityPool
+    // },
     {
       ...SoneiumTestnet,
       iconUrl:sonieumlogo,
