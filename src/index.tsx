@@ -121,8 +121,8 @@ if (process.env.REACT_APP_SERVER == "testnet") {
       ...sepolia,
       iconUrl: sepolialogo,
       contractAddress: ChainJsonData["11155111"].routerContract,
-      explorer: ChainJsonData["11155111"].explorer,
-      liquidityPool: ChainJsonData["11155111"].liquidityPool,
+      explorer:ChainJsonData["11155111"].explorer,
+      liquidityPool:ChainJsonData["11155111"].liquidityPool
     },
     // {
     //   ...AbstractTestnet,
