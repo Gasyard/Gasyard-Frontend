@@ -236,18 +236,18 @@ const BridgeNew = observer((props: Props) => {
         accBalance
       )
     ) {
-      try {
-        const result = await writeContract({
-          abi,
-          address: chain1.contractAddress,
-          functionName: "bridgeTo",
-          args: [chain2.id === 920637907288165 ? 1802203764 : chain2.id , recepientAddress !== "" ? recepientAddress : address],
-          value: parseEther(debouncedValue),
-        });
-        setopenTransactionPopup(true);
-      } catch (err) {
-        console.log("err", err);
-      }
+      // try {
+      //   const result = await writeContract({
+      //     abi,
+      //     address: chain1.contractAddress,
+      //     functionName: "bridgeTo",
+      //     args: [chain2.id === 920637907288165 ? 1802203764 : chain2.id , recepientAddress !== "" ? recepientAddress : address],
+      //     value: parseEther(debouncedValue),
+      //   });
+      //   setopenTransactionPopup(true);
+      // } catch (err) {
+      //   console.log("err", err);
+      // }
     }
     // else{
     //   if(accBalance === ""){
